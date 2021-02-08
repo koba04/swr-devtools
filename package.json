@@ -1,0 +1,20 @@
+{
+  "name": "swr-devtools",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "examples/*"
+  ],
+  "scripts": {
+    "start:demo": "yarn workspace swr-devtools-demo dev",
+    "start:dev": "yarn workspace swr-devtools start",
+    "start": "run-p -l start:*"
+  },
+  "repository": "ssh://git@github.com/koba04/swr-devtools.git",
+  "author": "Toru Kobayashi <koba0004@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "npm-run-all": "^4.1.5"
+  }
+}
