@@ -1,6 +1,5 @@
 import React from "react";
 import * as CSS from "csstype";
-import { CacheInterface } from "swr";
 import { useSWRCache } from "./cache";
 
 const style: CSS.Properties = {
@@ -30,7 +29,7 @@ const DataPanel = () => {
   );
 };
 
-export const SWRDevTools = ({ cache }: { cache: CacheInterface }) => {
+export const SWRDevTools = () => {
   return (
     <div style={style}>
       <DataPanel />
