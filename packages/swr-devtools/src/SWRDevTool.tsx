@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import * as CSS from "csstype";
 import { CacheInterface } from "swr";
-
+import { useSWRCache } from "./cache";
 
 const style: CSS.Properties = {
   position: 'fixed',
@@ -12,23 +12,29 @@ const style: CSS.Properties = {
   backgroundColor: '#EEE',
 }
 
-export const SWRDevTools = ({ cache }: { cache: CacheInterface }) => {
-  const [cacheData, setCacheData] = useState<Array<{ key: string, data : object }>>([]);
-  useEffect(() => {
-    cache.subscribe(() => {
-      // validating@{key} is a key for the validating status corresponding with the key
-      // err@{key} is a key for the error that corresponding with the key
-      setCacheData(cache.keys().map(key => ({ key, data: cache.get(key)})))
-    })
-  }, [cache]);
+const DataPanel = () => {
+  const cacheData = useSWRCache()
+  return (
+    <ul>
+      {cacheData.map(({ key, data, timestampString, isValidating, error }) => (
+        <li key={key}>
+          {key} ({timestampString})
+          <ul>
+            <li>data: {JSON.stringify(data)}</li>
+            <li>isValidating: {isValidating.toString()}</li>
+            <li>error: {error || 'null'}</li>
+          </ul>
+        </li>
+      ))}
+    </ul>
+  )
+}
 
+export const SWRDevTools = ({ cache }: { cache: CacheInterface }) => {
   return (
     <div style={style}>
-      <ul>
-      {cacheData.map(({ key, data }) => (
-        <li key={key}>[{key}]: {JSON.stringify(data)}</li>
-      ))}
-      </ul>
+      <DataPanel />
     </div>
   )
+
 }
