@@ -1,1 +1,1 @@
-export { SWRDevTools } from "./SWRDevTool"
+export { SWRDevTools } from "./SWRDevTool";

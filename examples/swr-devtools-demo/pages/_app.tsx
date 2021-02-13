@@ -1,5 +1,5 @@
-import '../styles/globals.css'
-import { SWRDevTools } from "swr-devtools"
+import "../styles/globals.css";
+import { SWRDevTools } from "swr-devtools";
 import { cache } from "swr";
 
 function MyApp({ Component, pageProps }) {
@@ -11,4 +11,4 @@ function MyApp({ Component, pageProps }) {
   );
 }
 
-export default MyApp
+export default MyApp;

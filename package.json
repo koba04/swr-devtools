@@ -9,12 +9,16 @@
   "scripts": {
     "start:demo": "yarn workspace swr-devtools-demo dev",
     "start:dev": "yarn workspace swr-devtools start",
-    "start": "run-p -l start:*"
+    "start": "run-p -l start:*",
+    "lint": "eslint '**/pages/**/*' '**/src/**/*'"
   },
   "repository": "ssh://git@github.com/koba04/swr-devtools.git",
   "author": "Toru Kobayashi <koba0004@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "npm-run-all": "^4.1.5"
+    "@cybozu/eslint-config": "^11.0.4",
+    "eslint": "^7.20.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.2.1"
   }
 }

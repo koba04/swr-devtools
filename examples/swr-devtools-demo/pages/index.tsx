@@ -1,7 +1,7 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import Head from "next/head";
+import styles from "../styles/Home.module.css";
 import useSWR from "swr";
-import { useEffect } from 'react';
+import { useEffect } from "react";
 
 export default function Home() {
   const { data, mutate } = useSWR("/api/hello");
@@ -10,9 +10,9 @@ export default function Home() {
   useEffect(() => {
     const timerId = setInterval(() => {
       mutate();
-    }, 5000)
-    return () => clearInterval(timerId)
-  }, [])
+    }, 5000);
+    return () => clearInterval(timerId);
+  }, [mutate]);
 
   return (
     <div className={styles.container}>
@@ -27,13 +27,12 @@ export default function Home() {
         </h1>
 
         <h2>SWR</h2>
-        <div>{data ? data.name : '...loading'}</div>
-        <div>{data2 ? data2.name : '...loading'}</div>
-
+        <div>{data ? data.name : "...loading"}</div>
+        <div>{data2 ? data2.name : "...loading"}</div>
       </main>
       <footer>
         <p>SWR DevTools</p>
       </footer>
     </div>
-  )
+  );
 }

@@ -4,16 +4,16 @@ import { CacheInterface } from "swr";
 import { useSWRCache } from "./cache";
 
 const style: CSS.Properties = {
-  position: 'fixed',
+  position: "fixed",
   bottom: 0,
-  width: '100%',
-  height: '200px',
+  width: "100%",
+  height: "200px",
   opacity: 0.5,
-  backgroundColor: '#EEE',
-}
+  backgroundColor: "#EEE",
+};
 
 const DataPanel = () => {
-  const cacheData = useSWRCache()
+  const cacheData = useSWRCache();
   return (
     <ul>
       {cacheData.map(({ key, data, timestampString, isValidating, error }) => (
@@ -22,19 +22,18 @@ const DataPanel = () => {
           <ul>
             <li>data: {JSON.stringify(data)}</li>
             <li>isValidating: {isValidating.toString()}</li>
-            <li>error: {error || 'null'}</li>
+            <li>error: {error || "null"}</li>
           </ul>
         </li>
       ))}
     </ul>
-  )
-}
+  );
+};
 
 export const SWRDevTools = ({ cache }: { cache: CacheInterface }) => {
   return (
     <div style={style}>
       <DataPanel />
     </div>
-  )
-
-}
+  );
+};
