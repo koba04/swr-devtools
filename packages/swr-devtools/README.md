@@ -21,7 +21,7 @@ import { SWRDevTools } from "swr-devtools";
 const App = () => (
     <>
       <MainApp />
-      <SWRDevTools>
+      <SWRDevTools />
     </>
 )
 ```
