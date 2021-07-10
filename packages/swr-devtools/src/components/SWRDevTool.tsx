@@ -24,7 +24,8 @@ const currentTabStyle: CSS.Properties = {
   width: "100%",
   height: "100%",
   border: "none",
-  borderBottom: "solid 2px red",
+  borderBottom: "solid 2px #BBB",
+  backgroundColor: "#DDD",
 };
 
 const Tab = ({
@@ -57,7 +58,9 @@ const tabGroupStyle: CSS.Properties = {
   paddingInlineStart: "0",
 };
 
-type Panel = { label: string; key: "current" | "logs" };
+export type PanelType = "current" | "logs";
+
+type Panel = { label: string; key: PanelType };
 
 const panels: Panel[] = [
   {
@@ -98,8 +101,10 @@ export const SWRDevTools = () => {
   return (
     <div style={devToolWindowStyle}>
       <TabGroup tabs={panels} current={activePanel} onChange={setActivePanel} />
-      {activePanel === "current" && <Panel data={latestCache} />}
-      {activePanel === "logs" && <Panel data={cacheLogs} />}
+      {activePanel === "current" && (
+        <Panel data={latestCache} type={activePanel} />
+      )}
+      {activePanel === "logs" && <Panel data={cacheLogs} type={activePanel} />}
     </div>
   );
 };

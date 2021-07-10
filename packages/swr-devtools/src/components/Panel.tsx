@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import * as CSS from "csstype";
 import { CacheData } from "../cache";
+import { PanelType } from "./SWRDevTool";
 
 const panelStyle: CSS.Properties = {
   display: "flex",
@@ -39,18 +40,35 @@ const panelTitleStyle: CSS.Properties = {
   margin: "5px",
 };
 
-export const Panel = ({ data: cacheData }: { data: CacheData[] }) => {
-  const [selectedItemKey, setSelectedItemKey] = useState<string | null>(null);
+export const Panel = ({
+  data: cacheData,
+  type,
+}: {
+  data: CacheData[];
+  type: PanelType;
+}) => {
+  const [selectedItemKey, setSelectedItemKey] = useState<{
+    key: string;
+    timestamp: Date;
+  } | null>(null);
+  const currentData =
+    selectedItemKey &&
+    cacheData.find(
+      (c) =>
+        c.key === selectedItemKey.key &&
+        (type === "current" || c.timestamp === selectedItemKey.timestamp)
+    );
   return (
     <section style={panelStyle}>
       <div style={panelItemStyle}>
         <h3 style={panelTitleStyle}>Keys</h3>
         <ul style={logsStyle}>
-          {cacheData.map(({ id, key, timestampString }) => (
+          {cacheData.map(({ id, key, timestampString, timestamp }) => (
             <li
               key={id}
               style={
-                selectedItemKey === key
+                selectedItemKey?.key === key &&
+                (type === "current" || selectedItemKey?.timestamp === timestamp)
                   ? { backgroundColor: "#DDD", padding: "0.3rem 0" }
                   : { padding: "0.3rem 0" }
               }
@@ -64,7 +82,7 @@ export const Panel = ({ data: cacheData }: { data: CacheData[] }) => {
                   background: "transparent",
                   textAlign: "left",
                 }}
-                onClick={() => setSelectedItemKey(key)}
+                onClick={() => setSelectedItemKey({ key, timestamp })}
               >
                 {key} ({timestampString})
               </button>
@@ -74,11 +92,16 @@ export const Panel = ({ data: cacheData }: { data: CacheData[] }) => {
       </div>
       <hr />
       <div style={panelItemStyle}>
-        <h3 style={panelTitleStyle}>Data</h3>
-        {selectedItemKey !== null && (
-          <CacheDetail
-            data={cacheData.find((c) => c.key === selectedItemKey)!}
-          />
+        {currentData && (
+          <>
+            <h3 style={panelTitleStyle}>
+              {currentData.key}&nbsp;
+              <span style={{ fontSize: "1rem", fontWeight: "normal" }}>
+                {currentData.timestampString}
+              </span>
+            </h3>
+            <CacheDetail data={currentData} />
+          </>
         )}
       </div>
     </section>
