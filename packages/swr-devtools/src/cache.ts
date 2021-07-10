@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { cache } from "swr";
 
-type CacheData = {
+export type CacheData = {
   id: number;
   key: string;
   data: any;
