@@ -1,0 +1,7 @@
+{
+  "name": "SWR DevTools",
+  "description": "A DevTools for SWR to inspect your SWR cache",
+  "version": "1.0",
+  "manifest_version": 3,
+  "devtools_page": "devtools.html"
+}
