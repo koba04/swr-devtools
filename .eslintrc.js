@@ -5,5 +5,6 @@ module.exports = {
   },
   env: {
     webextensions: true,
+    node: true,
   },
 };
