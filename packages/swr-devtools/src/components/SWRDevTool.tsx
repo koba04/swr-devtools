@@ -2,13 +2,18 @@ import React, { useState } from "react";
 import * as CSS from "csstype";
 import { useSWRCache } from "../cache";
 import { Panel } from "./Panel";
+import { CacheInterface } from "swr";
 
 const devToolWindowStyle: CSS.Properties = {
+  width: "100%",
+  height: "90vh",
+  backgroundColor: "#EEE",
+};
+
+const devToolFixedWindowStyle: CSS.Properties = {
   position: "fixed",
   bottom: 0,
-  width: "100%",
   height: "400px",
-  backgroundColor: "#EEE",
 };
 
 const tabStyle: CSS.Properties = {
@@ -94,12 +99,21 @@ const TabGroup = ({
   </ul>
 );
 
-export const SWRDevTools = () => {
-  const [latestCache, cacheLogs] = useSWRCache();
+type Props = {
+  cache: CacheInterface;
+  isFixedPosition?: boolean;
+};
+export const SWRDevTools = ({ cache, isFixedPosition = false }: Props) => {
+  const [latestCache, cacheLogs] = useSWRCache(cache);
   const [activePanel, setActivePanel] = useState<Panel["key"]>("current");
 
   return (
-    <div style={devToolWindowStyle}>
+    <div
+      style={{
+        ...devToolWindowStyle,
+        ...(isFixedPosition ? devToolFixedWindowStyle : {}),
+      }}
+    >
       <TabGroup tabs={panels} current={activePanel} onChange={setActivePanel} />
       {activePanel === "current" && (
         <Panel data={latestCache} type={activePanel} />

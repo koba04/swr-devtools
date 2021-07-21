@@ -1,5 +1,7 @@
 import ReactDOM from "react-dom";
+import { cache } from "swr";
+import { SWRDevTools } from "swr-devtools";
 
-const App = () => <div style={{ backgroundColor: "white"}}>Hello SWR Devtools</div>;
+const App = () => <SWRDevTools cache={cache} />;
 
 ReactDOM.render(<App />, document.getElementById("app"));
