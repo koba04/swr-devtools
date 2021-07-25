@@ -65,6 +65,6 @@ export const useSWRCache = (
       setCacheData(retrieveCache(cache));
     });
     return () => unsubscribe();
-  }, []);
+  }, [cache]);
   return cacheData;
 };

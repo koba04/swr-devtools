@@ -7,7 +7,9 @@ import { CacheInterface } from "swr";
 const devToolWindowStyle: CSS.Properties = {
   width: "100%",
   height: "90vh",
-  backgroundColor: "#EEE",
+  backgroundColor: "#FFF",
+  margin: 0,
+  padding: 0,
 };
 
 const devToolFixedWindowStyle: CSS.Properties = {
@@ -57,7 +59,6 @@ const tabGroupStyle: CSS.Properties = {
   display: "flex",
   justifyContent: "space-around",
   borderBottom: "solid 1px #CCC",
-  marginTop: "3px",
   marginBottom: "3px",
   listStyle: "none",
   paddingInlineStart: "0",

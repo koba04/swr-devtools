@@ -1,3 +1,1 @@
-chrome.devtools.panels.create("SWR DevTools", "", "panel.html", () => {
-  /* noop */
-});
+chrome.devtools.panels.create("SWR DevTools", "", "panel.html");
