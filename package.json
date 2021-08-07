@@ -9,6 +9,7 @@
   "scripts": {
     "start:demo": "yarn workspace swr-devtools-demo dev",
     "start:dev": "yarn workspace swr-devtools start",
+    "start:extensions": "yarn workspace swr-devtools-extentions start",
     "start": "run-p -l start:*",
     "lint": "eslint '**/pages/**/*' '**/src/**/*'"
   },

@@ -22,10 +22,7 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
+        <h1 className={styles.title}>Welcome to Next.js!</h1>
         <h2>SWR</h2>
         <div>{data ? data.name : "...loading"}</div>
         <div>{data2 ? data2.name : "...loading"}</div>

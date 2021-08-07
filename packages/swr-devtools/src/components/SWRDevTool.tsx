@@ -70,7 +70,7 @@ type Panel = { label: string; key: PanelType };
 
 const panels: Panel[] = [
   {
-    label: "Current Cache",
+    label: "Current Cache!",
     key: "current",
   },
   {

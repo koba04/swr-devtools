@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Suspense, useState, lazy } from "react";
 import * as CSS from "csstype";
 import { CacheData } from "../cache";
 import { PanelType } from "./SWRDevTool";
@@ -24,9 +24,26 @@ const logLineStyle: CSS.Properties = {
   height: "100%",
 };
 
+const AsyncReactJson = ({ data }: { data: any }) => {
+  const ReactJson = lazy(() => import("react-json-view"));
+  return <ReactJson src={data} />;
+};
+
+const CacheDataView = ({ data }: { data: any }) => {
+  if (typeof window === "undefined") return null;
+  return (
+    <Suspense fallback="loading">
+      <AsyncReactJson data={data} />
+    </Suspense>
+  );
+};
+
 const CacheDetail = ({ data }: { data: CacheData }) => (
   <ul style={logLineStyle}>
-    <li>data: {JSON.stringify(data.data)}</li>
+    <li>
+      data:
+      <CacheDataView data={data.data} />
+    </li>
     <li>isValidating: {data.isValidating.toString()}</li>
     <li>error: {data.error || "null"}</li>
   </ul>

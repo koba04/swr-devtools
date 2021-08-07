@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@types/react": "^17.0.1",
-    "csstype": "^3.0.6"
+    "csstype": "^3.0.6",
+    "react-json-view": "^1.21.3"
   }
 }
