@@ -2,8 +2,11 @@
   "name": "SWR DevTools",
   "description": "A DevTools for SWR to inspect your SWR cache",
   "version": "1.0",
-  "manifest_version": 3,
+  "manifest_version": 2,
   "devtools_page": "devtools.html",
+  "background": {
+    "scripts": ["background.js"]
+  },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
@@ -11,13 +14,7 @@
       "run_at": "document_start"
     }
   ],
-  "host_permissions": [
-    "*://*/*"
-  ],
   "web_accessible_resources": [
-    {
-      "matches": ["<all_urls>"],
-      "resources": ["runtime.js"]
-    }
+    "runtime.js"
   ]
 }

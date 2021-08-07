@@ -4,8 +4,11 @@ script.src = chrome.runtime.getURL("runtime.js");
 document.documentElement.appendChild(script);
 script.parentNode.removeChild(script);
 
+// proxy messages from applications to a background script
+const port = chrome.runtime.connect({ name: "content" });
 window.addEventListener("message", (e) => {
-  console.log("received", e);
-  // send the data to the devtools_pages through a background script
-  // https://developer.chrome.com/docs/extensions/mv3/devtools/#content-script-to-devtools
+  if (e.data?.cacheData) {
+    // console.log("received", e.data.cacheData);
+    port.postMessage(e.data.cacheData);
+  }
 });
