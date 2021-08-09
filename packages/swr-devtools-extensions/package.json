@@ -11,7 +11,6 @@
     "build": "run-s build:webpack build:zip",
     "clean": "rm -rf dist/",
     "lint": "tsc --noEmit",
-    "prestart": "yarn clean",
     "start": "webpack --mode development --watch"
   },
   "devDependencies": {
