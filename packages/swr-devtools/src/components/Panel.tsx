@@ -1,67 +1,15 @@
-import React, { Suspense, useState, lazy } from "react";
-import * as CSS from "csstype";
-import { CacheData } from "../cache";
+import React, { useState } from "react";
+import styled from "styled-components";
+
+import { SWRCacheData } from "../cache";
 import { PanelType } from "./SWRDevTool";
-
-const panelStyle: CSS.Properties = {
-  display: "flex",
-  justifyContent: "space-around",
-  padding: "0",
-  height: "100%",
-};
-
-const logsStyle: CSS.Properties = {
-  overflow: "scroll",
-  overflowY: "scroll",
-  height: "100%",
-  margin: "0",
-  listStyle: "none",
-  paddingInlineStart: "0",
-};
-
-const logLineStyle: CSS.Properties = {
-  borderBottom: "solid 1px #CCC",
-  fontSize: "1rem",
-  height: "100%",
-  margin: 0,
-  padding: "0 0.3rem",
-};
-
-const AsyncReactJson = ({ data }: { data: any }) => {
-  const ReactJson = lazy(() => import("react-json-view"));
-  return <ReactJson src={data} />;
-};
-
-const CacheDataView = ({ data }: { data: any }) => {
-  if (typeof window === "undefined") return null;
-  return (
-    <Suspense fallback="loading">
-      <AsyncReactJson data={data} />
-    </Suspense>
-  );
-};
-
-const CacheDetail = ({ data }: { data: CacheData }) => (
-  <div style={logLineStyle}>
-    <CacheDataView data={data.data} />
-    {data.error && <p style={{ color: "red" }}>{data.error}</p>}
-  </div>
-);
-
-const panelItemStyle: CSS.Properties = {
-  flex: 1,
-};
-
-const panelTitleStyle: CSS.Properties = {
-  margin: 0,
-  padding: "1rem 0.5rem",
-};
+import { CacheData } from "./CacheData";
 
 export const Panel = ({
   data: cacheData,
   type,
 }: {
-  data: CacheData[];
+  data: SWRCacheData[];
   type: PanelType;
 }) => {
   const [selectedItemKey, setSelectedItemKey] = useState<{
@@ -76,54 +24,85 @@ export const Panel = ({
         (type === "current" || c.timestamp === selectedItemKey.timestamp)
     );
   return (
-    <section style={panelStyle}>
-      <div style={panelItemStyle}>
-        <ul style={logsStyle}>
+    <PanelWrapper>
+      <PanelItem>
+        <CacheItems>
           {cacheData.map(({ id, key, timestampString, timestamp }) => (
-            <li
+            <CacheItem
               key={id}
-              style={
+              isSelected={
                 selectedItemKey?.key === key &&
                 (type === "current" || selectedItemKey?.timestamp === timestamp)
-                  ? {
-                      backgroundColor: "#F7F5F4",
-                      padding: "0.3rem 0",
-                      borderBottom: "solid 1px #DDD",
-                    }
-                  : { padding: "0.3rem 0", borderBottom: "solid 1px #DDD" }
               }
             >
-              <button
-                style={{
-                  display: "inline-block",
-                  width: "100%",
-                  height: "100%",
-                  border: "none",
-                  background: "transparent",
-                  textAlign: "left",
-                }}
+              <CacheItemButton
                 onClick={() => setSelectedItemKey({ key, timestamp })}
               >
                 {key} ({timestampString})
-              </button>
-            </li>
+              </CacheItemButton>
+            </CacheItem>
           ))}
-        </ul>
-      </div>
+        </CacheItems>
+      </PanelItem>
       <hr />
-      <div style={panelItemStyle}>
+      <PanelItem>
         {currentData && (
           <>
-            <h3 style={panelTitleStyle}>
+            <PanelDataTitle>
               {currentData.key}&nbsp;
               <span style={{ fontSize: "1rem", fontWeight: "normal" }}>
                 {currentData.timestampString}
               </span>
-            </h3>
-            <CacheDetail data={currentData} />
+            </PanelDataTitle>
+            <CacheData data={currentData} />
           </>
         )}
-      </div>
-    </section>
+      </PanelItem>
+    </PanelWrapper>
   );
 };
+
+const PanelWrapper = styled.section`
+  display: flex;
+  justify-content: space-around;
+  padding: 0;
+  height: 100%;
+  border-top: solid 1px #ccc;
+`;
+
+const PanelItem = styled.div`
+  flex: 1;
+`;
+
+const CacheItems = styled.ul`
+  overflow: scroll;
+  overflow-y: scroll;
+  height: 100%;
+  margin: 0;
+  list-style: none;
+  padding-inline-start: 0;
+`;
+
+const CacheItem = styled.li<{ isSelected: boolean }>`
+  padding: 0.3rem 0;
+  border-bottom: solid 1px #ddd;
+  background-color: ${(props) => (props.isSelected ? "#e6e0dd" : "none")};
+  &:hover {
+    background-color: #f7f5f4;
+  }
+`;
+
+const CacheItemButton = styled.button`
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+`;
+
+const PanelDataTitle = styled.h3`
+  margin: 0;
+  padding: 1rem 0.5rem;
+`;

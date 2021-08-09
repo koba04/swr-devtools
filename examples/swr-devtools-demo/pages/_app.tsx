@@ -8,11 +8,24 @@ if (typeof window !== "undefined") {
   globalThis.__SWR_DEVTOOLS__?.launch(cache);
 }
 
+const DevToolsArea = () => (
+  <div
+    style={{
+      position: "fixed",
+      bottom: 0,
+      width: "100%",
+      height: "400px",
+    }}
+  >
+    <SWRDevTools cache={cache} />
+  </div>
+);
+
 function MyApp({ Component, pageProps }) {
   return (
     <>
       <Component {...pageProps} />
-      <SWRDevTools cache={cache} isFixedPosition />
+      <DevToolsArea />
     </>
   );
 }
