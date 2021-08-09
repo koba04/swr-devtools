@@ -25,19 +25,34 @@ type Props = {
   isFixedPosition?: boolean;
 };
 
+export type ItemKey = {
+  key: string;
+  timestamp: Date;
+};
+
 export const SWRDevTools = ({ cache }: Props) => {
   const [latestCache, cacheLogs] = useSWRCache(cache);
   const [activePanel, setActivePanel] = useState<Panel["key"]>("current");
+  const [selectedItemKey, setSelectedItemKey] = useState<ItemKey | null>(null);
   return (
     <DevToolWindow>
       <Header>
         <HeaderTitle>SWR</HeaderTitle>
-        <Tab panels={panels} current={activePanel} onChange={setActivePanel} />
+        <Tab
+          panels={panels}
+          current={activePanel}
+          onChange={(panel: PanelType) => {
+            setActivePanel(panel);
+            setSelectedItemKey(null);
+          }}
+        />
       </Header>
       <PanelWrapper>
         <Panel
           data={activePanel === "logs" ? cacheLogs : latestCache}
           type={activePanel}
+          selectedItemKey={selectedItemKey}
+          onSelectItem={setSelectedItemKey}
         />
       </PanelWrapper>
     </DevToolWindow>

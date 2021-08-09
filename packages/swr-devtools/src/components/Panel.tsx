@@ -2,20 +2,20 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 import { SWRCacheData } from "../cache";
-import { PanelType } from "./SWRDevTool";
+import { PanelType, ItemKey } from "./SWRDevTool";
 import { CacheData } from "./CacheData";
 
 export const Panel = ({
   data: cacheData,
   type,
+  selectedItemKey,
+  onSelectItem,
 }: {
   data: SWRCacheData[];
   type: PanelType;
+  selectedItemKey: ItemKey | null;
+  onSelectItem: (itemKey: ItemKey) => void;
 }) => {
-  const [selectedItemKey, setSelectedItemKey] = useState<{
-    key: string;
-    timestamp: Date;
-  } | null>(null);
   const currentData =
     selectedItemKey &&
     cacheData.find(
@@ -35,9 +35,7 @@ export const Panel = ({
                 (type === "current" || selectedItemKey?.timestamp === timestamp)
               }
             >
-              <CacheItemButton
-                onClick={() => setSelectedItemKey({ key, timestamp })}
-              >
+              <CacheItemButton onClick={() => onSelectItem({ key, timestamp })}>
                 {key} ({timestampString})
               </CacheItemButton>
             </CacheItem>
