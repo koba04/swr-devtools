@@ -8,6 +8,7 @@ const devToolWindowStyle: CSS.Properties = {
   width: "100%",
   height: "90vh",
   backgroundColor: "#FFF",
+  border: "solid 1px #CCC",
   margin: 0,
   padding: 0,
 };
@@ -18,21 +19,25 @@ const devToolFixedWindowStyle: CSS.Properties = {
   height: "400px",
 };
 
-const tabStyle: CSS.Properties = {
+const baseTabStyle: CSS.Properties = {
   display: "inline-block",
   width: "100%",
   height: "100%",
-  border: "none",
+  border: "0",
+  backgroundColor: "#FFF",
+  padding: "0.5rem 1.5rem",
+  cursor: "pointer",
+};
+
+const tabStyle: CSS.Properties = {
+  ...baseTabStyle,
   borderBottom: "none",
 };
 
 const currentTabStyle: CSS.Properties = {
-  display: "inline-block",
-  width: "100%",
-  height: "100%",
-  border: "none",
+  ...baseTabStyle,
   borderBottom: "solid 2px #BBB",
-  backgroundColor: "#DDD",
+  backgroundColor: "#F7F5F4",
 };
 
 const Tab = ({
@@ -44,7 +49,7 @@ const Tab = ({
   current: boolean;
   onChange: () => void;
 }) => (
-  <li style={{ width: "100%", height: "44px" }}>
+  <li style={{}}>
     <button
       type="button"
       onClick={onChange}
@@ -57,9 +62,9 @@ const Tab = ({
 
 const tabGroupStyle: CSS.Properties = {
   display: "flex",
-  justifyContent: "space-around",
+  //  justifyContent: "space-around",
   borderBottom: "solid 1px #CCC",
-  marginBottom: "3px",
+  margin: 0,
   listStyle: "none",
   paddingInlineStart: "0",
 };
@@ -70,11 +75,11 @@ type Panel = { label: string; key: PanelType };
 
 const panels: Panel[] = [
   {
-    label: "Current Cache!",
+    label: "Cache",
     key: "current",
   },
   {
-    label: "Cache Logs",
+    label: "History",
     key: "logs",
   },
 ];
@@ -115,6 +120,9 @@ export const SWRDevTools = ({ cache, isFixedPosition = false }: Props) => {
         ...(isFixedPosition ? devToolFixedWindowStyle : {}),
       }}
     >
+      <h3 style={{ position: "absolute", margin: 0, bottom: "0", right: 10 }}>
+        SWR Cache
+      </h3>
       <TabGroup tabs={panels} current={activePanel} onChange={setActivePanel} />
       {activePanel === "current" && (
         <Panel data={latestCache} type={activePanel} />
