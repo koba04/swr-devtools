@@ -16,8 +16,11 @@ const formatTime = (date: Date) =>
     date.getMinutes()
   ).padStart(2, "0")}:${String(date.getSeconds()).padStart(2, "0")}`;
 
-const cacheLogsStore = new Set<any>();
-const latestCacheStore = new Map<any, any>();
+const cacheHistory = new Map<string, any>();
+const proccessedCacheData = new Map<any, any>();
+
+const getCacheHistoryKey = (key: string, timestamp: Date) =>
+  `${key}__${timestamp.getTime()}`;
 
 let id = 1;
 
@@ -30,15 +33,11 @@ const retrieveCache = (
     .filter((key) => !key.startsWith("validating@") && !key.startsWith("err@"))
     .map((key) => {
       const data = cache.get(key);
-      const devToolsCache = latestCacheStore.get(data);
-      if (devToolsCache) {
-        return devToolsCache;
-      }
 
       const isValidating = cache.get(`validating@${key}`);
       const error = cache.get(`err@${key}`);
       ++id;
-      const cacheData = {
+      const cacheData = proccessedCacheData.get(data) || {
         id,
         key,
         data,
@@ -47,11 +46,14 @@ const retrieveCache = (
         timestamp: date,
         timestampString: formatTime(date),
       };
-      latestCacheStore.set(data, cacheData);
-      cacheLogsStore.add(cacheData);
+      proccessedCacheData.set(data, cacheData);
+      const cacheHistoryKey = getCacheHistoryKey(key, cacheData.timestamp);
+      if (!cacheHistory.get(cacheHistoryKey)) {
+        cacheHistory.set(cacheHistoryKey, cacheData);
+      }
       return cacheData;
     });
-  return [retrieveCacheData, Array.from(cacheLogsStore).reverse()];
+  return [retrieveCacheData, Array.from(cacheHistory.values()).reverse()];
 };
 
 export const useSWRCache = (

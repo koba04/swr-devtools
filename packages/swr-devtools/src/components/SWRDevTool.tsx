@@ -57,7 +57,8 @@ const DevToolWindow = styled.div`
 
 const Header = styled.header`
   display: flex;
-  gap: 10;
+  /* TODO: stop using the fixed size */
+  height: 40px;
 `;
 
 const HeaderTitle = styled.h3`
@@ -68,6 +69,6 @@ const HeaderTitle = styled.h3`
 
 const PanelWrapper = styled.div`
   position: relative;
-  flex-grow: 1;
+  height: calc(100% - 40px);
   width: 100%;
 `;

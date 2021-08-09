@@ -72,12 +72,10 @@ const PanelWrapper = styled.section`
 
 const PanelItem = styled.div`
   flex: 1;
+  overflow: scroll;
 `;
 
 const CacheItems = styled.ul`
-  overflow: scroll;
-  overflow-y: scroll;
-  height: 100%;
   margin: 0;
   list-style: none;
   padding-inline-start: 0;
