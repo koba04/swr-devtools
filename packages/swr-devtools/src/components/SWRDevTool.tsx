@@ -6,9 +6,11 @@ import { CacheInterface } from "swr";
 
 const devToolWindowStyle: CSS.Properties = {
   width: "100%",
-  height: "90vh",
+  height: "100%",
+  display: "flex",
+  flexDirection: "column",
   backgroundColor: "#FFF",
-  border: "solid 1px #CCC",
+  borderTop: "solid 1px #CCC",
   margin: 0,
   padding: 0,
 };
@@ -120,14 +122,30 @@ export const SWRDevTools = ({ cache, isFixedPosition = false }: Props) => {
         ...(isFixedPosition ? devToolFixedWindowStyle : {}),
       }}
     >
-      <h3 style={{ position: "absolute", margin: 0, bottom: "0", right: 10 }}>
-        SWR Cache
-      </h3>
-      <TabGroup tabs={panels} current={activePanel} onChange={setActivePanel} />
-      {activePanel === "current" && (
-        <Panel data={latestCache} type={activePanel} />
-      )}
-      {activePanel === "logs" && <Panel data={cacheLogs} type={activePanel} />}
+      <header style={{ display: "flex", gap: 10 }}>
+        <h3 style={{ margin: 0, padding: "0.2rem", alignSelf: "center" }}>
+          SWR
+        </h3>
+        <TabGroup
+          tabs={panels}
+          current={activePanel}
+          onChange={setActivePanel}
+        />
+      </header>
+      <div
+        style={{
+          position: "relative",
+          flexGrow: 1,
+          width: "100%",
+        }}
+      >
+        {activePanel === "current" && (
+          <Panel data={latestCache} type={activePanel} />
+        )}
+        {activePanel === "logs" && (
+          <Panel data={cacheLogs} type={activePanel} />
+        )}
+      </div>
     </div>
   );
 };

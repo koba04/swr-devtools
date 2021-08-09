@@ -11,7 +11,9 @@
     "start:dev": "yarn workspace swr-devtools start",
     "start:extensions": "yarn workspace swr-devtools-extentions start",
     "start": "run-p -l start:*",
-    "lint": "eslint '**/pages/**/*' '**/src/**/*'"
+    "lint:eslint": "eslint '**/pages/**/*' '**/src/**/*'",
+    "lint:tsc": "yarn workspaces run lint",
+    "lint": "run-p -l lint:*"
   },
   "repository": "ssh://git@github.com/koba04/swr-devtools.git",
   "author": "Toru Kobayashi <koba0004@gmail.com>",
