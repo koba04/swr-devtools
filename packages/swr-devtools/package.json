@@ -5,6 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "tsc --watch",
+    "build": "tsc",
     "lint": "tsc --noEmit"
   },
   "peerDependencies": {

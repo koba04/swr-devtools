@@ -6,7 +6,7 @@ import { useSWRCache } from "../cache";
 import { Panel } from "./Panel";
 import { Tab } from "./Tab";
 
-export type PanelType = "current" | "logs";
+export type PanelType = "current" | "history";
 export type Panel = { label: string; key: PanelType };
 
 const panels: Panel[] = [
@@ -16,7 +16,7 @@ const panels: Panel[] = [
   },
   {
     label: "History",
-    key: "logs",
+    key: "history",
   },
 ];
 
@@ -31,7 +31,7 @@ export type ItemKey = {
 };
 
 export const SWRDevTools = ({ cache }: Props) => {
-  const [latestCache, cacheLogs] = useSWRCache(cache);
+  const [currentCache, historyCache] = useSWRCache(cache);
   const [activePanel, setActivePanel] = useState<Panel["key"]>("current");
   const [selectedItemKey, setSelectedItemKey] = useState<ItemKey | null>(null);
   return (
@@ -49,7 +49,7 @@ export const SWRDevTools = ({ cache }: Props) => {
       </Header>
       <PanelWrapper>
         <Panel
-          data={activePanel === "logs" ? cacheLogs : latestCache}
+          data={activePanel === "history" ? historyCache : currentCache}
           type={activePanel}
           selectedItemKey={selectedItemKey}
           onSelectItem={setSelectedItemKey}
