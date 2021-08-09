@@ -2,30 +2,44 @@ import React, { useState } from "react";
 import * as CSS from "csstype";
 import { useSWRCache } from "../cache";
 import { Panel } from "./Panel";
+import { CacheInterface } from "swr";
 
 const devToolWindowStyle: CSS.Properties = {
-  position: "fixed",
-  bottom: 0,
   width: "100%",
-  height: "400px",
-  backgroundColor: "#EEE",
+  height: "100%",
+  display: "flex",
+  flexDirection: "column",
+  backgroundColor: "#FFF",
+  borderTop: "solid 1px #CCC",
+  margin: 0,
+  padding: 0,
 };
 
-const tabStyle: CSS.Properties = {
+const devToolFixedWindowStyle: CSS.Properties = {
+  position: "fixed",
+  bottom: 0,
+  height: "400px",
+};
+
+const baseTabStyle: CSS.Properties = {
   display: "inline-block",
   width: "100%",
   height: "100%",
-  border: "none",
+  border: "0",
+  backgroundColor: "#FFF",
+  padding: "0.5rem 1.5rem",
+  cursor: "pointer",
+};
+
+const tabStyle: CSS.Properties = {
+  ...baseTabStyle,
   borderBottom: "none",
 };
 
 const currentTabStyle: CSS.Properties = {
-  display: "inline-block",
-  width: "100%",
-  height: "100%",
-  border: "none",
+  ...baseTabStyle,
   borderBottom: "solid 2px #BBB",
-  backgroundColor: "#DDD",
+  backgroundColor: "#F7F5F4",
 };
 
 const Tab = ({
@@ -37,7 +51,7 @@ const Tab = ({
   current: boolean;
   onChange: () => void;
 }) => (
-  <li style={{ width: "100%", height: "44px" }}>
+  <li style={{}}>
     <button
       type="button"
       onClick={onChange}
@@ -50,10 +64,9 @@ const Tab = ({
 
 const tabGroupStyle: CSS.Properties = {
   display: "flex",
-  justifyContent: "space-around",
+  //  justifyContent: "space-around",
   borderBottom: "solid 1px #CCC",
-  marginTop: "3px",
-  marginBottom: "3px",
+  margin: 0,
   listStyle: "none",
   paddingInlineStart: "0",
 };
@@ -64,11 +77,11 @@ type Panel = { label: string; key: PanelType };
 
 const panels: Panel[] = [
   {
-    label: "Current Cache",
+    label: "Cache",
     key: "current",
   },
   {
-    label: "Cache Logs",
+    label: "History",
     key: "logs",
   },
 ];
@@ -94,17 +107,45 @@ const TabGroup = ({
   </ul>
 );
 
-export const SWRDevTools = () => {
-  const [latestCache, cacheLogs] = useSWRCache();
+type Props = {
+  cache: CacheInterface;
+  isFixedPosition?: boolean;
+};
+export const SWRDevTools = ({ cache, isFixedPosition = false }: Props) => {
+  const [latestCache, cacheLogs] = useSWRCache(cache);
   const [activePanel, setActivePanel] = useState<Panel["key"]>("current");
 
   return (
-    <div style={devToolWindowStyle}>
-      <TabGroup tabs={panels} current={activePanel} onChange={setActivePanel} />
-      {activePanel === "current" && (
-        <Panel data={latestCache} type={activePanel} />
-      )}
-      {activePanel === "logs" && <Panel data={cacheLogs} type={activePanel} />}
+    <div
+      style={{
+        ...devToolWindowStyle,
+        ...(isFixedPosition ? devToolFixedWindowStyle : {}),
+      }}
+    >
+      <header style={{ display: "flex", gap: 10 }}>
+        <h3 style={{ margin: 0, padding: "0.2rem", alignSelf: "center" }}>
+          SWR
+        </h3>
+        <TabGroup
+          tabs={panels}
+          current={activePanel}
+          onChange={setActivePanel}
+        />
+      </header>
+      <div
+        style={{
+          position: "relative",
+          flexGrow: 1,
+          width: "100%",
+        }}
+      >
+        {activePanel === "current" && (
+          <Panel data={latestCache} type={activePanel} />
+        )}
+        {activePanel === "logs" && (
+          <Panel data={cacheLogs} type={activePanel} />
+        )}
+      </div>
     </div>
   );
 };

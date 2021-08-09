@@ -1,0 +1,20 @@
+{
+  "name": "SWR DevTools",
+  "description": "A DevTools for SWR to inspect your SWR cache",
+  "version": "1.0",
+  "manifest_version": 2,
+  "devtools_page": "devtools.html",
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    "runtime.js"
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "name": "swr-devtools-extentions",
+  "private": "true",
+  "version": "0.1.0",
+  "main": "lib/index.js",
+  "license": "MIT",
+  "scripts": {
+    "prebuild": "yarn clean",
+    "build:zip": "zip -r extension.zip dist/",
+    "build:webpack": "webpack --mode production",
+    "build": "run-s build:webpack build:zip",
+    "clean": "rm -rf dist/",
+    "lint": "tsc --noEmit",
+    "start": "webpack --mode development --watch"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.0.154",
+    "@types/react": "^17.0.14",
+    "@types/react-dom": "^17.0.9",
+    "copy-webpack-plugin": "^9.0.1",
+    "ts-loader": "^9.2.3",
+    "typescript": "^4.3.5",
+    "webpack": "^5.45.1",
+    "webpack-cli": "^4.7.2"
+  },
+  "dependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "swr": "^0.5.6",
+    "swr-devtools": "0.1.0"
+  }
+}

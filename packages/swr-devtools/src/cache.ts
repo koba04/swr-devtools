@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { cache } from "swr";
+import { CacheInterface } from "swr";
 
 export type CacheData = {
   id: number;
@@ -21,7 +21,7 @@ const latestCacheStore = new Map<any, any>();
 
 let id = 1;
 
-const retrieveCache = (): [CacheData[], CacheData[]] => {
+const retrieveCache = (cache: CacheInterface): [CacheData[], CacheData[]] => {
   const date = new Date();
   const retrieveCacheData = cache
     .keys()
@@ -52,7 +52,9 @@ const retrieveCache = (): [CacheData[], CacheData[]] => {
   return [retrieveCacheData, Array.from(cacheLogsStore).reverse()];
 };
 
-export const useSWRCache = (): [CacheData[], CacheData[]] => {
+export const useSWRCache = (
+  cache: CacheInterface
+): [CacheData[], CacheData[]] => {
   const [cacheData, setCacheData] = useState<[CacheData[], CacheData[]]>([
     [],
     [],
@@ -60,9 +62,9 @@ export const useSWRCache = (): [CacheData[], CacheData[]] => {
 
   useEffect(() => {
     const unsubscribe = cache.subscribe(() => {
-      setCacheData(retrieveCache());
+      setCacheData(retrieveCache(cache));
     });
     return () => unsubscribe();
-  }, []);
+  }, [cache]);
   return cacheData;
 };

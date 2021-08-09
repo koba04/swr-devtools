@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Suspense, useState, lazy } from "react";
 import * as CSS from "csstype";
 import { CacheData } from "../cache";
 import { PanelType } from "./SWRDevTool";
@@ -6,7 +6,7 @@ import { PanelType } from "./SWRDevTool";
 const panelStyle: CSS.Properties = {
   display: "flex",
   justifyContent: "space-around",
-  padding: "2px",
+  padding: "0",
   height: "100%",
 };
 
@@ -14,22 +14,38 @@ const logsStyle: CSS.Properties = {
   overflow: "scroll",
   overflowY: "scroll",
   height: "100%",
-  margin: "0.2rem",
+  margin: "0",
   listStyle: "none",
   paddingInlineStart: "0",
 };
 
 const logLineStyle: CSS.Properties = {
   borderBottom: "solid 1px #CCC",
+  fontSize: "1rem",
   height: "100%",
+  margin: 0,
+  padding: "0 0.3rem",
+};
+
+const AsyncReactJson = ({ data }: { data: any }) => {
+  const ReactJson = lazy(() => import("react-json-view"));
+  return <ReactJson src={data} />;
+};
+
+const CacheDataView = ({ data }: { data: any }) => {
+  if (typeof window === "undefined") return null;
+  return (
+    <Suspense fallback="loading">
+      <AsyncReactJson data={data} />
+    </Suspense>
+  );
 };
 
 const CacheDetail = ({ data }: { data: CacheData }) => (
-  <ul style={logLineStyle}>
-    <li>data: {JSON.stringify(data.data)}</li>
-    <li>isValidating: {data.isValidating.toString()}</li>
-    <li>error: {data.error || "null"}</li>
-  </ul>
+  <div style={logLineStyle}>
+    <CacheDataView data={data.data} />
+    {data.error && <p style={{ color: "red" }}>{data.error}</p>}
+  </div>
 );
 
 const panelItemStyle: CSS.Properties = {
@@ -37,7 +53,8 @@ const panelItemStyle: CSS.Properties = {
 };
 
 const panelTitleStyle: CSS.Properties = {
-  margin: "5px",
+  margin: 0,
+  padding: "1rem 0.5rem",
 };
 
 export const Panel = ({
@@ -61,7 +78,6 @@ export const Panel = ({
   return (
     <section style={panelStyle}>
       <div style={panelItemStyle}>
-        <h3 style={panelTitleStyle}>Keys</h3>
         <ul style={logsStyle}>
           {cacheData.map(({ id, key, timestampString, timestamp }) => (
             <li
@@ -69,8 +85,12 @@ export const Panel = ({
               style={
                 selectedItemKey?.key === key &&
                 (type === "current" || selectedItemKey?.timestamp === timestamp)
-                  ? { backgroundColor: "#DDD", padding: "0.3rem 0" }
-                  : { padding: "0.3rem 0" }
+                  ? {
+                      backgroundColor: "#F7F5F4",
+                      padding: "0.3rem 0",
+                      borderBottom: "solid 1px #DDD",
+                    }
+                  : { padding: "0.3rem 0", borderBottom: "solid 1px #DDD" }
               }
             >
               <button
