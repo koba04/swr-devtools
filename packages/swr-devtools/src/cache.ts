@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { CacheInterface } from "swr";
 
-export type CacheData = {
+export type SWRCacheData = {
   id: number;
   key: string;
   data: any;
@@ -21,7 +21,9 @@ const latestCacheStore = new Map<any, any>();
 
 let id = 1;
 
-const retrieveCache = (cache: CacheInterface): [CacheData[], CacheData[]] => {
+const retrieveCache = (
+  cache: CacheInterface
+): [SWRCacheData[], SWRCacheData[]] => {
   const date = new Date();
   const retrieveCacheData = cache
     .keys()
@@ -54,8 +56,8 @@ const retrieveCache = (cache: CacheInterface): [CacheData[], CacheData[]] => {
 
 export const useSWRCache = (
   cache: CacheInterface
-): [CacheData[], CacheData[]] => {
-  const [cacheData, setCacheData] = useState<[CacheData[], CacheData[]]>([
+): [SWRCacheData[], SWRCacheData[]] => {
+  const [cacheData, setCacheData] = useState<[SWRCacheData[], SWRCacheData[]]>([
     [],
     [],
   ]);
