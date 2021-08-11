@@ -30,7 +30,11 @@ const retrieveCache = (
   const date = new Date();
   const retrieveCacheData = cache
     .keys()
-    .filter((key) => !key.startsWith("validating@") && !key.startsWith("err@"))
+    // filter meta data in a cache store
+    // ctx and len are keys used in use-swr-infinite
+    .filter((key) => !/^(?:validating|err|ctx|len)@/.test(key))
+    // v1 (beta)
+    .filter((key) => !/^\$(?:req|err|ctx|len)\$/.test(key))
     .map((key) => {
       const data = cache.get(key);
 
@@ -53,7 +57,12 @@ const retrieveCache = (
       }
       return cacheData;
     });
-  return [retrieveCacheData, Array.from(cacheHistory.values()).reverse()];
+  return [
+    retrieveCacheData,
+    Array.from(cacheHistory.values())
+      .sort((a, b) => a.timestamp - b.timestamp)
+      .reverse(),
+  ];
 };
 
 export const useSWRCache = (
