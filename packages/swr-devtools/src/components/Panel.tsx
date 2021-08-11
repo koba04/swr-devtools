@@ -48,9 +48,7 @@ export const Panel = ({
           <>
             <PanelDataTitle>
               {currentData.key}&nbsp;
-              <span style={{ fontSize: "1rem", fontWeight: "normal" }}>
-                {currentData.timestampString}
-              </span>
+              <TimestampText>{currentData.timestampString}</TimestampText>
             </PanelDataTitle>
             <CacheData data={currentData} />
           </>
@@ -101,4 +99,9 @@ const CacheItemButton = styled.button`
 const PanelDataTitle = styled.h3`
   margin: 0;
   padding: 1rem 0.5rem;
+`;
+
+const TimestampText = styled.span`
+  font-size: 1rem;
+  font-weight: normal;
 `;

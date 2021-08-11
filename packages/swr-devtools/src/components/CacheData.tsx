@@ -9,7 +9,7 @@ type Props = {
 export const CacheData = ({ data }: Props) => (
   <CacheDataWrapper>
     <CacheDataView data={data.data} />
-    {data.error && <p style={{ color: "red" }}>{data.error}</p>}
+    {data.error && <ErrorText>{data.error}</ErrorText>}
   </CacheDataWrapper>
 );
 
@@ -34,3 +34,7 @@ const AsyncReactJson = ({ data }: Props) => {
   const ReactJson = lazy(() => import("react-json-view"));
   return <ReactJson src={data} />;
 };
+
+const ErrorText = styled.p`
+  color: red;
+`;
