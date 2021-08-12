@@ -1,13 +1,16 @@
 import "../styles/globals.css";
 import { SWRDevTools } from "swr-devtools";
 import { cache } from "swr";
+import { createDevToolsSWRCache } from "swr-devtools/lib/cache";
 
+// The way to use SWR DevTools as a Chrome extension
 if (typeof window !== "undefined") {
-  console.log("load __SWR_DEVTOOLS__", window);
   // @ts-ignore
   globalThis.__SWR_DEVTOOLS__?.launch(cache);
 }
 
+// The way to use SWR DevTools as a React Component
+const devtoolsSWRCache = createDevToolsSWRCache(cache);
 const DevToolsArea = () => (
   <div
     style={{
@@ -17,7 +20,7 @@ const DevToolsArea = () => (
       height: "400px",
     }}
   >
-    <SWRDevTools cache={cache} />
+    <SWRDevTools cache={devtoolsSWRCache} />
   </div>
 );
 

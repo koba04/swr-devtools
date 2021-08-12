@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { CacheInterface } from "swr";
 
-import { useSWRCache } from "../cache";
+import { DevToolsSWRCache, useSWRCache } from "../cache";
 import { Panel } from "./Panel";
 import { Tab } from "./Tab";
 
@@ -21,7 +20,7 @@ const panels: Panel[] = [
 ];
 
 type Props = {
-  cache: CacheInterface;
+  cache: DevToolsSWRCache;
   isFixedPosition?: boolean;
 };
 

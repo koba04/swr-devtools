@@ -1,6 +1,8 @@
 import ReactDOM from "react-dom";
-import { cache } from "swr";
 import { SWRDevTools } from "swr-devtools";
+import { createDevToolsSWRCache } from "swr-devtools/lib/cache";
+
+const cache = createDevToolsSWRCache(new Map() as any);
 
 const render = () => {
   ReactDOM.render(
@@ -15,9 +17,7 @@ const port = chrome.runtime.connect({
 });
 // @ts-ignore
 port.onMessage.addListener((request) => {
-  Object.entries(request).forEach(([key, value]: any) => {
-    cache.set(key, value);
-  });
+  cache.set(request.key, request.value);
   render();
 });
 
