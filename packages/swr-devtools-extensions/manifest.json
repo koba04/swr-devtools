@@ -1,6 +1,6 @@
 {
   "name": "SWR DevTools",
-  "description": "A DevTools for SWR to inspect your SWR cache",
+  "description": "A DevTool to inspect your SWR cache",
   "version": "1.0",
   "manifest_version": 2,
   "icons": {

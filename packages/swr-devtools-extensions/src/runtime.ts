@@ -8,7 +8,10 @@ window.__SWR_DEVTOOLS__ = {
       if (isMetaCache(key)) {
         return;
       }
-      window.postMessage({ cacheData: { key, value } }, "*");
+      window.postMessage(
+        { __SWR_DEVTOOLS__: { cacheData: { key, value } } },
+        "*"
+      );
     });
   },
 };
