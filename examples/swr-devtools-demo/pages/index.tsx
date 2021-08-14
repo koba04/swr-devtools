@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Link from "next/link";
 import styles from "../styles/Home.module.css";
 import useSWR from "swr";
 import { useEffect } from "react";
@@ -29,6 +30,9 @@ export default function Home() {
             in 5 seconds)
           </p>
           <p>/api/hello?foo: {data2 ? data2.name : "...loading"}</p>
+        </section>
+        <section>
+          <Link href="/infinite">/infinite</Link>
         </section>
       </main>
       <footer>
