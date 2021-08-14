@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { SWRCacheData } from "../swr-cache";
+import { getDisplayCacheKey, SWRCacheData } from "../swr-cache";
 import { PanelType, ItemKey } from "./SWRDevTool";
 import { CacheData } from "./CacheData";
 
@@ -36,7 +36,7 @@ export const Panel = ({
               }
             >
               <CacheItemButton onClick={() => onSelectItem({ key, timestamp })}>
-                {key} ({timestampString})
+                {getDisplayCacheKey(key)} ({timestampString})
               </CacheItemButton>
             </CacheItem>
           ))}
