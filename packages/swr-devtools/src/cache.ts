@@ -14,6 +14,8 @@ export type SWRCacheData = {
 export type DevToolsSWRCache<Value = any> = {
   get(key: string): Value;
   set(key: string, value: Value): void;
+  delete(key: string): void;
+  // TODO: should support a delete method
   subscribe(fn: (key: string, value: Value) => void): () => void;
 };
 
@@ -28,6 +30,11 @@ export const spySWRCache = (
     console.log("call map.set", key, value);
     return originalSet.call(cache, key, value);
   };
+  const originalDelete = cache.delete;
+  cache.delete = (key: string) => {
+    watcher(key, undefined);
+    return originalDelete.call(cache, key);
+  };
 };
 
 export const createDevToolsSWRCache = (
@@ -40,6 +47,9 @@ export const createDevToolsSWRCache = (
     },
     set(key, value) {
       cache.set(key, value);
+    },
+    delete(key) {
+      cache.delete(key);
     },
     subscribe(callback) {
       listeners.push(callback);
