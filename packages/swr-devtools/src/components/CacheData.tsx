@@ -6,14 +6,21 @@ type Props = {
   data: SWRCacheData;
 };
 
-export const CacheData = ({ data }: Props) => (
-  <CacheDataWrapper>
-    <CacheDataView data={data.data} />
-    {data.error && <ErrorText>{data.error}</ErrorText>}
-  </CacheDataWrapper>
-);
+export const CacheData = React.memo(({ data }: Props) => (
+  <>
+    <Title>
+      {data.key}&nbsp;
+      <TimestampText>{data.timestampString}</TimestampText>
+    </Title>
+    <DataWrapper>
+      <CacheDataView data={data.data} />
+      {data.error && <ErrorText>{data.error}</ErrorText>}
+    </DataWrapper>
+  </>
+));
+CacheData.displayName = "CacheData";
 
-const CacheDataWrapper = styled.div`
+const DataWrapper = styled.div`
   border-bottom: solid 1px #ccc;
   font-size: 1rem;
   height: 100%;
@@ -37,4 +44,14 @@ const AsyncReactJson = ({ data }: Props) => {
 
 const ErrorText = styled.p`
   color: red;
+`;
+
+const Title = styled.h3`
+  margin: 0;
+  padding: 1rem 0.5rem;
+`;
+
+const TimestampText = styled.span`
+  font-size: 1rem;
+  font-weight: normal;
 `;

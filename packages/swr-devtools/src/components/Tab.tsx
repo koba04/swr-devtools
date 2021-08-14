@@ -31,7 +31,7 @@ const TabButton = styled.button.attrs({ type: "button" })<{
   width: 100%;
   height: 100%;
   border: 0;
-  padding: 0.5rem 1.5rem;
+  padding: 0.2rem 1.5rem;
   border-bottom: ${(props) => (props.isSelected ? "solid 2px #bbb" : "none")};
   background-color: ${(props) => (props.isSelected ? "#e6e0dd" : "#FFF")};
   cursor: pointer;

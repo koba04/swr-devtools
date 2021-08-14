@@ -43,17 +43,7 @@ export const Panel = ({
         </CacheItems>
       </PanelItem>
       <hr />
-      <PanelItem>
-        {currentData && (
-          <>
-            <PanelDataTitle>
-              {currentData.key}&nbsp;
-              <TimestampText>{currentData.timestampString}</TimestampText>
-            </PanelDataTitle>
-            <CacheData data={currentData} />
-          </>
-        )}
-      </PanelItem>
+      <PanelItem>{currentData && <CacheData data={currentData} />}</PanelItem>
     </PanelWrapper>
   );
 };
@@ -94,14 +84,4 @@ const CacheItemButton = styled.button`
   background: transparent;
   cursor: pointer;
   text-align: left;
-`;
-
-const PanelDataTitle = styled.h3`
-  margin: 0;
-  padding: 1rem 0.5rem;
-`;
-
-const TimestampText = styled.span`
-  font-size: 1rem;
-  font-weight: normal;
 `;

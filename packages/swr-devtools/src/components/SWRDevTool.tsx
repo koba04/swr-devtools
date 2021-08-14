@@ -72,7 +72,7 @@ const DevToolWindow = styled.div`
 const Header = styled.header`
   display: flex;
   /* TODO: stop using the fixed size */
-  height: 40px;
+  height: 36px;
 `;
 
 const HeaderTitle = styled.h3`
