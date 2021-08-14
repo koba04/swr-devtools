@@ -27,7 +27,8 @@ module.exports = {
     new CopyPlugin({
       patterns: [
         { from: "src/*.html", to: "[name].html" },
-        { from: "manifest.json" }
+        { from: "manifest.json" },
+        { from: "icons/*.png" },
       ],
     }),
   ],
