@@ -1,17 +1,9 @@
 import { useState, useEffect } from "react";
-import { CacheInterface } from "swr";
+import type { CacheInterface } from "swr";
 
-export type SWRCacheData = {
-  id: number;
-  key: string;
-  data: any;
-  isValidating: boolean;
-  error: string;
-  timestamp: Date;
-  timestampString: string;
-};
+import { injectSWRCache, isMetaCache, SWRCacheData } from "./swr-cache";
 
-export type DevToolsSWRCache<Value = any> = {
+export type DevToolsCache<Value = any> = {
   get(key: string): Value;
   set(key: string, value: Value): void;
   delete(key: string): void;
@@ -19,29 +11,9 @@ export type DevToolsSWRCache<Value = any> = {
   subscribe(fn: (key: string, value: Value) => void): () => void;
 };
 
-export const spySWRCache = (
-  cache: CacheInterface,
-  watcher: (key: string, value: any) => void
-): void => {
-  // intercept operations modifying the cache store
-  const originalSet = cache.set;
-  cache.set = (key: string, value: any) => {
-    watcher(key, value);
-    console.log("call map.set", key, value);
-    return originalSet.call(cache, key, value);
-  };
-  const originalDelete = cache.delete;
-  cache.delete = (key: string) => {
-    watcher(key, undefined);
-    return originalDelete.call(cache, key);
-  };
-};
-
-export const createDevToolsSWRCache = (
-  cache: CacheInterface
-): DevToolsSWRCache => {
+export const createDevToolsCache = (cache: CacheInterface): DevToolsCache => {
   let listeners: Array<(key: string, value: any) => void> = [];
-  const store: DevToolsSWRCache = {
+  const store: DevToolsCache = {
     get(key) {
       return cache.get(key);
     },
@@ -58,7 +30,7 @@ export const createDevToolsSWRCache = (
       };
     },
   };
-  spySWRCache(cache, (key: string, value: any) => {
+  injectSWRCache(cache, (key: string, value: any) => {
     if (isMetaCache(key)) {
       return;
     }
@@ -67,15 +39,6 @@ export const createDevToolsSWRCache = (
     });
   });
   return store;
-};
-
-export const isMetaCache = (key: string) => {
-  return (
-    // ctx and len are keys used in use-swr-infinite
-    /^(?:validating|err|ctx|len)@/.test(key) ||
-    // v1 (beta)
-    /^\$(?:req|err|ctx|len)\$/.test(key)
-  );
 };
 
 const formatTime = (date: Date) =>
@@ -117,8 +80,8 @@ const retrieveCache = (
   ];
 };
 
-export const useSWRCache = (
-  cache: DevToolsSWRCache
+export const useDevToolsCache = (
+  cache: DevToolsCache
 ): [SWRCacheData[], SWRCacheData[]] => {
   const [cacheData, setCacheData] = useState<[SWRCacheData[], SWRCacheData[]]>([
     [],

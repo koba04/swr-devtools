@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-import { DevToolsSWRCache, useSWRCache } from "../cache";
+import { DevToolsCache, useDevToolsCache } from "../devtools-cache";
 import { Panel } from "./Panel";
 import { Tab } from "./Tab";
 
@@ -20,7 +20,7 @@ const panels: Panel[] = [
 ];
 
 type Props = {
-  cache: DevToolsSWRCache;
+  cache: DevToolsCache;
   isFixedPosition?: boolean;
 };
 
@@ -30,7 +30,7 @@ export type ItemKey = {
 };
 
 export const SWRDevTools = ({ cache }: Props) => {
-  const [currentCache, historyCache] = useSWRCache(cache);
+  const [currentCache, historyCache] = useDevToolsCache(cache);
   const [activePanel, setActivePanel] = useState<Panel["key"]>("current");
   const [selectedItemKey, setSelectedItemKey] = useState<ItemKey | null>(null);
   return (

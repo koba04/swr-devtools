@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 
-import { SWRCacheData } from "../cache";
+import { SWRCacheData } from "../swr-cache";
 import { PanelType, ItemKey } from "./SWRDevTool";
 import { CacheData } from "./CacheData";
 
@@ -27,9 +27,9 @@ export const Panel = ({
     <PanelWrapper>
       <PanelItem>
         <CacheItems>
-          {cacheData.map(({ id, key, timestampString, timestamp }) => (
+          {cacheData.map(({ key, timestampString, timestamp }) => (
             <CacheItem
-              key={id}
+              key={key}
               isSelected={
                 selectedItemKey?.key === key &&
                 (type === "current" || selectedItemKey?.timestamp === timestamp)

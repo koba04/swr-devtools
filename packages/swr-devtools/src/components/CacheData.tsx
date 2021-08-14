@@ -1,6 +1,6 @@
 import React, { lazy, Suspense } from "react";
 import styled from "styled-components";
-import type { SWRCacheData } from "../cache";
+import type { SWRCacheData } from "../swr-cache";
 
 type Props = {
   data: SWRCacheData;
