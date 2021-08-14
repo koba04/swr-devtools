@@ -30,7 +30,7 @@ export const injectSWRCache = (
 export const isMetaCache = (key: string) => {
   return (
     // ctx and len are keys used in use-swr-infinite
-    /^(?:validating|err|context|len)@/.test(key) ||
+    /^(?:validating|err|context|size)@/.test(key) ||
     // v1 (beta)
     /^\$(?:req|err|ctx|len)\$/.test(key)
   );
