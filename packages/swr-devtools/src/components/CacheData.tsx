@@ -1,6 +1,7 @@
 import React, { lazy, Suspense } from "react";
 import styled from "styled-components";
-import { getDisplayCacheKey, SWRCacheData } from "../swr-cache";
+import { SWRCacheData } from "../swr-cache";
+import { CacheKey } from "./CacheKey";
 
 type Props = {
   data: SWRCacheData;
@@ -9,7 +10,8 @@ type Props = {
 export const CacheData = React.memo(({ data }: Props) => (
   <>
     <Title>
-      {getDisplayCacheKey(data.key)}&nbsp;
+      <CacheKey cacheKey={data.key} />
+      &nbsp;
       <TimestampText>{data.timestampString}</TimestampText>
     </Title>
     <DataWrapper>

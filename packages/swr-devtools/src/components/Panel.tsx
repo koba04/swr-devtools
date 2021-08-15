@@ -1,9 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 
-import { getDisplayCacheKey, SWRCacheData } from "../swr-cache";
+import { SWRCacheData } from "../swr-cache";
 import { PanelType, ItemKey } from "./SWRDevTool";
 import { CacheData } from "./CacheData";
+import { CacheKey } from "./CacheKey";
 
 export const Panel = ({
   data: cacheData,
@@ -29,14 +30,16 @@ export const Panel = ({
         <CacheItems>
           {cacheData.map(({ key, timestampString, timestamp }) => (
             <CacheItem
-              key={key}
+              key={`${type}--${key}--${
+                type === "history" ? timestamp.getTime() : ""
+              }`}
               isSelected={
                 selectedItemKey?.key === key &&
                 (type === "current" || selectedItemKey?.timestamp === timestamp)
               }
             >
               <CacheItemButton onClick={() => onSelectItem({ key, timestamp })}>
-                {getDisplayCacheKey(key)} ({timestampString})
+                <CacheKey cacheKey={key} /> ({timestampString})
               </CacheItemButton>
             </CacheItem>
           ))}

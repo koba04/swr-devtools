@@ -36,16 +36,12 @@ export const isMetaCache = (key: string) => {
   );
 };
 
-const isInfiniteCache = (key: string) => {
+export const isInfiniteCache = (key: string) => {
   return /^arg@"many"@"/.test(key);
 };
 
-const getInfiniteCacheKey = (key: string) => {
+export const getInfiniteCacheKey = (key: string) => {
   // TODO: support v1 style cache keys
   const match = key.match(/^arg@"many"@"(?<cacheKey>.*)?"/);
   return match?.groups?.cacheKey ?? key;
-};
-
-export const getDisplayCacheKey = (key: string) => {
-  return isInfiniteCache(key) ? "[Infinite] " + getInfiniteCacheKey(key) : key;
 };
