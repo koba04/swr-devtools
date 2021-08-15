@@ -78,6 +78,5 @@ const pages = {
 };
 
 export default (req, res) => {
-  console.log(req);
   res.status(200).json(pages[req.query.page] || null);
 };
