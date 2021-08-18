@@ -18,6 +18,6 @@ export const CacheKey = ({ cacheKey }: { cacheKey: string }) => {
 const CacheTag = styled.b`
   margin-right: 0.3rem;
   padding: 0.2rem;
-  background-color: #464242;
-  color: white;
+  background-color: var(--swr-devtools-tag-bg-color);
+  color: var(--swr-devtools-tag-text-color);
 `;

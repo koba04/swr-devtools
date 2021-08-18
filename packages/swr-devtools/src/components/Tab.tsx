@@ -32,11 +32,20 @@ const TabButton = styled.button.attrs({ type: "button" })<{
   height: 100%;
   border: 0;
   padding: 0.2rem 1.5rem;
-  border-bottom: ${(props) => (props.isSelected ? "solid 2px #bbb" : "none")};
-  background-color: ${(props) => (props.isSelected ? "#e6e0dd" : "#FFF")};
+  border-bottom: ${(props) =>
+    props.isSelected
+      ? "solid 2px var(--swr-devtools-selected-border-color)"
+      : "none"};
+  background-color: ${(props) =>
+    props.isSelected
+      ? "var(--swr-devtools-selected-bg-color)"
+      : "var(--swr-devtools-bg-color)"};
   cursor: pointer;
   &:hover {
-    background-color: #f7f5f4;
+    background-color: ${(props) =>
+      props.isSelected
+        ? "var(--swr-devtools-selected-bg-color)"
+        : "var(--swr-devtools-hover-bg-color)"};
   }
 `;
 

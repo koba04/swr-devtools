@@ -23,7 +23,7 @@ export const CacheData = React.memo(({ data }: Props) => (
 CacheData.displayName = "CacheData";
 
 const DataWrapper = styled.div`
-  border-bottom: solid 1px #ccc;
+  border-bottom: solid 1px var(--swr-devtools-border-color);
   font-size: 1rem;
   height: 100%;
   margin: 0;
@@ -45,7 +45,7 @@ const AsyncReactJson = ({ data }: Props) => {
 };
 
 const ErrorText = styled.p`
-  color: red;
+  color: var(--swr-devtools-error-text-colora);
 `;
 
 const Title = styled.h3`

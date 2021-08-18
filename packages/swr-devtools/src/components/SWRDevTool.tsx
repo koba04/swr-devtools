@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styled from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 
 import { DevToolsCache, useDevToolsCache } from "../devtools-cache";
 import { Panel } from "./Panel";
@@ -29,12 +29,27 @@ export type ItemKey = {
   timestamp: Date;
 };
 
+const GlobalStyle = createGlobalStyle`
+  html {
+    --swr-devtools-bg-color: #FFF;
+    --swr-devtools-hover-bg-color: #f7f5f4;
+    --swr-devtools-border-color: #CCC;
+    --swr-devtools-selected-bg-color: #e6e0dd;
+    --swr-devtools-selected-border-color: #bbb;
+    --swr-devtools-tag-bg-color: #464242
+    --swr-devtools-tag-text-color: #FFF;
+    --swr-devtools-error-text-color: red;
+
+  }
+`;
+
 export const SWRDevTools = ({ cache }: Props) => {
   const [currentCache, historyCache] = useDevToolsCache(cache);
   const [activePanel, setActivePanel] = useState<Panel["key"]>("current");
   const [selectedItemKey, setSelectedItemKey] = useState<ItemKey | null>(null);
   return (
     <DevToolWindow>
+      <GlobalStyle />
       <Header>
         <HeaderTitle>SWR</HeaderTitle>
         <Tab
@@ -65,8 +80,8 @@ const DevToolWindow = styled.div`
   flex-direction: column;
   margin: 0;
   padding: 0;
-  background-color: #fff;
-  border-top: solid 1px #ccc;
+  background-color: var(--swr-devtools-bg-color);
+  border-top: solid 1px var(--swr-devtools-border-color);
 `;
 
 const Header = styled.header`

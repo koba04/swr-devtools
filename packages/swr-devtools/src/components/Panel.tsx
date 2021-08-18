@@ -56,7 +56,7 @@ const PanelWrapper = styled.section`
   justify-content: space-around;
   padding: 0;
   height: 100%;
-  border-top: solid 1px #ccc;
+  border-top: solid 1px var(--swr-devtools-border-color);
 `;
 
 const PanelItem = styled.div`
@@ -72,10 +72,14 @@ const CacheItems = styled.ul`
 
 const CacheItem = styled.li<{ isSelected: boolean }>`
   padding: 0.3rem 0;
-  border-bottom: solid 1px #ddd;
-  background-color: ${(props) => (props.isSelected ? "#e6e0dd" : "none")};
+  border-bottom: solid 1px var(--swr-devtools-border-color);
+  background-color: ${(props) =>
+    props.isSelected ? "var(--swr-devtools-selected-bg-color)" : "none"};
   &:hover {
-    background-color: #f7f5f4;
+    background-color: ${(props) =>
+      props.isSelected
+        ? "var(--swr-devtools-selected-bg-color)"
+        : "var(--swr-devtools-hover-bg-color)"};
   }
 `;
 
