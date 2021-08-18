@@ -2,6 +2,10 @@
 
 **THIS IS NOT READY FOR THE USE IN YOUR PROJECT, JUST AN EXPERIMENT**
 
+![A screenshot of SWR Devtools (light theme)](./imgs/light.png)
+
+![A screenshot of SWR Devtools (dark theme)](./imgs/dark.png)
+
 ## How to Use
 
 ### 1.Install this Chrome extension
