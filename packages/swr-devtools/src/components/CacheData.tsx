@@ -41,7 +41,16 @@ const CacheDataView = ({ data }: Props) => {
 
 const AsyncReactJson = ({ data }: Props) => {
   const ReactJson = lazy(() => import("react-json-view"));
-  return <ReactJson src={data} theme="monokai" />;
+  return (
+    <ReactJson
+      src={data}
+      theme={
+        matchMedia("(prefers-color-scheme: dark)").matches
+          ? "monokai"
+          : "rjv-default"
+      }
+    />
+  );
 };
 
 const ErrorText = styled.p`
