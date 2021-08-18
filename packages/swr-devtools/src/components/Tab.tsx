@@ -40,6 +40,7 @@ const TabButton = styled.button.attrs({ type: "button" })<{
     props.isSelected
       ? "var(--swr-devtools-selected-bg-color)"
       : "var(--swr-devtools-bg-color)"};
+  color: var(--swr-devtools-text-color);
   cursor: pointer;
   &:hover {
     background-color: ${(props) =>

@@ -45,7 +45,7 @@ export const Panel = ({
           ))}
         </CacheItems>
       </PanelItem>
-      <hr />
+      <Hr />
       <PanelItem>{currentData && <CacheData data={currentData} />}</PanelItem>
     </PanelWrapper>
   );
@@ -89,6 +89,11 @@ const CacheItemButton = styled.button`
   height: 100%;
   border: none;
   background: transparent;
+  color: var(--swr-devtools-text-color);
   cursor: pointer;
   text-align: left;
+`;
+
+const Hr = styled.hr`
+  border-color: var(--swr-devtools-border-color);
 `;

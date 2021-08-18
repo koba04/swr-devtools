@@ -31,6 +31,7 @@ export type ItemKey = {
 
 const GlobalStyle = createGlobalStyle`
   html {
+    --swr-devtools-text-color: #000;
     --swr-devtools-bg-color: #FFF;
     --swr-devtools-hover-bg-color: #f7f5f4;
     --swr-devtools-border-color: #CCC;
@@ -40,6 +41,17 @@ const GlobalStyle = createGlobalStyle`
     --swr-devtools-tag-text-color: #FFF;
     --swr-devtools-error-text-color: red;
 
+    @media (prefers-color-scheme: dark) {
+      --swr-devtools-text-color: #FFF;
+      --swr-devtools-bg-color: rgb(39, 40, 34);
+      --swr-devtools-hover-bg-color: #6d6a66;
+      --swr-devtools-border-color: #555454;
+      --swr-devtools-selected-bg-color: #524f4d;
+      --swr-devtools-selected-border-color: #bbb;
+      --swr-devtools-tag-bg-color: #FFF;
+      --swr-devtools-tag-text-color: #464242;
+      --swr-devtools-error-text-color: red;
+    }
   }
 `;
 
@@ -88,6 +100,7 @@ const Header = styled.header`
   display: flex;
   /* TODO: stop using the fixed size */
   height: 36px;
+  color: var(--swr-devtools-text-color);
 `;
 
 const HeaderTitle = styled.h3`

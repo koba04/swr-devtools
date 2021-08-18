@@ -41,7 +41,7 @@ const CacheDataView = ({ data }: Props) => {
 
 const AsyncReactJson = ({ data }: Props) => {
   const ReactJson = lazy(() => import("react-json-view"));
-  return <ReactJson src={data} />;
+  return <ReactJson src={data} theme="monokai" />;
 };
 
 const ErrorText = styled.p`
@@ -51,6 +51,7 @@ const ErrorText = styled.p`
 const Title = styled.h3`
   margin: 0;
   padding: 1rem 0.5rem;
+  color: var(--swr-devtools-text-color);
 `;
 
 const TimestampText = styled.span`
