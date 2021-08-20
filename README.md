@@ -16,11 +16,9 @@
 
 ```js
 import { cache } from "swr";
+import { launch } from "swr-devtools";
 
-if (typeof window !== "undefined") {
-  window.__SWR_DEVTOOLS__?.launch(cache);
-}
-
+launch(cache);
 ```
 
 ## Use this as a React Component

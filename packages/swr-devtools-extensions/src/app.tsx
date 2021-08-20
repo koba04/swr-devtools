@@ -1,7 +1,7 @@
 import ReactDOM from "react-dom";
-import { SWRDevTools, createDevToolsCache } from "swr-devtools";
+import { SWRDevTools } from "swr-devtools";
 
-const cache = createDevToolsCache(new Map() as any);
+const cache = new Map();
 
 const render = () => {
   ReactDOM.render(

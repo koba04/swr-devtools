@@ -4473,13 +4473,6 @@ supports-color@^8.0.0:
   dependencies:
     has-flag "^4.0.0"
 
-swr@^0.4.2:
-  version "0.4.2"
-  resolved "https://registry.yarnpkg.com/swr/-/swr-0.4.2.tgz#4a9ed5e9948088af145c79d716d294cb99712a29"
-  integrity sha512-SKGxcAfyijj/lE5ja5zVMDqJNudASH3WZPRUakDVOePTM18FnsXgugndjl9BSRwj+jokFCulMDe7F2pQL+VhEw==
-  dependencies:
-    dequal "2.0.2"
-
 swr@^0.5.6:
   version "0.5.6"
   resolved "https://registry.yarnpkg.com/swr/-/swr-0.5.6.tgz#70bfe9bc9d7ac49a064be4a0f4acf57982e55a31"
