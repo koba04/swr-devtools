@@ -1,5 +1,6 @@
 // background.js
 let panelPort: chrome.runtime.Port | null = null;
+let contentPort: chrome.runtime.Port | null = null;
 
 const queuedMessages: any[] = [];
 const flushQueuedMessages = () => {
@@ -18,7 +19,11 @@ const enqueueMessage = (message: any) => {
 chrome.runtime.onConnect.addListener((port) => {
   // A port between a content page
   if (port.name === "content") {
-    port.onMessage.addListener((message) => {
+    contentPort = port;
+    contentPort.onDisconnect.addListener(() => {
+      contentPort = null;
+    });
+    contentPort.onMessage.addListener((message) => {
       console.log("sent message from content to panel", message);
       if (panelPort === null) {
         enqueueMessage(message);
@@ -33,6 +38,12 @@ chrome.runtime.onConnect.addListener((port) => {
     flushQueuedMessages();
     panelPort.onDisconnect.addListener(() => {
       panelPort = null;
+    });
+    panelPort.onMessage.addListener((message) => {
+      console.log("sent message from panel to content", message);
+      if (contentPort !== null) {
+        contentPort.postMessage(message);
+      }
     });
   }
 });
