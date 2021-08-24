@@ -3,17 +3,30 @@ import styled from "styled-components";
 
 import { isInfiniteCache, getInfiniteCacheKey } from "../swr-cache";
 
-export const CacheKey = ({ cacheKey }: { cacheKey: string }) => {
-  if (isInfiniteCache(cacheKey)) {
-    return (
-      <span>
-        <CacheTag>Infinite</CacheTag>
-        {getInfiniteCacheKey(cacheKey)}
-      </span>
-    );
-  }
-  return <span>{cacheKey}</span>;
+export const CacheKey = ({
+  cacheKey,
+  className,
+}: {
+  cacheKey: string;
+  className?: string;
+}) => {
+  return (
+    <Wrapper className={className}>
+      {isInfiniteCache(cacheKey) ? (
+        <>
+          <CacheTag>Infinite</CacheTag>
+          {getInfiniteCacheKey(cacheKey)}
+        </>
+      ) : (
+        cacheKey
+      )}
+    </Wrapper>
+  );
 };
+
+const Wrapper = styled.span`
+  display: inline-block;
+`;
 
 const CacheTag = styled.b`
   margin-right: 0.3rem;

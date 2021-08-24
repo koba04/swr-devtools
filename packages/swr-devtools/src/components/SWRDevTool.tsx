@@ -40,6 +40,9 @@ const GlobalStyle = createGlobalStyle`
     --swr-devtools-tag-bg-color: #464242
     --swr-devtools-tag-text-color: #FFF;
     --swr-devtools-error-text-color: red;
+    --swr-devtools-mutate-btn-text-color: #FFF;
+    --swr-devtools-mutate-btn-color: #f1492b;
+    --swr-devtools-mutate-btn-hover-color: #b65442;
 
     @media (prefers-color-scheme: dark) {
       --swr-devtools-text-color: #FFF;
@@ -51,6 +54,9 @@ const GlobalStyle = createGlobalStyle`
       --swr-devtools-tag-bg-color: #FFF;
       --swr-devtools-tag-text-color: #464242;
       --swr-devtools-error-text-color: red;
+      --swr-devtools-mutate-btn-text-color: #FFF;
+      --swr-devtools-mutate-btn-color: #f1492b;
+      --swr-devtools-mutate-btn-hover-color: #b65442;
     }
   }
 `;
