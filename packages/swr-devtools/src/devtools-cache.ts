@@ -1,9 +1,16 @@
 import { useState, useEffect } from "react";
-import type { CacheInterface } from "swr";
 
 import { injectSWRCache, isMetaCache, SWRCacheData } from "./swr-cache";
 
-export type DevToolsCache<Value = any> = {
+// This is the Cache interface for SWR v1, but this only allows a string as its key
+// https://github.com/vercel/swr/blob/6e25b3b123541db5e042e5d359683575d3631df1/src/types.ts#L183
+export type SWRCache<Data = any> = {
+  get(key: string): Data | null | undefined;
+  set(key: string, value: Data): void;
+  delete(key: string): void;
+};
+
+type DevToolsCache<Value = any> = {
   get(key: string): Value;
   set(key: string, value: Value): void;
   delete(key: string): void;
@@ -11,7 +18,7 @@ export type DevToolsCache<Value = any> = {
   subscribe(fn: (key: string, value: Value) => void): () => void;
 };
 
-export const createDevToolsCache = (cache: CacheInterface): DevToolsCache => {
+const createDevToolsCache = (cache: SWRCache): DevToolsCache => {
   let listeners: Array<(key: string, value: any) => void> = [];
   const store: DevToolsCache = {
     get(key) {
@@ -81,7 +88,7 @@ const retrieveCache = (
 };
 
 export const useDevToolsCache = (
-  cache: DevToolsCache
+  cache: SWRCache
 ): [SWRCacheData[], SWRCacheData[]] => {
   const [cacheData, setCacheData] = useState<[SWRCacheData[], SWRCacheData[]]>([
     [],
@@ -89,7 +96,8 @@ export const useDevToolsCache = (
   ]);
 
   useEffect(() => {
-    const unsubscribe = cache.subscribe((key: string, value: any) => {
+    const devToolsCache = createDevToolsCache(cache);
+    const unsubscribe = devToolsCache.subscribe((key: string, value: any) => {
       setCacheData(retrieveCache(key, value));
     });
     return () => unsubscribe();

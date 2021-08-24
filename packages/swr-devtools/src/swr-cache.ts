@@ -1,4 +1,4 @@
-import type { CacheInterface } from "swr";
+import { SWRCache } from "./devtools-cache";
 
 export type SWRCacheData = {
   id: number;
@@ -11,7 +11,7 @@ export type SWRCacheData = {
 };
 
 export const injectSWRCache = (
-  cache: CacheInterface,
+  cache: SWRCache,
   watcher: (key: string, value: any) => void
 ): void => {
   // intercept operations modifying the cache store
@@ -30,18 +30,18 @@ export const injectSWRCache = (
 export const isMetaCache = (key: string) => {
   return (
     // ctx and len are keys used in use-swr-infinite
-    /^(?:validating|err|context|size)@/.test(key) ||
+    /^(?:validating|err|ctx|context|size)@/.test(key) ||
     // v1 (beta)
     /^\$(?:req|err|ctx|len)\$/.test(key)
   );
 };
 
 export const isInfiniteCache = (key: string) => {
-  return /^arg@"many"@"/.test(key);
+  return /^arg@"(many|inf)"@"/.test(key);
 };
 
 export const getInfiniteCacheKey = (key: string) => {
   // TODO: support v1 style cache keys
-  const match = key.match(/^arg@"many"@"(?<cacheKey>.*)?"/);
+  const match = key.match(/^arg@"(many|inf)"@"(?<cacheKey>.*)?"/);
   return match?.groups?.cacheKey ?? key;
 };
