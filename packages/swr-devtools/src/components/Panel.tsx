@@ -71,7 +71,7 @@ const CacheItems = styled.ul`
 `;
 
 const CacheItem = styled.li<{ isSelected: boolean }>`
-  padding: 0.3rem 0;
+  padding: 0;
   border-bottom: solid 1px var(--swr-devtools-border-color);
   background-color: ${(props) =>
     props.isSelected ? "var(--swr-devtools-selected-bg-color)" : "none"};
@@ -87,6 +87,7 @@ const CacheItemButton = styled.button`
   display: inline-block;
   width: 100%;
   height: 100%;
+  padding: 0.5rem 0;
   border: none;
   background: transparent;
   color: var(--swr-devtools-text-color);
