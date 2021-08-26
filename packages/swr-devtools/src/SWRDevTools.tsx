@@ -18,12 +18,11 @@ const inject = (cache: SWRCache) =>
   });
 
 const swrdevtools: Middleware = (useSWRNext) => (key, fn, config) => {
-  // @ts-expect-error
-  if (!injected.has(config.cache)) {
-    // @ts-expect-error
-    inject(config.cache);
+  // @ts-expect-error we need to move the cache type from InternalConfiguration to PublicConfiguration to use `cache` here.
+  const { cache } = config;
+  if (!injected.has(cache)) {
+    inject(cache);
   }
-  console.log({ key, fn, config });
   return useSWRNext(key, fn, config);
 };
 
