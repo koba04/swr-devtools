@@ -28,20 +28,15 @@ export const injectSWRCache = (
 };
 
 export const isMetaCache = (key: string) => {
-  return (
-    // ctx and len are keys used in use-swr-infinite
-    /^(?:validating|err|ctx|context|size)@/.test(key) ||
-    // v1 (beta)
-    /^\$(?:req|err|ctx|len)\$/.test(key)
-  );
+  return /^\$(?:req|err|ctx|len)\$/.test(key);
 };
 
 export const isInfiniteCache = (key: string) => {
-  return /^arg@"(many|inf)"@"/.test(key);
+  return /^\$inf\$/.test(key);
 };
 
 export const getInfiniteCacheKey = (key: string) => {
-  // TODO: support v1 style cache keys
-  const match = key.match(/^arg@"(many|inf)"@"(?<cacheKey>.*)?"/);
+  const match = key.match(/^\$inf\$(?<cacheKey>.*)?/);
+  console.log(match, key);
   return match?.groups?.cacheKey ?? key;
 };

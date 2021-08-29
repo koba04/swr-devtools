@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
-import { useSWRInfinite } from "swr";
+import useSWRInfinite from "swr/infinite";
 
 export default function Home() {
   const { data, setSize } = useSWRInfinite(

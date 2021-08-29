@@ -1,11 +1,11 @@
 import ReactDOM from "react-dom";
-import { SWRDevTools } from "swr-devtools";
+import { SWRDevToolPanel } from "swr-devtools";
 
 const cache = new Map();
 
 const render = () => {
   ReactDOM.render(
-    <SWRDevTools cache={cache} />,
+    <SWRDevToolPanel cache={cache} />,
     document.getElementById("app")
   );
 };

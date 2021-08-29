@@ -7,7 +7,6 @@ module.exports = {
     background: "./src/background.ts",
     content: "./src/content.ts",
     devtools: "./src/devtools.ts",
-    runtime: "./src/runtime.ts",
   },
   output: {
     path: path.resolve(__dirname, "dist"),

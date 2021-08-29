@@ -55,7 +55,7 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-export const SWRDevTools = ({ cache }: Props) => {
+export const SWRDevToolPanel = ({ cache }: Props) => {
   const [currentCache, historyCache] = useDevToolsCache(cache);
   const [activePanel, setActivePanel] = useState<Panel["key"]>("current");
   const [selectedItemKey, setSelectedItemKey] = useState<ItemKey | null>(null);
