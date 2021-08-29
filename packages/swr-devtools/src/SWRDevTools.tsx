@@ -22,6 +22,7 @@ const swrdevtools: Middleware = (useSWRNext) => (key, fn, config) => {
   const { cache } = config;
   if (!injected.has(cache)) {
     inject(cache);
+    injected.add(cache);
   }
   return useSWRNext(key, fn, config);
 };
