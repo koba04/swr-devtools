@@ -1,5 +1,5 @@
 import React from "react";
-import { SWRConfig, Middleware } from "swr";
+import { useSWRConfig, SWRConfig, Middleware } from "swr";
 import { SWRCache } from "./devtools-cache";
 
 import { injectSWRCache, isMetaCache } from "./swr-cache";
@@ -18,8 +18,9 @@ const inject = (cache: SWRCache) =>
   });
 
 const swrdevtools: Middleware = (useSWRNext) => (key, fn, config) => {
-  // @ts-expect-error we need to move the cache type from InternalConfiguration to PublicConfiguration to use `cache` here.
-  const { cache } = config;
+  // FIXME: I'll use mutate to support mutating from a devtool panel.
+  const { cache /* , mutate */ } = useSWRConfig();
+
   if (!injected.has(cache)) {
     inject(cache);
     injected.add(cache);
