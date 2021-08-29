@@ -4,11 +4,7 @@
 
 ## How to Use
 
-### Use the devtools as a component to put it yourself
-
-You can also use `swr-devtools` as a React Component.
-
-#### Install dependencies
+### Install dependencies
 
 ```shell
 # This package hasn't been published yet.
@@ -17,18 +13,18 @@ npm install swr-devtools
 npm install react swr styled-components
 ```
 
-#### Place the SWRDevTools Component
+**This only supports SWR v1 or later versions.**
+
+### Wrap your application in the SWRDevTools component
 
 ```jsx
-import { cache } from "swr";
 // This package hasn't been published yet.
 import { SWRDevTools } from "swr-devtools";
 
 const App = () => (
-    <>
+    <SWRDevTools>
       <MainApp />
-      <SWRDevTools cache={cache} />
-    </>
+    </SWRDevTools>
 )
 ```
 

@@ -6,24 +6,27 @@
 
 ![A screenshot of SWR Devtools (dark theme)](./imgs/dark.png)
 
+**This only supports SWR v1 or later versions.**
+
 ## How to Use
 
 ### 1.Install this Chrome extension
 
 **THIS HAS NOT BEEN PUBLISHED YET**
 
-### 2.Inject runtime code for swr-devtools (recommended)
+### 2.Wrap your application in the SWRDevTools component
 
 ```js
-import { cache } from "swr";
-import { launch } from "swr-devtools";
+import ReactDOM from "react-dom";
+import { SWRDevTools } from "swr-devtools";
 
-launch(cache);
+ReactDOM.render(
+  <SWRDevTools>
+    <App />
+  </SWRDevTools>,
+  document.getElementById("app")
+);
 ```
-
-## Use this as a React Component
-
-[SWRDevTools](./packages/swr-devtools/)
 
 ## LICENSE
 
