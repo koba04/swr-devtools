@@ -4,7 +4,7 @@ import { SWRDevToolPanel, SWRDevTools } from "swr-devtools";
 
 // The way to use SWR DevTools as a React Component
 const DevToolsArea = () => {
-  const cache = useSWRConfig().cache;
+  const { cache } = useSWRConfig();
   return (
     <div
       style={{

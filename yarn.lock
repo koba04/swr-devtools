@@ -4473,10 +4473,10 @@ supports-color@^8.0.0:
   dependencies:
     has-flag "^4.0.0"
 
-swr@^1.0.0-beta.14:
-  version "1.0.0-beta.14"
-  resolved "https://registry.yarnpkg.com/swr/-/swr-1.0.0-beta.14.tgz#be0b74693df3906c8a6a84366afacc0553a7bb44"
-  integrity sha512-qpcKQDau6tTnci42xOzxJEGQfCvg6et3OMHFY87/EBdWr5IV1FCm+tsIEOWplR12yo5N1k/G32h42TGRBQCjcw==
+swr@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/swr/-/swr-1.0.0.tgz#d047933714d8bd16ae35af67d81149f4ae700a4d"
+  integrity sha512-v55Dr+vxIFiUyGxC5W4uN5falxHxYdbpb/R3bO+bSG+svbC9bUWmupy4NM/2pER7X8OvgwJWu0AiSoGy0ND9ew==
   dependencies:
     dequal "2.0.2"
 
