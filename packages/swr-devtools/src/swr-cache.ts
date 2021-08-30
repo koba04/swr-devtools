@@ -1,4 +1,4 @@
-import { SWRCache } from "./devtools-cache";
+import { Cache } from "swr";
 
 export type SWRCacheData = {
   id: number;
@@ -11,7 +11,7 @@ export type SWRCacheData = {
 };
 
 export const injectSWRCache = (
-  cache: SWRCache,
+  cache: Cache,
   watcher: (key: string, value: any) => void
 ): void => {
   // intercept operations modifying the cache store

@@ -1,6 +1,6 @@
 import React, { lazy, Suspense } from "react";
 import styled from "styled-components";
-import { SWRCacheData } from "../swr-cache";
+import { SWRCacheData } from "swr-devtools/lib/swr-cache";
 import { CacheKey } from "./CacheKey";
 
 type Props = {

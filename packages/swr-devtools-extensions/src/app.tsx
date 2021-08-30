@@ -1,5 +1,5 @@
 import ReactDOM from "react-dom";
-import { SWRDevToolPanel } from "swr-devtools";
+import { SWRDevToolPanel } from "swr-devtools-panel";
 
 const cache = new Map();
 

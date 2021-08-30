@@ -1,12 +1,11 @@
 import React from "react";
-import { useSWRConfig, SWRConfig, Middleware } from "swr";
-import { SWRCache } from "./devtools-cache";
+import { useSWRConfig, SWRConfig, Middleware, Cache } from "swr";
 
 import { injectSWRCache, isMetaCache } from "./swr-cache";
 
 const injected = new WeakSet();
 
-const inject = (cache: SWRCache) =>
+const inject = (cache: Cache) =>
   injectSWRCache(cache, (key: string, value: any) => {
     if (isMetaCache(key)) {
       return;
