@@ -7,7 +7,7 @@
     "examples/*"
   ],
   "scripts": {
-    "build": "npm-run-all -p build:devtools build:panel -s build:extensions",
+    "build": "run-s build:devtools build:panel build:extensions",
     "build:devtools": "yarn workspace swr-devtools build",
     "build:extensions": "yarn workspace swr-devtools-extentions build",
     "build:panel": "yarn workspace swr-devtools-panel build",
