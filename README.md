@@ -1,5 +1,7 @@
 # swr-devtools
 
+[![](https://github.com/koba04/swr-devtools/workflows/lint/badge.svg)](https://github.com/koba04/swr-devtools/actions?workflow=lint)
+
 **THIS IS NOT READY FOR THE USE IN YOUR PROJECT, JUST AN EXPERIMENT**
 
 ![A screenshot of SWR Devtools (light theme)](./imgs/light.png)
