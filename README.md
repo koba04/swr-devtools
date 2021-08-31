@@ -10,7 +10,7 @@
 
 | package                                                       | description                                  |
 | ------------------------------------------------------------- | -------------------------------------------- |
-| [swr-devtools](./packages/swr-devtols)                        | A React component to inject your application |
+| [swr-devtools](./packages/swr-devtools)                       | A React component to inject your application |
 | [swr-devtools-extensions](./packages/swr-devtools-extensions) | A Chrome extension for the SWR DevTools      |
 | [swr-devtools-panel](./packages/swr-devtools-panel)           | A React component for the SWR DevTools panel |
 
