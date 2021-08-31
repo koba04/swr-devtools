@@ -1,6 +1,7 @@
 import "../styles/globals.css";
 import { SWRConfig, useSWRConfig } from "swr";
-import { SWRDevToolPanel, SWRDevTools } from "swr-devtools";
+import { SWRDevTools } from "swr-devtools";
+import { SWRDevToolPanel } from "swr-devtools-panel";
 
 // The way to use SWR DevTools as a React Component
 const DevToolsArea = () => {

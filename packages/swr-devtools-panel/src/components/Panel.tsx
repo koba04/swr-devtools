@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { SWRCacheData } from "../swr-cache";
+import { SWRCacheData } from "swr-devtools/lib/swr-cache";
 import { PanelType, ItemKey } from "./SWRDevToolPanel";
 import { CacheData } from "./CacheData";
 import { CacheKey } from "./CacheKey";

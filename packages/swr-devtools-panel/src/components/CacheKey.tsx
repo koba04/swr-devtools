@@ -1,7 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 
-import { isInfiniteCache, getInfiniteCacheKey } from "../swr-cache";
+import {
+  isInfiniteCache,
+  getInfiniteCacheKey,
+} from "swr-devtools/lib/swr-cache";
 
 export const CacheKey = ({ cacheKey }: { cacheKey: string }) => {
   if (isInfiniteCache(cacheKey)) {
