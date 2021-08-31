@@ -22,14 +22,16 @@ npm install react swr
 ### Wrap your application in the SWRDevTools component
 
 ```jsx
+import ReactDOM from "react-dom";
 // This package hasn't been published yet.
 import { SWRDevTools } from "swr-devtools";
 
-const App = () => (
-    <SWRDevTools>
-      <MainApp />
-    </SWRDevTools>
-)
+ReactDOM.render(
+  <SWRDevTools>
+    <MainApp />
+  </SWRDevTools>,
+  document.getElementById("app")
+);
 ```
 
 ### Install SWRDevTools from Chrome Web Store

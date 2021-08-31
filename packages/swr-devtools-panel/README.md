@@ -13,12 +13,12 @@ import { useSWRConfig } from "swr";
 import { SWRDevToolsPanel } from "swr-devtools-panel";
 
 const App = () => {
-    const { cache } = useSWRConfig();
-    return (
-        <SWRDevToolsPanel cache={cache}>
-            <Page />
-        </SWRDevToolsPanel>
-    );
+  const { cache } = useSWRConfig();
+  return (
+    <SWRDevToolsPanel cache={cache}>
+      <Page />
+    </SWRDevToolsPanel>
+  );
 }
 ```
 
