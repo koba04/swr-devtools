@@ -1,6 +1,6 @@
 # swr-devtools
 
-![https://github.com/koba04/swr-devtools/workflows/lint/badge.svg](https://github.com/koba04/swr-devtools/actions?query=workflow%3Alint)
+[![](https://github.com/koba04/swr-devtools/workflows/lint/badge.svg)](https://github.com/koba04/swr-devtools/actions?workflow=lint)
 
 **THIS IS NOT READY FOR THE USE IN YOUR PROJECT, JUST AN EXPERIMENT**
 
