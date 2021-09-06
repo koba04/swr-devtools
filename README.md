@@ -14,6 +14,10 @@
 | [swr-devtools-extensions](./packages/swr-devtools-extensions) | A Chrome extension for the SWR DevTools      |
 | [swr-devtools-panel](./packages/swr-devtools-panel)           | A React component for the SWR DevTools panel |
 
+## Online Demo
+
+https://swr-devtools.vercel.app
+
 ## LICENSE
 
 [MIT](LICENSE.md)
