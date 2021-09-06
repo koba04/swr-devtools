@@ -11,6 +11,7 @@
     "build:devtools": "yarn workspace swr-devtools build",
     "build:extensions": "yarn workspace swr-devtools-extentions build",
     "build:panel": "yarn workspace swr-devtools-panel build",
+    "deploy:examples": "yarn build && yarn workspace swr-devtools-demo build",
     "start:demo": "yarn workspace swr-devtools-demo dev",
     "start:dev": "yarn workspace swr-devtools start",
     "start:extensions": "yarn workspace swr-devtools-extentions start",
