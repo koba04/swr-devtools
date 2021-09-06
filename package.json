@@ -9,9 +9,10 @@
   "scripts": {
     "build": "run-s build:devtools build:panel build:extensions",
     "build:devtools": "yarn workspace swr-devtools build",
+    "build:demo": "yarn workspace swr-devtools-demo build",
     "build:extensions": "yarn workspace swr-devtools-extentions build",
     "build:panel": "yarn workspace swr-devtools-panel build",
-    "deploy:examples": "yarn build && yarn workspace swr-devtools-demo build",
+    "deploy:demo": "run-s build:devtools build:panel build:demo",
     "start:demo": "yarn workspace swr-devtools-demo dev",
     "start:dev": "yarn workspace swr-devtools start",
     "start:extensions": "yarn workspace swr-devtools-extentions start",
