@@ -31,7 +31,7 @@ const pages = {
   2: [
     {
       name: "HTMLElement.accessKey",
-      ulr:
+      url:
         "https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/accessKey",
     },
     {
