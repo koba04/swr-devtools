@@ -23,7 +23,16 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>SWR DevTools Demo</h1>
+        <p>
+          <h1 className={styles.title}>SWR DevTools Demo</h1>
+          <a
+            href="https://github.com/koba04/swr-devtools"
+            target="_blank"
+            rel="noreferrer"
+          >
+            koba04/swr-devtools
+          </a>
+        </p>
         <section>
           <p className={styles.row}>
             <span className={styles.cacheKey}>/api/hello</span>

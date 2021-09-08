@@ -1,7 +1,5 @@
 # swr-devtools
 
-**THIS IS NOT READY FOR THE USE IN YOUR PROJECT, JUST AN EXPERIMENT**
-
 ![A screenshot of SWR Devtools (light theme)](../../imgs/light.png)
 
 ![A screenshot of SWR Devtools (dark theme)](../../imgs/dark.png)
@@ -9,7 +7,6 @@
 ### Install
 
 ```shell
-# This package hasn't been published yet.
 npm install swr-devtools
 # Install peerDependencies
 npm install react swr
@@ -23,7 +20,6 @@ npm install react swr
 
 ```jsx
 import ReactDOM from "react-dom";
-// This package hasn't been published yet.
 import { SWRDevTools } from "swr-devtools";
 
 ReactDOM.render(
