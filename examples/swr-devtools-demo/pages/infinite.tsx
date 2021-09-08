@@ -2,6 +2,8 @@ import Head from "next/head";
 import Link from "next/link";
 import useSWRInfinite from "swr/infinite";
 
+import styles from "../styles/infinite.module.css";
+
 export default function Home() {
   const { data, setSize } = useSWRInfinite(
     (index) => `/api/list?page=${index + 1}`
@@ -10,33 +12,36 @@ export default function Home() {
   const pages = data ? data.reduce((acc, page) => acc.concat(page), []) : [];
 
   return (
-    <div>
+    <div className={styles.container}>
       <Head>
-        <title>useSWRInfinite demo</title>
+        <title>SWR DevTools Demo (useSWRInfinite)</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
-        <h1>useSWRInfinite demo</h1>
-        <section>
-          <ul>
+      <main className={styles.main}>
+        <h1 className={styles.title}>SWR DevTools Demo (useSWRInfinite)</h1>
+        <section className={styles.content}>
+          <ul className={styles.list}>
             {pages.map((page) => (
-              <li key={page.name}>
+              <li key={page.name} className={styles.listItem}>
                 <a href={page.url} target="_blank" rel="noreferrer">
                   {page.name}
                 </a>
               </li>
             ))}
           </ul>
-          <div>
-            <button onClick={() => setSize((size) => size + 1)}>
-              load more...
+          <div className={styles.buttonArea}>
+            <button
+              className={styles.button}
+              onClick={() => setSize((size) => size + 1)}
+            >
+              Load more
             </button>
           </div>
         </section>
-        <section>
+        <nav className={styles.nav}>
           <Link href="/">/index</Link>
-        </section>
+        </nav>
       </main>
       <footer>
         <p>SWR DevTools</p>

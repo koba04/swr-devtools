@@ -18,22 +18,26 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <Head>
-        <title>Create Next App</title>
+        <title>SWR DevTools Demo</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>Welcome to SWR!</h1>
-        <section className={styles.swr}>
-          <p>
-            /api/hello: {data ? data.name : "...loading"}&nbsp;(auto increment
-            in 5 seconds)
-          </p>
-          <p>/api/hello?foo: {data2 ? data2.name : "...loading"}</p>
-        </section>
+        <h1 className={styles.title}>SWR DevTools Demo</h1>
         <section>
-          <Link href="/infinite">/infinite</Link>
+          <p className={styles.row}>
+            <span className={styles.cacheKey}>/api/hello</span>
+            <span>{data ? data.name : "...loading"}</span>
+            <span className={styles.note}>(auto increment in 5 seconds)</span>
+          </p>
+          <p className={styles.row}>
+            <span className={styles.cacheKey}>/api/hello?foo</span>
+            <span>{data2 ? data2.name : "...loading"}</span>
+          </p>
         </section>
+        <nav className={styles.nav}>
+          <Link href="/infinite">/infinite</Link>
+        </nav>
       </main>
       <footer>
         <p>SWR DevTools</p>

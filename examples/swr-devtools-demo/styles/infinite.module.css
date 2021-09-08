@@ -1,0 +1,55 @@
+.container {
+  min-height: 100vh;
+  padding: 0 0.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.main {
+  padding: 0;
+  flex: 1;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+}
+
+.list {
+  margin: 0 auto;
+  max-width: 80%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  list-style: none;
+}
+
+.listItem {
+  font-size: 1.2rem;
+}
+
+.buttonArea {
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+}
+.button {
+  font-size: 1rem;
+  padding: 0.3rem 0.5rem;
+  border-radius: 5px;
+  border: solid 2px #ccc;
+}
+
+.nav {
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+.title {
+  line-height: 1.15;
+  font-size: 3rem;
+  text-align: center;
+}
+
