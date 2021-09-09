@@ -9,7 +9,7 @@
     "build:zip": "zip -r extension.zip dist/",
     "build:webpack": "webpack --mode production",
     "build": "run-s build:webpack build:zip",
-    "clean": "rm -rf dist/",
+    "clean": "rimraf dist/",
     "lint": "tsc --noEmit",
     "start": "webpack --mode development --watch"
   },

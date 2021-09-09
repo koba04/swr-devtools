@@ -18,7 +18,9 @@
   "homepage": "https://github.com/koba04/swr-devtools",
   "bugs": "https://github.com/koba04/swr-devtools/issues",
   "scripts": {
+    "clean": "rimraf lib",
     "start": "tsc --watch",
+    "prebuild": "yarn clean",
     "build": "tsc",
     "lint": "tsc --noEmit"
   },

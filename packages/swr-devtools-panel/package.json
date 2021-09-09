@@ -11,6 +11,8 @@
   "author": "koba04",
   "scripts": {
     "start": "tsc --watch",
+    "clean": "rimraf lib",
+    "prebuild": "yarn clean",
     "build": "tsc",
     "lint": "tsc --noEmit"
   },
