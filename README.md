@@ -2,11 +2,36 @@
 
 [![](https://github.com/koba04/swr-devtools/workflows/lint/badge.svg)](https://github.com/koba04/swr-devtools/actions?workflow=lint)
 
-**THIS IS NOT READY FOR THE USE IN YOUR PROJECT, JUST AN EXPERIMENT**
-
 ![A screenshot of SWR Devtools (light theme)](./imgs/light.png)
 
 ![A screenshot of SWR Devtools (dark theme)](./imgs/dark.png)
+
+## How to use
+
+### Install SWRDevTools from Chrome Web Store
+
+https://chrome.google.com/webstore/detail/swr-devtools/liidbicegefhheghhjbomajjaehnjned
+
+### Wrap your application in the SWRDevTools component
+
+```shell
+npm install swr-devtools
+# Install peerDependencies
+npm install react swr
+```
+
+```jsx
+import ReactDOM from "react-dom";
+import { SWRDevTools } from "swr-devtools";
+
+ReactDOM.render(
+  <SWRDevTools>
+    <MainApp />
+  </SWRDevTools>,
+  document.getElementById("app")
+);
+```
+## Packages
 
 | package                                                       | description                                  |
 | ------------------------------------------------------------- | -------------------------------------------- |
