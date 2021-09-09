@@ -1,6 +1,6 @@
 {
   "name": "swr-devtools-panel",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "description": "A React component for the SWR DevTools panel",
   "main": "lib/index.js",
@@ -31,6 +31,6 @@
   },
   "dependencies": {
     "react-json-view": "^1.21.3",
-    "swr-devtools": "^0.1.0"
+    "swr-devtools": "^0.2.0"
   }
 }
