@@ -22,6 +22,7 @@ const panels: Panel[] = [
 
 type Props = {
   cache: Cache;
+  isReady?: boolean;
   isFixedPosition?: boolean;
 };
 
@@ -56,7 +57,7 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-export const SWRDevToolPanel = ({ cache }: Props) => {
+export const SWRDevToolPanel = ({ cache, isReady = true }: Props) => {
   const [currentCache, historyCache] = useDevToolsCache(cache);
   const [activePanel, setActivePanel] = useState<Panel["key"]>("current");
   const [selectedItemKey, setSelectedItemKey] = useState<ItemKey | null>(null);
@@ -75,12 +76,18 @@ export const SWRDevToolPanel = ({ cache }: Props) => {
         />
       </Header>
       <PanelWrapper>
-        <Panel
-          data={activePanel === "history" ? historyCache : currentCache}
-          type={activePanel}
-          selectedItemKey={selectedItemKey}
-          onSelectItem={setSelectedItemKey}
-        />
+        {isReady ? (
+          <Panel
+            data={activePanel === "history" ? historyCache : currentCache}
+            type={activePanel}
+            selectedItemKey={selectedItemKey}
+            onSelectItem={setSelectedItemKey}
+          />
+        ) : (
+          <NoteText>
+            Haven&apos;t received any cache data from SWRDevTools
+          </NoteText>
+        )}
       </PanelWrapper>
     </DevToolWindow>
   );
@@ -114,4 +121,8 @@ const PanelWrapper = styled.div`
   position: relative;
   height: calc(100% - 40px);
   width: 100%;
+`;
+
+const NoteText = styled.p`
+  color: var(--swr-devtools-text-color);
 `;
