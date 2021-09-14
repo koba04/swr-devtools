@@ -2,13 +2,7 @@ import ReactDOM from "react-dom";
 import { SWRDevToolPanel } from "swr-devtools-panel";
 
 const cache = new Map();
-
-const render = () => {
-  ReactDOM.render(
-    <SWRDevToolPanel cache={cache} />,
-    document.getElementById("app")
-  );
-};
+const rootEl = document.getElementById("app");
 
 // @ts-ignore
 const port = chrome.runtime.connect({
@@ -16,8 +10,17 @@ const port = chrome.runtime.connect({
 });
 // @ts-ignore
 port.onMessage.addListener((request) => {
-  cache.set(request.key, request.value);
-  render();
+  if (request === "initializing...") {
+    cache.clear();
+    ReactDOM.render(<SWRDevToolPanel cache={cache} isReady={false} />, rootEl);
+  } else {
+    cache.set(request.key, request.value);
+    ReactDOM.render(<SWRDevToolPanel cache={cache} />, rootEl);
+  }
+});
+port.onDisconnect.addListener(() => {
+  cache.clear();
+  ReactDOM.render(<SWRDevToolPanel cache={cache} isReady={false} />, rootEl);
 });
 
-render();
+ReactDOM.render(<SWRDevToolPanel cache={cache} isReady={false} />, rootEl);
