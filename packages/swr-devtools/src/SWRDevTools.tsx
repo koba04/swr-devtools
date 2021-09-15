@@ -5,13 +5,27 @@ import { injectSWRCache, isMetaCache } from "./swr-cache";
 
 const injected = new WeakSet();
 
+export type DevToolsMessage = {
+  type: "updated_swr_cache";
+  payload: {
+    key: string;
+    value: any;
+  };
+};
+
 const inject = (cache: Cache) =>
   injectSWRCache(cache, (key: string, value: any) => {
     if (isMetaCache(key)) {
       return;
     }
     window.postMessage(
-      { __SWR_DEVTOOLS__: { cacheData: { key, value } } },
+      {
+        type: "updated_swr_cache",
+        payload: {
+          key,
+          value,
+        },
+      },
       "*"
     );
   });
