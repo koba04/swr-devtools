@@ -97,7 +97,11 @@ export const useDevToolsCache = (
     const unsubscribe = devToolsCache.subscribe((key: string, value: any) => {
       setCacheData(retrieveCache(key, value));
     });
-    return () => unsubscribe();
+    return () => {
+      unsubscribe();
+      cacheHistory.clear();
+      currentCacheData.clear();
+    };
   }, [cache]);
   return cacheData;
 };

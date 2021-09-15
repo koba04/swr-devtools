@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import { Cache } from "swr";
 
-import { useDevToolsCache } from "../devtools-cache";
 import { Panel } from "./Panel";
 import { Tab } from "./Tab";
 
@@ -58,7 +57,6 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 export const SWRDevToolPanel = ({ cache, isReady = true }: Props) => {
-  const [currentCache, historyCache] = useDevToolsCache(cache);
   const [activePanel, setActivePanel] = useState<Panel["key"]>("current");
   const [selectedItemKey, setSelectedItemKey] = useState<ItemKey | null>(null);
   return (
@@ -78,7 +76,7 @@ export const SWRDevToolPanel = ({ cache, isReady = true }: Props) => {
       <PanelWrapper>
         {isReady ? (
           <Panel
-            data={activePanel === "history" ? historyCache : currentCache}
+            cache={cache}
             type={activePanel}
             selectedItemKey={selectedItemKey}
             onSelectItem={setSelectedItemKey}

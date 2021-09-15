@@ -1,22 +1,26 @@
 import React from "react";
 import styled from "styled-components";
+import { Cache } from "swr";
 
-import { SWRCacheData } from "swr-devtools/lib/swr-cache";
 import { PanelType, ItemKey } from "./SWRDevToolPanel";
 import { CacheData } from "./CacheData";
 import { CacheKey } from "./CacheKey";
+import { useDevToolsCache } from "../devtools-cache";
 
 export const Panel = ({
-  data: cacheData,
+  cache,
   type,
   selectedItemKey,
   onSelectItem,
 }: {
-  data: SWRCacheData[];
+  cache: Cache;
   type: PanelType;
   selectedItemKey: ItemKey | null;
   onSelectItem: (itemKey: ItemKey) => void;
 }) => {
+  const [currentCache, historyCache] = useDevToolsCache(cache);
+  const cacheData = type === "history" ? historyCache : currentCache;
+
   const currentData =
     selectedItemKey &&
     cacheData.find(
