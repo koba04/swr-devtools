@@ -1,3 +1,4 @@
+import type { ContentMessage } from "./content";
 // background.js
 let panelPort: chrome.runtime.Port | null = null;
 let contentPort: chrome.runtime.Port | null = null;
@@ -23,7 +24,7 @@ chrome.runtime.onConnect.addListener((port) => {
     contentPort.onDisconnect.addListener(() => {
       contentPort = null;
     });
-    contentPort.onMessage.addListener((message) => {
+    contentPort.onMessage.addListener((message: ContentMessage) => {
       console.log("sent message from content to panel", message);
       if (panelPort === null) {
         enqueueMessage(message);

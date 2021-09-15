@@ -37,6 +37,5 @@ export const isInfiniteCache = (key: string) => {
 
 export const getInfiniteCacheKey = (key: string) => {
   const match = key.match(/^\$inf\$(?<cacheKey>.*)?/);
-  console.log(match, key);
   return match?.groups?.cacheKey ?? key;
 };
