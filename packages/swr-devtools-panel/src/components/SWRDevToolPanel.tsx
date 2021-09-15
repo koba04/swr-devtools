@@ -45,7 +45,7 @@ const GlobalStyle = createGlobalStyle`
 
     @media (prefers-color-scheme: dark) {
       --swr-devtools-text-color: #FFF;
-      --swr-devtools-bg-color: rgb(39, 40, 34);
+      --swr-devtools-bg-color: #292a2d;
       --swr-devtools-hover-bg-color: #6d6a66;
       --swr-devtools-border-color: #555454;
       --swr-devtools-selected-bg-color: #524f4d;

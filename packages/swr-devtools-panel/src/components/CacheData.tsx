@@ -46,7 +46,7 @@ const AsyncReactJson = ({ data }: Props) => {
       src={data}
       theme={
         matchMedia("(prefers-color-scheme: dark)").matches
-          ? "monokai"
+          ? "railscasts"
           : "rjv-default"
       }
     />
