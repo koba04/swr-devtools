@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.1](https://github.com/koba04/swr-devtools/compare/v0.2.0...v0.2.1) (2021-09-16)
+
+
+### Bug Fixes
+
+* reset a devtool panel when a navigation is happen ([#24](https://github.com/koba04/swr-devtools/issues/24)) ([1cc108b](https://github.com/koba04/swr-devtools/commit/1cc108bf3556b65b8d251e3b22af9505ea28e8da))
+* sync SWRDevTools and a devtool panel ([#27](https://github.com/koba04/swr-devtools/issues/27)) ([ba34e6f](https://github.com/koba04/swr-devtools/commit/ba34e6ff3be261cd656a5d90f0b4bef64e1b71e8))
+
+
+
+
+
 # 0.2.0 (2021-09-09)
 
 
