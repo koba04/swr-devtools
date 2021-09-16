@@ -22,18 +22,21 @@ const inject = (cache: Cache) =>
     if (isMetaCache(key)) {
       return;
     }
-    window.postMessage({
-      type: "updated_swr_cache",
-      payload: {
-        key,
-        value,
+    window.postMessage(
+      {
+        type: "updated_swr_cache",
+        payload: {
+          key,
+          value,
+        },
       },
-    });
+      "*"
+    );
   });
 
 const swrdevtools: Middleware = (useSWRNext) => (key, fn, config) => {
   useLayoutEffect(() => {
-    window.postMessage({ type: "initialized" });
+    window.postMessage({ type: "initialized" }, "*");
   }, []);
   // FIXME: I'll use mutate to support mutating from a devtool panel.
   const { cache /* , mutate */ } = useSWRConfig();
