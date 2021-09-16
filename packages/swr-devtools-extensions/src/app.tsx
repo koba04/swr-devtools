@@ -10,20 +10,45 @@ const rootEl = document.getElementById("app");
 const port = chrome.runtime.connect({
   name: "panel",
 });
-// @ts-ignore
-port.onMessage.addListener((message: ContentMessage) => {
-  if (message.type === "initialized") {
-    cache.clear();
-    ReactDOM.render(<SWRDevToolPanel cache={cache} isReady={false} />, rootEl);
-  } else if (message.type === "updated_cache") {
-    const { key, value } = message.payload;
-    cache.set(key, value);
-    ReactDOM.render(<SWRDevToolPanel cache={cache} />, rootEl);
-  }
-});
 port.onDisconnect.addListener(() => {
   cache.clear();
-  ReactDOM.render(<SWRDevToolPanel cache={cache} isReady={false} />, rootEl);
+  mounted = false;
+  ReactDOM.render(<SWRDevToolPanel cache={null} />, rootEl);
 });
 
-ReactDOM.render(<SWRDevToolPanel cache={cache} isReady={false} />, rootEl);
+let mounted = false;
+// @ts-ignore
+port.onMessage.addListener((message: ContentMessage) => {
+  switch (message.type) {
+    // loaded a new page
+    case "load": {
+      ReactDOM.render(<SWRDevToolPanel cache={null} />, rootEl);
+      break;
+    }
+
+    // initialized SWRDevTools, start rendering a devtool panel
+    case "initialized": {
+      cache.clear();
+      mounted = true;
+      ReactDOM.render(<SWRDevToolPanel cache={cache} />, rootEl);
+      break;
+    }
+
+    case "updated_swr_cache": {
+      const { key, value } = message.payload;
+      // trigger re-rendering
+      cache.set(key, value);
+
+      // mount a devtool panel if it hasn't been mounted yet.
+      if (mounted === false) {
+        ReactDOM.render(<SWRDevToolPanel cache={cache} />, rootEl);
+        mounted = true;
+      }
+      break;
+    }
+
+    default: {
+      // noop
+    }
+  }
+});
