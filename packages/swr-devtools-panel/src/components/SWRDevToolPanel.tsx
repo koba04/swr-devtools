@@ -20,8 +20,7 @@ const panels: Panel[] = [
 ];
 
 type Props = {
-  cache: Cache;
-  isReady?: boolean;
+  cache: Cache | null;
   isFixedPosition?: boolean;
 };
 
@@ -56,7 +55,7 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-export const SWRDevToolPanel = ({ cache, isReady = true }: Props) => {
+export const SWRDevToolPanel = ({ cache }: Props) => {
   const [activePanel, setActivePanel] = useState<Panel["key"]>("current");
   const [selectedItemKey, setSelectedItemKey] = useState<ItemKey | null>(null);
   return (
@@ -74,7 +73,7 @@ export const SWRDevToolPanel = ({ cache, isReady = true }: Props) => {
         />
       </Header>
       <PanelWrapper>
-        {isReady ? (
+        {cache !== null ? (
           <Panel
             cache={cache}
             type={activePanel}
