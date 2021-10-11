@@ -1,4 +1,5 @@
 import { DevToolsMessage } from "swr-devtools";
+import { runtime } from "webextension-polyfill";
 
 export type ContentMessage =
   | {
@@ -24,7 +25,7 @@ const enqueueMessage = (message: any) => {
 let isDisplayedPanel = false;
 
 // proxy messages from applications to a background script
-const port = chrome.runtime.connect({ name: "content" });
+const port = runtime.connect({ name: "content" });
 port.onMessage.addListener((message: any) => {
   console.log("received from background -> content", message);
   // a panel has been displayed, so we sent queued messages

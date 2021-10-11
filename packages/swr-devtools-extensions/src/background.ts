@@ -1,12 +1,13 @@
+import { runtime, Runtime } from "webextension-polyfill";
 import type { ContentMessage } from "./content";
 // background.js
-let panelPort: chrome.runtime.Port | null = null;
-let contentPort: chrome.runtime.Port | null = null;
+let panelPort: Runtime.Port | null = null;
+let contentPort: Runtime.Port | null = null;
 
 // queued messages until a panel is connected
 const queuedContentMessages: any[] = [];
 
-chrome.runtime.onConnect.addListener((port) => {
+runtime.onConnect.addListener((port) => {
   console.log("on connect", port.name);
   // A port between a content page
   if (port.name === "content") {

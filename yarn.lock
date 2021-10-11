@@ -1438,6 +1438,11 @@
     "@types/react" "*"
     csstype "^3.0.2"
 
+"@types/webextension-polyfill@^0.8.0":
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/@types/webextension-polyfill/-/webextension-polyfill-0.8.0.tgz#6c40740eec531de412f6ceba27bb2cad4a24907c"
+  integrity sha512-usmQx2snpNkVl2VoOGZCdrPnfHL+CjuSFy84ZdTwQ2b2cvyygF/zGW5YI6Zywk+bfq9zmYpORO9lmdN7DknpRw==
+
 "@typescript-eslint/eslint-plugin@^4.15.0":
   version "4.15.0"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/eslint-plugin/-/eslint-plugin-4.15.0.tgz#13a5a07cf30d0d5781e43480aa2a8d38d308b084"
@@ -7877,6 +7882,11 @@ wcwidth@^1.0.0:
   integrity sha1-8LDc+RW8X/FSivrbLA4XtTLaL+g=
   dependencies:
     defaults "^1.0.3"
+
+webextension-polyfill@^0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/webextension-polyfill/-/webextension-polyfill-0.8.0.tgz#f80e9f4b7f81820c420abd6ffbebfa838c60e041"
+  integrity sha512-a19+DzlT6Kp9/UI+mF9XQopeZ+n2ussjhxHJ4/pmIGge9ijCDz7Gn93mNnjpZAk95T4Tae8iHZ6sSf869txqiQ==
 
 webidl-conversions@^4.0.2:
   version "4.0.2"

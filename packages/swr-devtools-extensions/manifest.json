@@ -6,16 +6,23 @@
   "icons": {
     "16": "icons/swr-devtools-16.png",
     "48": "icons/swr-devtools-48.png",
+    "64": "icons/swr-devtools-64.png",
     "128": "icons/swr-devtools-128.png"
   },
   "devtools_page": "devtools.html",
   "background": {
-    "scripts": ["background.js"]
+    "scripts": [
+      "background.js"
+    ]
   },
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
-      "js": ["content.js"],
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content.js"
+      ],
       "run_at": "document_start"
     }
   ]

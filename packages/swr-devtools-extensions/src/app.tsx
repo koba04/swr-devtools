@@ -1,13 +1,13 @@
 import ReactDOM from "react-dom";
 import { SWRDevToolPanel } from "swr-devtools-panel";
+import { runtime } from "webextension-polyfill";
 
 import type { ContentMessage } from "./content";
 
 const cache = new Map();
 const rootEl = document.getElementById("app");
 
-// @ts-ignore
-const port = chrome.runtime.connect({
+const port = runtime.connect({
   name: "panel",
 });
 port.onDisconnect.addListener(() => {
@@ -17,7 +17,6 @@ port.onDisconnect.addListener(() => {
 });
 
 let mounted = false;
-// @ts-ignore
 port.onMessage.addListener((message: ContentMessage) => {
   switch (message.type) {
     // loaded a new page
