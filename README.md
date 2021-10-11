@@ -6,6 +6,8 @@
 
 ![A screenshot of SWR Devtools (dark theme)](./imgs/dark.png)
 
+**This only supports SWR v1 or later versions.**
+
 ## How to use
 
 ### Install SWRDevTools from Chrome Web Store
