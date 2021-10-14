@@ -10,9 +10,12 @@
 
 ## How to use
 
-### Install SWRDevTools from Chrome Web Store
+### Install the SWRDevTools extension
 
-https://chrome.google.com/webstore/detail/swr-devtools/liidbicegefhheghhjbomajjaehnjned
+- Chrome
+    - https://chrome.google.com/webstore/detail/swr-devtools/liidbicegefhheghhjbomajjaehnjned
+- Firefox
+    - https://addons.mozilla.org/en-US/firefox/addon/swr-devtools/
 
 ### Wrap your application in the SWRDevTools component
 
