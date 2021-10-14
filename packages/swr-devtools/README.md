@@ -1,8 +1,10 @@
 # swr-devtools
 
-![A screenshot of SWR Devtools (light theme)](../../imgs/light.png)
+[![npm version](https://badge.fury.io/js/swr-devtools.svg)](https://badge.fury.io/js/swr-devtools)
 
-![A screenshot of SWR Devtools (dark theme)](../../imgs/dark.png)
+![A screenshot of SWR Devtools (light theme)](https://raw.githubusercontent.com/koba04/swr-devtools/main/imgs/light.png)
+
+![A screenshot of SWR Devtools (dark theme)](https://raw.githubusercontent.com/koba04/swr-devtools/main/imgs/dark.png)
 
 ### Install
 

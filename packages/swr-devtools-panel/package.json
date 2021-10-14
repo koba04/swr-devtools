@@ -1,7 +1,6 @@
 {
   "name": "swr-devtools-panel",
   "version": "0.2.2",
-  "private": true,
   "description": "A React component for the SWR DevTools panel",
   "main": "lib/index.js",
   "license": "MIT",

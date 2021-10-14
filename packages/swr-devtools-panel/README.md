@@ -1,15 +1,22 @@
 # swr-devtools-panel
 
-**This is a private package.**
+[![npm version](https://badge.fury.io/js/swr-devtools-panel.svg)](https://badge.fury.io/js/swr-devtools-panel)
 
-This package is a React component of SWR Devtools panel.
+This package is a React component of SWR Devtools panel. If you want to use this component as a React component, you can place it on your own.
 
+**This package hasn't been stable yet, so its interface would be changed in the future releases.**
+## Install
 
-If you want to use this component as a React component and place it on your own, you should install `styled-components` as well as `react` and `swr`. But this is not a recommend way, and `swr-devtools-panel` hasn't been published yet.
+```
+// install peerDependencies
+$ yarn add react swr styled-components
+$ yarn add swr-devtools-panel
+```
+
+## How to use
 
 ```jsx
 import { useSWRConfig } from "swr";
-// This package hasn't been published yet.
 import { SWRDevToolsPanel } from "swr-devtools-panel";
 
 const App = () => {
