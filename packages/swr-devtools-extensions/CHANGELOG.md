@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/koba04/swr-devtools/compare/v0.2.2...v0.3.0) (2021-10-14)
+
+
+### Features
+
+* support Firefox Extension ([#29](https://github.com/koba04/swr-devtools/issues/29)) ([27f5f0e](https://github.com/koba04/swr-devtools/commit/27f5f0e186fc45dcd5f39862f4788c3a33ba6b18))
+
+
+
+
+
 ## [0.2.2](https://github.com/koba04/swr-devtools/compare/v0.2.0...v0.2.2) (2021-09-16)
 
 

@@ -1,6 +1,6 @@
 {
   "name": "swr-devtools",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "A React component for SWR DevTools",
   "main": "lib/index.js",
   "license": "MIT",
