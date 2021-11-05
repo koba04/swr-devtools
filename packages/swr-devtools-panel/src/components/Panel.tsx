@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Cache } from "swr";
 
@@ -19,6 +19,7 @@ export const Panel = ({
   onSelectItem: (itemKey: ItemKey) => void;
 }) => {
   const [currentCache, historyCache] = useDevToolsCache(cache);
+  const [filterText, setFilterText] = useState("");
   const cacheData = type === "history" ? historyCache : currentCache;
 
   const currentData =
@@ -31,22 +32,32 @@ export const Panel = ({
   return (
     <PanelWrapper>
       <PanelItem>
+        <Input
+          type="text"
+          onChange={(e) => setFilterText(e.target.value)}
+          placeholder="input a filter text"
+        />
         <CacheItems>
-          {cacheData.map(({ key, timestampString, timestamp }) => (
-            <CacheItem
-              key={`${type}--${key}--${
-                type === "history" ? timestamp.getTime() : ""
-              }`}
-              isSelected={
-                selectedItemKey?.key === key &&
-                (type === "current" || selectedItemKey?.timestamp === timestamp)
-              }
-            >
-              <CacheItemButton onClick={() => onSelectItem({ key, timestamp })}>
-                <CacheKey cacheKey={key} /> ({timestampString})
-              </CacheItemButton>
-            </CacheItem>
-          ))}
+          {cacheData
+            .filter(({ key }) => filterText === "" || key.includes(filterText))
+            .map(({ key, timestampString, timestamp }) => (
+              <CacheItem
+                key={`${type}--${key}--${
+                  type === "history" ? timestamp.getTime() : ""
+                }`}
+                isSelected={
+                  selectedItemKey?.key === key &&
+                  (type === "current" ||
+                    selectedItemKey?.timestamp === timestamp)
+                }
+              >
+                <CacheItemButton
+                  onClick={() => onSelectItem({ key, timestamp })}
+                >
+                  <CacheKey cacheKey={key} /> ({timestampString})
+                </CacheItemButton>
+              </CacheItem>
+            ))}
         </CacheItems>
       </PanelItem>
       <Hr />
@@ -54,6 +65,21 @@ export const Panel = ({
     </PanelWrapper>
   );
 };
+
+const Input = styled.input`
+  top: 0;
+  position: sticky;
+  width: 100%;
+  display: inline-block;
+  height: 2rem;
+  margin: 0;
+  padding: 0;
+  background-color: var(--swr-devtools-bg-color);
+  border: solid 1px var(--swr-devtools-border-color);
+  border-left: 0;
+  border-right: 0;
+  color: var(--swr-devtools-text-color);
+`;
 
 const PanelWrapper = styled.section`
   display: flex;
