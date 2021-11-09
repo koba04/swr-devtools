@@ -6,6 +6,7 @@ import { PanelType, ItemKey } from "./SWRDevToolPanel";
 import { CacheData } from "./CacheData";
 import { CacheKey } from "./CacheKey";
 import { useDevToolsCache } from "../devtools-cache";
+import { SearchInput } from "./SearchInput";
 
 export const Panel = ({
   cache,
@@ -32,10 +33,9 @@ export const Panel = ({
   return (
     <PanelWrapper>
       <PanelItem>
-        <Input
-          type="text"
-          onChange={(e) => setFilterText(e.target.value)}
-          placeholder="input a filter text"
+        <SearchInput
+          value={filterText}
+          onChange={(text: string) => setFilterText(text)}
         />
         <CacheItems>
           {cacheData
@@ -65,21 +65,6 @@ export const Panel = ({
     </PanelWrapper>
   );
 };
-
-const Input = styled.input`
-  top: 0;
-  position: sticky;
-  width: 100%;
-  display: inline-block;
-  height: 2rem;
-  margin: 0;
-  padding: 0;
-  background-color: var(--swr-devtools-bg-color);
-  border: solid 1px var(--swr-devtools-border-color);
-  border-left: 0;
-  border-right: 0;
-  color: var(--swr-devtools-text-color);
-`;
 
 const PanelWrapper = styled.section`
   display: flex;
