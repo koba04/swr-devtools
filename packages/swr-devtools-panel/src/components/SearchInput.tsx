@@ -27,7 +27,7 @@ const SearchArea = styled.label`
   display: flex;
   align-items: center;
   gap: 8px;
-  height: 2.5rem;
+  height: 2rem;
   margin: 0;
   padding: 0;
   border-bottom: solid 1px var(--swr-devtools-border-color);
