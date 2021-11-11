@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Cache } from "swr";
 
@@ -6,6 +6,7 @@ import { PanelType, ItemKey } from "./SWRDevToolPanel";
 import { CacheData } from "./CacheData";
 import { CacheKey } from "./CacheKey";
 import { useDevToolsCache } from "../devtools-cache";
+import { SearchInput } from "./SearchInput";
 
 export const Panel = ({
   cache,
@@ -19,6 +20,7 @@ export const Panel = ({
   onSelectItem: (itemKey: ItemKey) => void;
 }) => {
   const [currentCache, historyCache] = useDevToolsCache(cache);
+  const [filterText, setFilterText] = useState("");
   const cacheData = type === "history" ? historyCache : currentCache;
 
   const currentData =
@@ -31,22 +33,31 @@ export const Panel = ({
   return (
     <PanelWrapper>
       <PanelItem>
+        <SearchInput
+          value={filterText}
+          onChange={(text: string) => setFilterText(text)}
+        />
         <CacheItems>
-          {cacheData.map(({ key, timestampString, timestamp }) => (
-            <CacheItem
-              key={`${type}--${key}--${
-                type === "history" ? timestamp.getTime() : ""
-              }`}
-              isSelected={
-                selectedItemKey?.key === key &&
-                (type === "current" || selectedItemKey?.timestamp === timestamp)
-              }
-            >
-              <CacheItemButton onClick={() => onSelectItem({ key, timestamp })}>
-                <CacheKey cacheKey={key} /> ({timestampString})
-              </CacheItemButton>
-            </CacheItem>
-          ))}
+          {cacheData
+            .filter(({ key }) => filterText === "" || key.includes(filterText))
+            .map(({ key, timestampString, timestamp }) => (
+              <CacheItem
+                key={`${type}--${key}--${
+                  type === "history" ? timestamp.getTime() : ""
+                }`}
+                isSelected={
+                  selectedItemKey?.key === key &&
+                  (type === "current" ||
+                    selectedItemKey?.timestamp === timestamp)
+                }
+              >
+                <CacheItemButton
+                  onClick={() => onSelectItem({ key, timestamp })}
+                >
+                  <CacheKey cacheKey={key} /> ({timestampString})
+                </CacheItemButton>
+              </CacheItem>
+            ))}
         </CacheItems>
       </PanelItem>
       <Hr />
