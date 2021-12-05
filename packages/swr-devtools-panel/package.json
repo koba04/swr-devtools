@@ -2,17 +2,31 @@
   "name": "swr-devtools-panel",
   "version": "0.3.0",
   "description": "A React component for the SWR DevTools panel",
-  "main": "lib/index.js",
+  "main": "cjs/index.js",
+  "module": "lib/index.js",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "import": "./lib/index.js",
+      "require": "./cjs/index.js",
+      "types": "./lib/index.d.ts"
+    }
+  },
   "license": "MIT",
   "files": [
-    "lib"
+    "lib",
+    "cjs"
   ],
   "author": "koba04",
   "scripts": {
-    "start": "tsc --watch",
-    "clean": "rimraf lib",
+    "clean": "rimraf lib cjs",
+    "start": "run-p start:*",
+    "start:cjs": "tsc -p tsconfig.cjs.json --watch",
+    "start:esm": "tsc --watch",
     "prebuild": "yarn clean",
-    "build": "tsc",
+    "build": "run-p build:*",
+    "build:esm": "tsc",
+    "build:cjs": "tsc -p tsconfig.cjs.json",
     "lint": "tsc --noEmit"
   },
   "peerDependencies": {
