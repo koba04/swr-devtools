@@ -12,6 +12,7 @@
       "types": "./lib/index.d.ts"
     }
   },
+  "types": "lib/index.d.ts",
   "license": "MIT",
   "files": [
     "lib",
