@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/koba04/swr-devtools/compare/v0.3.0...v0.4.0) (2021-12-05)
+
+
+### Features
+
+* **swr-devtools:** support module and exports fields ([264ddeb](https://github.com/koba04/swr-devtools/commit/264ddeb00f40b01014f936967fa1de72cd87c6b2))
+
+
+
+
+
 # [0.3.0](https://github.com/koba04/swr-devtools/compare/v0.2.2...v0.3.0) (2021-10-14)
 
 **Note:** Version bump only for package swr-devtools

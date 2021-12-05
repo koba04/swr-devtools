@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/koba04/swr-devtools/compare/v0.3.0...v0.4.0) (2021-12-05)
+
+
+### Features
+
+* filter cache data ([#36](https://github.com/koba04/swr-devtools/issues/36)) ([acb9013](https://github.com/koba04/swr-devtools/commit/acb9013a9ec6b504c51ae1e6ac7fca33cd08fbb1))
+* **swr-devtools-panel:** support module and exports fields ([03a3ef3](https://github.com/koba04/swr-devtools/commit/03a3ef3e328e9a2e04fd90fd08de8701ae9f6e2d))
+* **swr-devtools:** support module and exports fields ([264ddeb](https://github.com/koba04/swr-devtools/commit/264ddeb00f40b01014f936967fa1de72cd87c6b2))
+
+
+
+
+
 # [0.3.0](https://github.com/koba04/swr-devtools/compare/v0.2.2...v0.3.0) (2021-10-14)
 
 
