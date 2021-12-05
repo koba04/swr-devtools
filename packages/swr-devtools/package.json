@@ -2,10 +2,25 @@
   "name": "swr-devtools",
   "version": "0.3.0",
   "description": "A React component for SWR DevTools",
-  "main": "lib/index.js",
+  "main": "cjs/index.js",
+  "module": "lib/index.js",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "import": "./lib/index.js",
+      "require": "./cjs/index.js",
+      "types": "./lib/index.d.ts"
+    },
+    "./lib/swr-cache": {
+      "import": "./lib/swr-cache.js",
+      "require": "./cjs/swr-cache.js",
+      "types": "./lib/swr-cache.d.ts"
+    }
+  },
   "license": "MIT",
   "files": [
-    "lib"
+    "lib",
+    "cjs"
   ],
   "keywords": [
     "swr"
@@ -18,10 +33,14 @@
   "homepage": "https://github.com/koba04/swr-devtools",
   "bugs": "https://github.com/koba04/swr-devtools/issues",
   "scripts": {
-    "clean": "rimraf lib",
-    "start": "tsc --watch",
+    "clean": "rimraf lib cjs",
+    "start": "run-p start:*",
+    "start:cjs": "tsc -p tsconfig.cjs.json --watch",
+    "start:esm": "tsc --watch",
     "prebuild": "yarn clean",
-    "build": "tsc",
+    "build": "run-p build:*",
+    "build:esm": "tsc",
+    "build:cjs": "tsc -p tsconfig.cjs.json",
     "lint": "tsc --noEmit"
   },
   "peerDependencies": {
