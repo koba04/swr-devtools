@@ -9,7 +9,7 @@
     "build:zip": "cd dist && zip -r ../extension.zip * && cd ../",
     "build:webpack": "webpack --mode production",
     "build": "run-s build:webpack build:zip",
-    "clean": "rimraf dist/",
+    "clean": "rimraf dist/ extension.zip",
     "lint": "tsc --noEmit",
     "start": "webpack --mode development --watch",
     "start:firefox": "web-ext run -s dist"
