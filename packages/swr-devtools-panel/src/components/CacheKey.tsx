@@ -9,14 +9,19 @@ import {
 export const CacheKey = ({ cacheKey }: { cacheKey: string }) => {
   if (isInfiniteCache(cacheKey)) {
     return (
-      <span>
+      <CacheText>
         <CacheTag>Infinite</CacheTag>
         {getInfiniteCacheKey(cacheKey)}
-      </span>
+      </CacheText>
     );
   }
-  return <span>{cacheKey}</span>;
+  return <CacheText>{cacheKey}</CacheText>;
 };
+
+const CacheText = styled.span`
+  display: inline-block;
+  padding: 0.3rem;
+`;
 
 const CacheTag = styled.b`
   margin-right: 0.3rem;

@@ -7,6 +7,7 @@ import { CacheData } from "./CacheData";
 import { CacheKey } from "./CacheKey";
 import { useDevToolsCache } from "../devtools-cache";
 import { SearchInput } from "./SearchInput";
+import { ErrorLabel } from "./ErrorLabel";
 
 export const Panel = ({
   cache,
@@ -40,7 +41,7 @@ export const Panel = ({
         <CacheItems>
           {cacheData
             .filter(({ key }) => filterText === "" || key.includes(filterText))
-            .map(({ key, timestampString, timestamp }) => (
+            .map(({ key, error, timestampString, timestamp }) => (
               <CacheItem
                 key={`${type}--${key}--${
                   type === "history" ? timestamp.getTime() : ""
@@ -54,6 +55,7 @@ export const Panel = ({
                 <CacheItemButton
                   onClick={() => onSelectItem({ key, timestamp })}
                 >
+                  {error && <ErrorLabel />}
                   <CacheKey cacheKey={key} /> ({timestampString})
                 </CacheItemButton>
               </CacheItem>
@@ -99,10 +101,12 @@ const CacheItem = styled.li<{ isSelected: boolean }>`
 `;
 
 const CacheItemButton = styled.button`
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  gap: 2px;
   width: 100%;
   height: 100%;
-  padding: 0.5rem 0;
+  padding: 0.2rem 0;
   border: none;
   background: transparent;
   color: var(--swr-devtools-text-color);
