@@ -36,13 +36,6 @@ const ErrorData = ({ error }: { error: string | ReactJsonViewProps }) => (
   </ErrorWrapper>
 );
 
-const DataWrapper = styled.div`
-  font-size: 1rem;
-  height: 100%;
-  margin: 0;
-  padding: 0 0.3rem;
-`;
-
 const CacheDataView = ({ data }: { data: ReactJsonViewProps }) => {
   if (typeof window === "undefined") return null;
   return (
@@ -68,6 +61,13 @@ const AsyncReactJson = ({ data }: { data: ReactJsonViewProps }) => {
 
 const Wrapper = styled.div`
   padding: 0.2rem;
+`;
+
+const DataWrapper = styled.div`
+  font-size: 0.8rem;
+  height: 100%;
+  margin: 0;
+  padding: 0 0.3rem;
 `;
 
 const ErrorWrapper = styled.div`
