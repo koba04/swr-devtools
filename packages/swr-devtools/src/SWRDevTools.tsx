@@ -1,9 +1,7 @@
-import React, { useLayoutEffect } from "react";
-import { useSWRConfig, SWRConfig, Middleware, Cache } from "swr";
+import React, { useEffect, useLayoutEffect } from "react";
+import { SWRConfig, Middleware, unstable_serialize } from "swr";
 
-import { injectSWRCache, isMetaCache } from "./swr-cache";
-
-const injected = new WeakSet();
+const injected = new WeakSet<any>();
 
 export type DevToolsMessage =
   | {
@@ -17,35 +15,33 @@ export type DevToolsMessage =
       type: "initialized";
     };
 
-const inject = (cache: Cache) =>
-  injectSWRCache(cache, (key: string, value: any) => {
-    if (isMetaCache(key)) {
-      return;
-    }
-    window.postMessage(
-      {
-        type: "updated_swr_cache",
-        payload: {
-          key,
-          value,
-        },
-      },
-      "*"
-    );
-  });
-
 const swrdevtools: Middleware = (useSWRNext) => (key, fn, config) => {
   useLayoutEffect(() => {
     window.postMessage({ type: "initialized" }, "*");
   }, []);
-  // FIXME: I'll use mutate to support mutating from a devtool panel.
-  const { cache /* , mutate */ } = useSWRConfig();
 
-  if (!injected.has(cache)) {
-    inject(cache);
-    injected.add(cache);
-  }
-  return useSWRNext(key, fn, config);
+  const res = useSWRNext(key, fn, config);
+  // This doesn't work with useSWRInfinite because we cannot get the current page index that useSWRInfinite gets as an argument.
+  // This should be `(index) => key(index)` with useSWRInfinite
+  const serializedKey = unstable_serialize(key);
+
+  useEffect(() => {
+    if (typeof res.data !== "undefined" && !injected.has(res.data)) {
+      window.postMessage(
+        {
+          type: "updated_swr_cache",
+          payload: {
+            key: serializedKey,
+            value: res.data,
+          },
+        },
+        "*"
+      );
+      injected.add(res.data);
+    }
+  });
+
+  return res;
 };
 
 export const SWRDevTools = ({ children }: { children: React.ReactNode }) => {
