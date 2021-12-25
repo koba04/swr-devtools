@@ -20,13 +20,18 @@ const DevToolsArea = () => {
   );
 };
 
+const fetcher = async (url) => {
+  const res = await fetch(url);
+  const json = await res.json();
+  if (res.ok) {
+    return json;
+  }
+  throw new Error(json.message);
+};
+
 function MyApp({ Component, pageProps }) {
   return (
-    <SWRConfig
-      value={{
-        fetcher: (url) => fetch(url).then((r) => r.json()),
-      }}
-    >
+    <SWRConfig value={{ fetcher }}>
       <SWRDevTools>
         <Component {...pageProps} />
         <DevToolsArea />
