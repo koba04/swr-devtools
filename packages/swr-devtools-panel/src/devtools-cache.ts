@@ -4,6 +4,8 @@ import { Cache } from "swr";
 import {
   injectSWRCache,
   isMetaCache,
+  isErrorCache,
+  getErrorCacheKey,
   SWRCacheData,
 } from "swr-devtools/lib/swr-cache";
 
@@ -62,15 +64,24 @@ const sortCacheDataFromLatest = (cacheData: Map<string, any>) => {
     .reverse();
 };
 
+// TODO: this is a draft implementation
+const toJSON = (value: any) => {
+  return value instanceof Error ? { message: value.message } : value;
+};
+
 const retrieveCache = (
   key: string,
   value: any
 ): [SWRCacheData[], SWRCacheData[]] => {
   const date = new Date();
 
-  currentCacheData.set(key, {
-    key,
-    data: value,
+  const data = toJSON(value);
+
+  const payload = isErrorCache(key)
+    ? { key: getErrorCacheKey(key), error: data }
+    : { key, data };
+  currentCacheData.set(payload.key, {
+    ...payload,
     timestamp: date,
     timestampString: formatTime(date),
   });

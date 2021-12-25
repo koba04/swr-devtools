@@ -18,7 +18,7 @@ export const CacheData = React.memo(({ data }: Props) => (
       <TimestampText>{data.timestampString}</TimestampText>
     </Title>
     <DataWrapper>
-      <CacheDataView data={data.data} />
+      {data.data && <CacheDataView data={data.data} />}
       {data.error && <ErrorData error={data.error} />}
     </DataWrapper>
   </Wrapper>
