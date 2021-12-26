@@ -7,6 +7,7 @@ import {
   isErrorCache,
   getErrorCacheKey,
   SWRCacheData,
+  isErrorCache,
 } from "swr-devtools/lib/swr-cache";
 
 type DevToolsCache<Value = any> = {
@@ -70,17 +71,18 @@ const toJSON = (value: any) => {
 };
 
 const retrieveCache = (
-  key: string,
+  key_: string,
   value: any
 ): [SWRCacheData[], SWRCacheData[]] => {
   const date = new Date();
 
   const data = toJSON(value);
 
-  const payload = isErrorCache(key)
-    ? { key: getErrorCacheKey(key), error: data }
-    : { key, data };
-  currentCacheData.set(payload.key, {
+  const isErrorCache_ = isErrorCache(key_);
+  const key = isErrorCache_ ? getErrorCacheKey(key_) : key_;
+
+  const payload = isErrorCache_ ? { key, error: data } : { key, data };
+  currentCacheData.set(key, {
     ...payload,
     timestamp: date,
     timestampString: formatTime(date),
