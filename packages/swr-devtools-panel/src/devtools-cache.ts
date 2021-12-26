@@ -7,7 +7,6 @@ import {
   isErrorCache,
   getErrorCacheKey,
   SWRCacheData,
-  isErrorCache,
 } from "swr-devtools/lib/swr-cache";
 
 type DevToolsCache<Value = any> = {
