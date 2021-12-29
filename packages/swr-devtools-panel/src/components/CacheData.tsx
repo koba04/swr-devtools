@@ -1,36 +1,42 @@
 import React, { lazy, Suspense } from "react";
+import { ReactJsonViewProps } from "react-json-view";
 import styled from "styled-components";
 import { SWRCacheData } from "swr-devtools/lib/swr-cache";
 import { CacheKey } from "./CacheKey";
+import { ErrorLabel } from "./ErrorLabel";
 
 type Props = {
   data: SWRCacheData;
 };
 
 export const CacheData = React.memo(({ data }: Props) => (
-  <>
+  <Wrapper>
     <Title>
+      {data.error && <ErrorLabel />}
       <CacheKey cacheKey={data.key} />
       &nbsp;
       <TimestampText>{data.timestampString}</TimestampText>
     </Title>
     <DataWrapper>
-      <CacheDataView data={data.data} />
-      {data.error && <ErrorText>{data.error}</ErrorText>}
+      {data.data && <CacheDataView data={data.data} />}
+      {data.error && <ErrorData error={data.error} />}
     </DataWrapper>
-  </>
+  </Wrapper>
 ));
 CacheData.displayName = "CacheData";
 
-const DataWrapper = styled.div`
-  border-bottom: solid 1px var(--swr-devtools-border-color);
-  font-size: 1rem;
-  height: 100%;
-  margin: 0;
-  padding: 0 0.3rem;
-`;
+const ErrorData = ({ error }: { error: string | ReactJsonViewProps }) => (
+  <ErrorWrapper>
+    <ErrorTitle>ERROR</ErrorTitle>
+    {typeof error === "string" ? (
+      <ErrorText>{error}</ErrorText>
+    ) : (
+      <CacheDataView data={error} />
+    )}
+  </ErrorWrapper>
+);
 
-const CacheDataView = ({ data }: Props) => {
+const CacheDataView = ({ data }: { data: ReactJsonViewProps }) => {
   if (typeof window === "undefined") return null;
   return (
     <Suspense fallback="loading">
@@ -39,7 +45,7 @@ const CacheDataView = ({ data }: Props) => {
   );
 };
 
-const AsyncReactJson = ({ data }: Props) => {
+const AsyncReactJson = ({ data }: { data: ReactJsonViewProps }) => {
   const ReactJson = lazy(() => import("react-json-view"));
   return (
     <ReactJson
@@ -53,13 +59,36 @@ const AsyncReactJson = ({ data }: Props) => {
   );
 };
 
+const Wrapper = styled.div`
+  padding: 0.2rem;
+`;
+
+const DataWrapper = styled.div`
+  font-size: 0.8rem;
+  height: 100%;
+  margin: 0;
+  padding: 0 0.3rem;
+`;
+
+const ErrorWrapper = styled.div`
+  margin-top: 1rem;
+  padding: 0.5rem 0;
+`;
+
 const ErrorText = styled.p`
-  color: var(--swr-devtools-error-text-colora);
+  margin: 0;
+  color: var(--swr-devtools-text-color);
+`;
+
+const ErrorTitle = styled.h4`
+  margin: 0;
+  padding: 0.3rem 0;
+  color: var(--swr-devtools-text-color);
 `;
 
 const Title = styled.h3`
   margin: 0;
-  padding: 1rem 0.5rem;
+  padding: 0.5rem 0rem;
   color: var(--swr-devtools-text-color);
 `;
 

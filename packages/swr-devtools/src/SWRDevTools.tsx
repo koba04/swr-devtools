@@ -1,7 +1,7 @@
 import React, { useLayoutEffect } from "react";
 import { useSWRConfig, SWRConfig, Middleware, Cache } from "swr";
 
-import { injectSWRCache, isMetaCache } from "./swr-cache";
+import { injectSWRCache, isMetaCache, isErrorCache } from "./swr-cache";
 
 const injected = new WeakSet();
 
@@ -17,6 +17,11 @@ export type DevToolsMessage =
       type: "initialized";
     };
 
+// TOOD: we have to support more types
+const convertToSerializableObject = (value: any) => {
+  return value instanceof Error ? { message: value.message } : value;
+};
+
 const inject = (cache: Cache) =>
   injectSWRCache(cache, (key: string, value: any) => {
     if (isMetaCache(key)) {
@@ -27,7 +32,7 @@ const inject = (cache: Cache) =>
         type: "updated_swr_cache",
         payload: {
           key,
-          value,
+          value: convertToSerializableObject(value),
         },
       },
       "*"

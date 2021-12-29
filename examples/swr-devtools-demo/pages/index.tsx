@@ -5,7 +5,10 @@ import useSWR from "swr";
 import { useEffect } from "react";
 
 export default function Home() {
-  const { data, mutate } = useSWR("/api/hello");
+  // const { data, mutate } = useSWR("/api/hello?error=true");
+  const { data, mutate, error } = useSWR(
+    `/api/hello${typeof window !== "undefined" ? location.search : ""}`
+  );
   const { data: data2 } = useSWR("/api/hello?foo");
 
   useEffect(() => {
@@ -36,7 +39,9 @@ export default function Home() {
         <section>
           <p className={styles.row}>
             <span className={styles.cacheKey}>/api/hello</span>
-            <span>{data ? data.name : "...loading"}</span>
+            {!data && !error && <span>...loading</span>}
+            {data && <span>{data.name}</span>}
+            {error && <span>Error: {error.message}</span>}
             <span className={styles.note}>(auto increment in 5 seconds)</span>
           </p>
           <p className={styles.row}>

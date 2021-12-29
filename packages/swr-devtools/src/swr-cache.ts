@@ -28,7 +28,16 @@ export const injectSWRCache = (
 };
 
 export const isMetaCache = (key: string) => {
-  return /^\$(?:req|err|ctx|len)\$/.test(key);
+  return /^\$(?:req|ctx|len)\$/.test(key);
+};
+
+export const isErrorCache = (key: string) => {
+  return /^\$err\$/.test(key);
+};
+
+export const getErrorCacheKey = (key: string) => {
+  const match = key.match(/^\$err\$(?<cacheKey>.*)?/);
+  return match?.groups?.cacheKey ?? key;
 };
 
 export const isInfiniteCache = (key: string) => {

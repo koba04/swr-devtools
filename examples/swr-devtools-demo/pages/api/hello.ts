@@ -4,5 +4,9 @@ let counter = 1;
 
 export default (req, res) => {
   ++counter;
-  res.status(200).json({ name: `Hello World ${counter}` });
+  if (req.query.error) {
+    res.status(500).json({ message: "this is an error message" });
+  } else {
+    res.status(200).json({ name: `Hello World ${counter}` });
+  }
 };
