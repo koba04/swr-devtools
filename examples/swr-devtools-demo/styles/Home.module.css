@@ -1,15 +1,25 @@
 .container {
   min-height: 100vh;
-  padding: 0 0.5rem;
-  display: flex;
+  padding: 0;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
 .main {
+  width: 80%;
+  margin: 0 auto;
   padding: 0;
-  flex: 1;
+}
+
+.header {
+  text-align: center;
+
+}
+
+.header > h1 {
+  width: 100%;
+  margin: 0.2rem 0.5rem;
 }
 
 .row {
@@ -25,9 +35,12 @@
   font-weight: bold;
 }
 
-.nav {
-  font-size: 1.2rem;
-  text-align: center;
+.subTitle {
+  margin: 0.5rem 0;
+}
+
+.paragraph {
+  margin: 0.2rem 0;
 }
 
 .title {
@@ -36,4 +49,31 @@
   line-height: 1.15;
   font-size: 3rem;
   text-align: center;
+}
+
+.list {
+  margin: 0 0 0 1.2rem;
+}
+
+.section {
+  margin: 2rem 0;
+}
+
+.demo {
+  box-shadow: 0 0 2px gray;
+  width: 100%;
+  padding: 0;
+}
+
+.demo > h3 {
+  box-shadow: 0 0 2px gray;
+  margin: 0.5rem 0;
+}
+
+.demoApp {
+  padding: 0.3rem;
+}
+
+.footer {
+  text-align: center;;
 }
