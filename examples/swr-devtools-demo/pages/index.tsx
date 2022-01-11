@@ -34,13 +34,13 @@ export default function Home() {
             <a href="https://swr.vercel.app/" target="_blank" rel="noreferrer">
               SWR
             </a>
-            , which enables you to inspect cache data of SWR.
+            &nbsp;to enable you to inspect your SWR cache data.
           </p>
         </header>
         <section className={styles.section}>
           <h2 className={styles.subTitle}>Download</h2>
           <p className={styles.paragraph}>
-            You can download this devtools at the following.
+            You can download SWRDevTools extensions at the following.
           </p>
           <ul className={styles.list}>
             <li>
@@ -64,10 +64,10 @@ export default function Home() {
           </ul>
         </section>
         <section className={styles.section}>
-          <h2>How to use</h2>
+          <h2 className={styles.subTitle}>How to use</h2>
           <p>
-            Install <code>swr-devtools</code> and wrap your app with the{" "}
-            <code>SWRDevTools</code> component
+            First, you can install <code>swr-devtools</code> and wrap your app
+            with the <code>SWRDevTools</code> component
           </p>
           <pre>{`
           import ReactDOM from "react-dom";
@@ -85,7 +85,7 @@ export default function Home() {
           </p>
         </section>
         <section className={styles.section}>
-          <h2 className={styles.subTitle}>Demo</h2>
+          <h2 className={styles.subTitle}>Online Demo</h2>
           <div className={styles.demo}>
             <h3>App</h3>
             <div className={styles.demoApp}>
@@ -107,7 +107,8 @@ export default function Home() {
           </div>
         </section>
         <nav className={styles.nav}>
-          <Link href="/infinite">An example with useSWRInfinte</Link>
+          You can check{" "}
+          <Link href="/infinite">an example with useSWRInfinte</Link>.
         </nav>
       </main>
       <footer className={styles.footer}>

@@ -23,7 +23,6 @@
 }
 
 .row {
-  font-size: 1.2rem;
   display: grid;
   grid-template-columns: 1fr 1fr 2fr;
   gap: 0.4rem;
@@ -36,7 +35,9 @@
 }
 
 .subTitle {
-  margin: 0.5rem 0;
+  font-size: 1.8rem;
+  margin: 1rem 0;
+  border-bottom: solid 1px rgba(128 128 128 / 20%)
 }
 
 .paragraph {
@@ -48,11 +49,13 @@
   padding-inline-end: 1rem;
   line-height: 1.15;
   font-size: 3rem;
+  font-weight: bold;
   text-align: center;
 }
 
 .list {
-  margin: 0 0 0 1.2rem;
+  margin: 0.5rem 0 0 1.2rem;
+  line-height: 1.5;
 }
 
 .section {
@@ -61,13 +64,14 @@
 
 .demo {
   box-shadow: 0 0 2px gray;
+  border-radius: 3px;
+  background-color: rgba(241 245 249);
   width: 100%;
-  padding: 0;
 }
 
 .demo > h3 {
-  box-shadow: 0 0 2px gray;
-  margin: 0.5rem 0;
+  margin: 0.3rem;
+  padding-top: 0.3rem;
 }
 
 .demoApp {
