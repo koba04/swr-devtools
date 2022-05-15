@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from "react";
+import React, { useDebugValue, useLayoutEffect } from "react";
 import { useSWRConfig, SWRConfig, Middleware, Cache } from "swr";
 
 import { injectSWRCache, isMetaCache, isErrorCache } from "./swr-cache";
@@ -50,7 +50,14 @@ const swrdevtools: Middleware = (useSWRNext) => (key, fn, config) => {
     inject(cache);
     injected.add(cache);
   }
-  return useSWRNext(key, fn, config);
+  const result = useSWRNext(key, fn, config);
+
+  // Record SWR data in the Component panel of React Developer Tools
+  const { mutate, ...rest } = result;
+  const debugValue = { key, config, ...rest };
+  useDebugValue(debugValue);
+
+  return result;
 };
 
 export const SWRDevTools = ({ children }: { children: React.ReactNode }) => {
