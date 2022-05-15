@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Link from "next/link";
 import useSWRInfinite from "swr/infinite";
+import { DevToolsView } from "../components/DevToolsView";
 
 import styles from "../styles/infinite.module.css";
 
@@ -40,12 +41,13 @@ export default function Home() {
           </div>
         </section>
         <nav className={styles.nav}>
-          <Link href="/">/index</Link>
+          <Link href="/">Top</Link>
         </nav>
       </main>
       <footer>
         <p>SWR DevTools</p>
       </footer>
+      <DevToolsView />
     </div>
   );
 }
