@@ -63,9 +63,9 @@
 }
 
 .demo {
-  box-shadow: 0 0 2px gray;
-  border-radius: 3px;
-  background-color: rgba(241 245 249);
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  background-color: #fff;
   width: 100%;
 }
 

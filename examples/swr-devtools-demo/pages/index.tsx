@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
+import { highlight } from "sugar-high";
 import styles from "../styles/Home.module.css";
 import useSWR from "swr";
 import { useEffect } from "react";
@@ -69,17 +70,23 @@ export default function Home() {
             First, you can install <code>swr-devtools</code> and wrap your app
             with the <code>SWRDevTools</code> component
           </p>
-          <pre>{`
-          import ReactDOM from "react-dom";
-          import { SWRDevTools } from "swr-devtools";
+          <pre>
+            <code
+              dangerouslySetInnerHTML={{
+                __html: highlight(`
+import ReactDOM from "react-dom";
+import { SWRDevTools } from "swr-devtools";
 
-          ReactDOM.render(
-            <SWRDevTools>
-              <MainApp />
-            </SWRDevTools>,
-            document.getElementById("app")
-          );
-          `}</pre>
+ReactDOM.render(
+  <SWRDevTools>
+    <MainApp />
+  </SWRDevTools>,
+  document.getElementById("app")
+);
+          `),
+              }}
+            />
+          </pre>
           <p>
             Then, open the SWR Devtools from the browser&apos;s developer tools
           </p>

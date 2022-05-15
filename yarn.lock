@@ -8060,6 +8060,11 @@ stylis@3.5.4:
   resolved "https://registry.yarnpkg.com/stylis/-/stylis-3.5.4.tgz#f665f25f5e299cf3d64654ab949a57c768b73fbe"
   integrity sha512-8/3pSmthWM7lsPBKv7NXkzn2Uc9W7NotcwGNpJaa3k7WMM1XDCA4MgT5k/8BIexd5ydZdboXtU90XH9Ec4Bv/Q==
 
+sugar-high@^0.4.2:
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/sugar-high/-/sugar-high-0.4.2.tgz#9e64f857a688d18d35bbbf941ce118915e8c02cf"
+  integrity sha512-4aJiio7I2d+bUu6vDytG4EvBAmInyF4dbiaQXrzXL4qcsk1RVPocg+8z/jTXEsvIWuTQ9abImrIummVKReZqGA==
+
 supports-color@^5.3.0, supports-color@^5.5.0:
   version "5.5.0"
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-5.5.0.tgz#e2e69a44ac8772f78a1ec0b35b689df6530efc8f"
