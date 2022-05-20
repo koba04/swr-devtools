@@ -41,7 +41,8 @@ export const Panel = ({
         <CacheItems>
           {cacheData
             .filter(({ key }) => filterText === "" || key.includes(filterText))
-            .map(({ key, error, timestampString, timestamp }) => (
+            // @ts-ignore
+            .map(({ key, cache: { error }, timestampString, timestamp }) => (
               <CacheItem
                 key={`${type}--${key}--${
                   type === "history" ? timestamp.getTime() : ""
@@ -63,7 +64,7 @@ export const Panel = ({
         </CacheItems>
       </PanelItem>
       <Hr />
-      <PanelItem>{currentData && <CacheData data={currentData} />}</PanelItem>
+      <PanelItem>{currentData && <CacheData cache={currentData} />}</PanelItem>
     </PanelWrapper>
   );
 };

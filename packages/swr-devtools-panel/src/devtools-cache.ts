@@ -70,19 +70,15 @@ const toJSON = (value: any) => {
 };
 
 const retrieveCache = (
-  key_: string,
+  key: string,
   value: any
 ): [SWRCacheData[], SWRCacheData[]] => {
   const date = new Date();
 
   const data = toJSON(value);
-
-  const isErrorCache_ = isErrorCache(key_);
-  const key = isErrorCache_ ? getErrorCacheKey(key_) : key_;
-
-  const payload = isErrorCache_ ? { key, error: data } : { key, data };
   currentCacheData.set(key, {
-    ...payload,
+    key,
+    cache: data,
     timestamp: date,
     timestampString: formatTime(date),
   });

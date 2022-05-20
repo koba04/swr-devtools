@@ -1,9 +1,8 @@
 import { Cache } from "swr";
 
 export type SWRCacheData = {
-  id: number;
   key: string;
-  data: any;
+  cache: any;
   isValidating: boolean;
   error: string;
   timestamp: Date;
