@@ -2,41 +2,25 @@ import { useState, useEffect } from "react";
 import { Cache } from "swr";
 
 import {
-  injectSWRCache,
-  isMetaCache,
-  isErrorCache,
   getErrorCacheKey,
+  injectSWRCache,
+  isErrorCache,
+  isMetaCache,
   SWRCacheData,
 } from "swr-devtools/lib/swr-cache";
 
-type DevToolsCache<Value = any> = {
-  get(key: string): Value;
-  set(key: string, value: Value): void;
-  delete(key: string): void;
-  // TODO: should support a delete method
-  subscribe(fn: (key: string, value: Value) => void): () => void;
-};
+type Subscribe = (fn: (key: string, value: any) => void) => () => void;
 
-const createDevToolsCache = (cache: Cache): DevToolsCache => {
+const createDevToolsCache = (cache: Cache) => {
   let listeners: Array<(key: string, value: any) => void> = [];
-  const store: DevToolsCache = {
-    get(key) {
-      return cache.get(key);
-    },
-    set(key, value) {
-      cache.set(key, value);
-    },
-    delete(key) {
-      cache.delete(key);
-    },
-    subscribe(callback) {
-      listeners.push(callback);
-      return () => {
-        listeners = [];
-      };
-    },
+  const subscribe: Subscribe = (callback) => {
+    listeners.push(callback);
+    return () => {
+      listeners = [];
+    };
   };
   injectSWRCache(cache, (key: string, value: any) => {
+    console.log("inject", { key, value });
     if (isMetaCache(key)) {
       return;
     }
@@ -44,7 +28,7 @@ const createDevToolsCache = (cache: Cache): DevToolsCache => {
       listener(key, value);
     });
   });
-  return store;
+  return subscribe;
 };
 
 const formatTime = (date: Date) =>
@@ -101,9 +85,26 @@ export const useDevToolsCache = (
   ]);
 
   useEffect(() => {
-    const devToolsCache = createDevToolsCache(cache);
-    const unsubscribe = devToolsCache.subscribe((key: string, value: any) => {
-      setCacheData(retrieveCache(key, value));
+    const subscribe = createDevToolsCache(cache);
+    const unsubscribe = subscribe((key: string, value: any) => {
+      console.log("subscribe", { key, value });
+      // FIXME should detect the cache is SWR v1 rather than detecting v2
+      if (
+        value === undefined ||
+        ("isValidating" in value && "isLoading" in value)
+      ) {
+        setCacheData(retrieveCache(key, value));
+      } else if (/^\$swr\$/.test(key)) {
+        const key2 = key.replace(/^\$swr\$/, "");
+        setCacheData(
+          retrieveCache(key2, {
+            data: cache.get(key2),
+            error: value.error,
+          })
+        );
+      } else {
+        setCacheData(retrieveCache(key, { data: value }));
+      }
     });
     return () => {
       unsubscribe();
