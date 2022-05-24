@@ -47,3 +47,26 @@ export const getInfiniteCacheKey = (key: string) => {
   const match = key.match(/^\$inf\$(?<cacheKey>.*)?/);
   return match?.groups?.cacheKey ?? key;
 };
+
+export const isV2CacheData = (data: any) => {
+  return "isValidating" in data && "isLoading" in data;
+};
+
+export const isV1MetaCache = (key: string) => {
+  return /^\$swr\$/.test(key);
+};
+
+export const convertCacheDataFromV1ToV2 = (
+  key: string,
+  data: any,
+  cache: Cache
+) => {
+  const v1CacheKey = key.replace(/^\$swr\$/, "");
+  return [
+    v1CacheKey,
+    {
+      data: cache.get(v1CacheKey),
+      error: data.error,
+    },
+  ] as const;
+};

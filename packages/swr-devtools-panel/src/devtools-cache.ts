@@ -2,11 +2,14 @@ import { useState, useEffect } from "react";
 import { Cache } from "swr";
 
 import {
-  getErrorCacheKey,
   injectSWRCache,
-  isErrorCache,
   isMetaCache,
   SWRCacheData,
+  isV1MetaCache,
+  isV2CacheData,
+  convertCacheDataFromV1ToV2,
+  isErrorCache,
+  getErrorCacheKey,
 } from "swr-devtools/lib/swr-cache";
 
 type Subscribe = (fn: (key: string, value: any) => void) => () => void;
@@ -20,7 +23,6 @@ const createDevToolsCache = (cache: Cache) => {
     };
   };
   injectSWRCache(cache, (key: string, value: any) => {
-    console.log("inject", { key, value });
     if (isMetaCache(key)) {
       return;
     }
@@ -59,10 +61,15 @@ const retrieveCache = (
 ): [SWRCacheData[], SWRCacheData[]] => {
   const date = new Date();
 
-  const data = toJSON(value);
   currentCacheData.set(key, {
     key,
-    cache: data,
+    cache: Object.keys(value).reduce(
+      (acc, cacheKey) => ({
+        ...acc,
+        [cacheKey]: toJSON(value[cacheKey]),
+      }),
+      {}
+    ),
     timestamp: date,
     timestampString: formatTime(date),
   });
@@ -87,19 +94,17 @@ export const useDevToolsCache = (
   useEffect(() => {
     const subscribe = createDevToolsCache(cache);
     const unsubscribe = subscribe((key: string, value: any) => {
-      console.log("subscribe", { key, value });
       // FIXME should detect the cache is SWR v1 rather than detecting v2
-      if (
-        value === undefined ||
-        ("isValidating" in value && "isLoading" in value)
-      ) {
+      if (value !== undefined && isV2CacheData(value)) {
         setCacheData(retrieveCache(key, value));
-      } else if (/^\$swr\$/.test(key)) {
-        const key2 = key.replace(/^\$swr\$/, "");
+      } else if (value !== undefined && isV1MetaCache(key)) {
         setCacheData(
-          retrieveCache(key2, {
-            data: cache.get(key2),
-            error: value.error,
+          retrieveCache(...convertCacheDataFromV1ToV2(key, value, cache))
+        );
+      } else if (isErrorCache(key)) {
+        setCacheData(
+          retrieveCache(getErrorCacheKey(key), {
+            error: value,
           })
         );
       } else {

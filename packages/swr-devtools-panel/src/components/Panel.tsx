@@ -23,7 +23,6 @@ export const Panel = ({
   const [currentCache, historyCache] = useDevToolsCache(cache);
   const [filterText, setFilterText] = useState("");
   const cacheData = type === "history" ? historyCache : currentCache;
-
   const currentData =
     selectedItemKey &&
     cacheData.find(
