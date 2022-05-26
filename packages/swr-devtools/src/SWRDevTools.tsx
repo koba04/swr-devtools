@@ -1,7 +1,7 @@
 import React, { useLayoutEffect } from "react";
 import { useSWRConfig, SWRConfig, Middleware, Cache } from "swr";
 
-import { injectSWRCache, isMetaCache, isErrorCache } from "./swr-cache";
+import { injectSWRCache, isMetaCache } from "./swr-cache";
 
 const injected = new WeakSet();
 
@@ -32,7 +32,13 @@ const inject = (cache: Cache) =>
         type: "updated_swr_cache",
         payload: {
           key,
-          value: convertToSerializableObject(value),
+          value: Object.keys(value).reduce(
+            (acc, cacheKey) => ({
+              ...acc,
+              [cacheKey]: convertToSerializableObject(value[cacheKey]),
+            }),
+            {}
+          ),
         },
       },
       "*"

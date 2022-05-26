@@ -5,11 +5,7 @@ import {
   injectSWRCache,
   isMetaCache,
   SWRCacheData,
-  isV1MetaCache,
-  isV2CacheData,
-  convertCacheDataFromV1ToV2,
-  isErrorCache,
-  getErrorCacheKey,
+  convertCacheData,
 } from "swr-devtools/lib/swr-cache";
 
 type Subscribe = (fn: (key: string, value: any) => void) => () => void;
@@ -93,23 +89,9 @@ export const useDevToolsCache = (
 
   useEffect(() => {
     const subscribe = createDevToolsCache(cache);
-    const unsubscribe = subscribe((key: string, value: any) => {
-      // FIXME should detect the cache is SWR v1 rather than detecting v2
-      if (value !== undefined && isV2CacheData(value)) {
-        setCacheData(retrieveCache(key, value));
-      } else if (value !== undefined && isV1MetaCache(key)) {
-        setCacheData(
-          retrieveCache(...convertCacheDataFromV1ToV2(key, value, cache))
-        );
-      } else if (isErrorCache(key)) {
-        setCacheData(
-          retrieveCache(getErrorCacheKey(key), {
-            error: value,
-          })
-        );
-      } else {
-        setCacheData(retrieveCache(key, { data: value }));
-      }
+    const unsubscribe = subscribe((key_: string, value_: any) => {
+      const { key, value } = convertCacheData(key_, value_, cache);
+      setCacheData(retrieveCache(key, value));
     });
     return () => {
       unsubscribe();
