@@ -46,12 +46,12 @@
   },
   "peerDependencies": {
     "react": "^17.0.2",
-    "swr": "^1.0.0"
+    "swr": ">=1.0.0"
   },
   "devDependencies": {
     "@types/react": "^17.0.16",
     "react": "^17.0.2",
-    "swr": "^1.0.0",
+    "swr": "^2.0.0-beta.2",
     "typescript": "^4.1.3"
   }
 }

@@ -1,0 +1,83 @@
+.container {
+  min-height: 100vh;
+  padding: 0;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.main {
+  width: 80%;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.header {
+  text-align: center;
+
+}
+
+.header > h1 {
+  width: 100%;
+  margin: 0.2rem 0.5rem;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr;
+  gap: 0.4rem;
+  padding-bottom: 0.2rem;
+  border-bottom: solid 1px #ccc;
+}
+
+.cacheKey {
+  font-weight: bold;
+}
+
+.subTitle {
+  font-size: 1.8rem;
+  margin: 1rem 0;
+  border-bottom: solid 1px rgba(128 128 128 / 20%)
+}
+
+.paragraph {
+  margin: 0.2rem 0;
+}
+
+.title {
+  display: inline-block;
+  padding-inline-end: 1rem;
+  line-height: 1.15;
+  font-size: 3rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.list {
+  margin: 0.5rem 0 0 1.2rem;
+  line-height: 1.5;
+}
+
+.section {
+  margin: 2rem 0;
+}
+
+.demo {
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  background-color: #fff;
+  width: 100%;
+}
+
+.demo > h3 {
+  margin: 0.3rem;
+  padding-top: 0.3rem;
+}
+
+.demoApp {
+  padding: 0.3rem;
+}
+
+.footer {
+  text-align: center;;
+}

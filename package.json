@@ -20,6 +20,8 @@
     "start:extensions": "yarn workspace swr-devtools-extensions start",
     "start:panel": "yarn workspace swr-devtools-panel start",
     "start": "run-p -l start:*",
+    "v1": "yarn workspace swr-v1-devtools-demo dev",
+    "v1-legacy": "yarn workspace swr-v1-legacy-devtools-demo dev",
     "lint:eslint": "eslint '**/pages/**/*' '**/src/**/*'",
     "lint:tsc": "yarn workspaces run lint",
     "lint": "run-p -l lint:*"

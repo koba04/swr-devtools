@@ -6,23 +6,32 @@ import { CacheKey } from "./CacheKey";
 import { ErrorLabel } from "./ErrorLabel";
 
 type Props = {
-  data: SWRCacheData;
+  cache: SWRCacheData;
 };
 
-export const CacheData = React.memo(({ data }: Props) => (
-  <Wrapper>
-    <Title>
-      {data.error && <ErrorLabel />}
-      <CacheKey cacheKey={data.key} />
-      &nbsp;
-      <TimestampText>{data.timestampString}</TimestampText>
-    </Title>
-    <DataWrapper>
-      {data.data && <CacheDataView data={data.data} />}
-      {data.error && <ErrorData error={data.error} />}
-    </DataWrapper>
-  </Wrapper>
-));
+export const CacheData = React.memo(
+  ({
+    cache: {
+      // @ts-ignore
+      cache: { data, error },
+      key,
+      timestampString,
+    },
+  }: Props) => (
+    <Wrapper>
+      <Title>
+        {error && <ErrorLabel />}
+        <CacheKey cacheKey={key} />
+        &nbsp;
+        <TimestampText>{timestampString}</TimestampText>
+      </Title>
+      <DataWrapper>
+        {data && <CacheDataView data={data} />}
+        {error && <ErrorData error={error} />}
+      </DataWrapper>
+    </Wrapper>
+  )
+);
 CacheData.displayName = "CacheData";
 
 const ErrorData = ({ error }: { error: string | ReactJsonViewProps }) => (

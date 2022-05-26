@@ -4,37 +4,19 @@ import { Cache } from "swr";
 import {
   injectSWRCache,
   isMetaCache,
-  isErrorCache,
-  getErrorCacheKey,
   SWRCacheData,
+  convertCacheData,
 } from "swr-devtools/lib/swr-cache";
 
-type DevToolsCache<Value = any> = {
-  get(key: string): Value;
-  set(key: string, value: Value): void;
-  delete(key: string): void;
-  // TODO: should support a delete method
-  subscribe(fn: (key: string, value: Value) => void): () => void;
-};
+type Subscribe = (fn: (key: string, value: any) => void) => () => void;
 
-const createDevToolsCache = (cache: Cache): DevToolsCache => {
+const createDevToolsCache = (cache: Cache) => {
   let listeners: Array<(key: string, value: any) => void> = [];
-  const store: DevToolsCache = {
-    get(key) {
-      return cache.get(key);
-    },
-    set(key, value) {
-      cache.set(key, value);
-    },
-    delete(key) {
-      cache.delete(key);
-    },
-    subscribe(callback) {
-      listeners.push(callback);
-      return () => {
-        listeners = [];
-      };
-    },
+  const subscribe: Subscribe = (callback) => {
+    listeners.push(callback);
+    return () => {
+      listeners = [];
+    };
   };
   injectSWRCache(cache, (key: string, value: any) => {
     if (isMetaCache(key)) {
@@ -44,7 +26,7 @@ const createDevToolsCache = (cache: Cache): DevToolsCache => {
       listener(key, value);
     });
   });
-  return store;
+  return subscribe;
 };
 
 const formatTime = (date: Date) =>
@@ -70,19 +52,20 @@ const toJSON = (value: any) => {
 };
 
 const retrieveCache = (
-  key_: string,
+  key: string,
   value: any
 ): [SWRCacheData[], SWRCacheData[]] => {
   const date = new Date();
 
-  const data = toJSON(value);
-
-  const isErrorCache_ = isErrorCache(key_);
-  const key = isErrorCache_ ? getErrorCacheKey(key_) : key_;
-
-  const payload = isErrorCache_ ? { key, error: data } : { key, data };
   currentCacheData.set(key, {
-    ...payload,
+    key,
+    cache: Object.keys(value).reduce(
+      (acc, cacheKey) => ({
+        ...acc,
+        [cacheKey]: toJSON(value[cacheKey]),
+      }),
+      {}
+    ),
     timestamp: date,
     timestampString: formatTime(date),
   });
@@ -105,8 +88,9 @@ export const useDevToolsCache = (
   ]);
 
   useEffect(() => {
-    const devToolsCache = createDevToolsCache(cache);
-    const unsubscribe = devToolsCache.subscribe((key: string, value: any) => {
+    const subscribe = createDevToolsCache(cache);
+    const unsubscribe = subscribe((key_: string, value_: any) => {
+      const { key, value } = convertCacheData(key_, value_, cache);
       setCacheData(retrieveCache(key, value));
     });
     return () => {
