@@ -7,7 +7,6 @@ import { CacheData } from "./CacheData";
 import { CacheKey } from "./CacheKey";
 import { useDevToolsCache } from "../devtools-cache";
 import { SearchInput } from "./SearchInput";
-import { ErrorLabel } from "./ErrorLabel";
 
 export const Panel = ({
   cache,
@@ -41,7 +40,7 @@ export const Panel = ({
           {cacheData
             .filter(({ key }) => filterText === "" || key.includes(filterText))
             // @ts-ignore
-            .map(({ key, cache: { error }, timestampString, timestamp }) => (
+            .map(({ key, cache: cache_, timestampString, timestamp }) => (
               <CacheItem
                 key={`${type}--${key}--${
                   type === "history" ? timestamp.getTime() : ""
@@ -55,8 +54,7 @@ export const Panel = ({
                 <CacheItemButton
                   onClick={() => onSelectItem({ key, timestamp })}
                 >
-                  {error && <ErrorLabel />}
-                  <CacheKey cacheKey={key} /> ({timestampString})
+                  <CacheKey cacheKey={key} cache={cache_} /> ({timestampString})
                 </CacheItemButton>
               </CacheItem>
             ))}
