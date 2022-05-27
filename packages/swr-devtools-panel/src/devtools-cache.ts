@@ -59,6 +59,7 @@ const retrieveCache = (
 
   currentCacheData.set(key, {
     key,
+    // FIXME: cache is not appropriate name
     cache: Object.keys(value).reduce(
       (acc, cacheKey) => ({
         ...acc,

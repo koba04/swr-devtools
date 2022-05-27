@@ -5,27 +5,39 @@ import {
   isInfiniteCache,
   getInfiniteCacheKey,
 } from "swr-devtools/lib/swr-cache";
+import {
+  ErrorLabel,
+  InfiniteLabel,
+  LoadingLabel,
+  ValidationgLabel,
+} from "./StatusLabel";
 
-export const CacheKey = ({ cacheKey }: { cacheKey: string }) => {
+export const CacheKey = ({
+  cacheKey,
+  cache,
+}: {
+  cacheKey: string;
+  cache: any;
+}) => {
   if (isInfiniteCache(cacheKey)) {
     return (
       <CacheText>
-        <CacheTag>Infinite</CacheTag>
+        <InfiniteLabel />
         {getInfiniteCacheKey(cacheKey)}
       </CacheText>
     );
   }
-  return <CacheText>{cacheKey}</CacheText>;
+  return (
+    <CacheText>
+      {cache && cache.error && <ErrorLabel />}
+      {cache && cache.isLoading && <LoadingLabel />}
+      {cache && cache.isValidating && <ValidationgLabel />}
+      {cacheKey}
+    </CacheText>
+  );
 };
 
 const CacheText = styled.span`
   display: inline-block;
   padding: 0.3rem;
-`;
-
-const CacheTag = styled.b`
-  margin-right: 0.3rem;
-  padding: 0.2rem;
-  background-color: var(--swr-devtools-tag-bg-color);
-  color: var(--swr-devtools-tag-text-color);
 `;

@@ -3,7 +3,7 @@ import { ReactJsonViewProps } from "react-json-view";
 import styled from "styled-components";
 import { SWRCacheData } from "swr-devtools/lib/swr-cache";
 import { CacheKey } from "./CacheKey";
-import { ErrorLabel } from "./ErrorLabel";
+import { ErrorLabel } from "./StatusLabel";
 
 type Props = {
   cache: SWRCacheData;
@@ -13,37 +13,37 @@ export const CacheData = React.memo(
   ({
     cache: {
       // @ts-ignore
-      cache: { data, error },
+      cache: cacheData,
       key,
       timestampString,
     },
   }: Props) => (
     <Wrapper>
       <Title>
-        {error && <ErrorLabel />}
-        <CacheKey cacheKey={key} />
+        <CacheKey cacheKey={key} cache={cacheData} />
         &nbsp;
         <TimestampText>{timestampString}</TimestampText>
       </Title>
       <DataWrapper>
-        {data && <CacheDataView data={data} />}
-        {error && <ErrorData error={error} />}
+        {cacheData.data && (
+          <>
+            <DataTitle>Data</DataTitle>
+            <CacheDataView data={cacheData.data} />
+          </>
+        )}
+        {cacheData.error && (
+          <>
+            <DataTitle>
+              <ErrorLabel>Error</ErrorLabel>
+            </DataTitle>
+            <CacheDataView data={cacheData.error} />
+          </>
+        )}
       </DataWrapper>
     </Wrapper>
   )
 );
 CacheData.displayName = "CacheData";
-
-const ErrorData = ({ error }: { error: string | ReactJsonViewProps }) => (
-  <ErrorWrapper>
-    <ErrorTitle>ERROR</ErrorTitle>
-    {typeof error === "string" ? (
-      <ErrorText>{error}</ErrorText>
-    ) : (
-      <CacheDataView data={error} />
-    )}
-  </ErrorWrapper>
-);
 
 const CacheDataView = ({ data }: { data: ReactJsonViewProps }) => {
   if (typeof window === "undefined") return null;
@@ -79,23 +79,13 @@ const DataWrapper = styled.div`
   padding: 0 0.3rem;
 `;
 
-const ErrorWrapper = styled.div`
-  margin-top: 1rem;
-  padding: 0.5rem 0;
-`;
-
-const ErrorText = styled.p`
-  margin: 0;
-  color: var(--swr-devtools-text-color);
-`;
-
-const ErrorTitle = styled.h4`
-  margin: 0;
-  padding: 0.3rem 0;
-  color: var(--swr-devtools-text-color);
-`;
-
 const Title = styled.h3`
+  margin: 0;
+  padding: 0.5rem 0rem;
+  color: var(--swr-devtools-text-color);
+`;
+
+const DataTitle = styled.h4`
   margin: 0;
   padding: 0.5rem 0rem;
   color: var(--swr-devtools-text-color);
