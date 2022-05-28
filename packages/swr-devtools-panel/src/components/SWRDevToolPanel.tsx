@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import { Cache } from "swr";
+import { DevToolsCacheData } from "swr-devtools/lib/swr-cache";
 
 import { Panel } from "./Panel";
 import { Tab } from "./Tab";
@@ -22,11 +23,6 @@ const panels: Panel[] = [
 type Props = {
   cache: Cache | null;
   isFixedPosition?: boolean;
-};
-
-export type ItemKey = {
-  key: string;
-  timestamp: Date;
 };
 
 const GlobalStyle = createGlobalStyle`
@@ -57,7 +53,8 @@ const GlobalStyle = createGlobalStyle`
 
 export const SWRDevToolPanel = ({ cache }: Props) => {
   const [activePanel, setActivePanel] = useState<Panel["key"]>("current");
-  const [selectedItemKey, setSelectedItemKey] = useState<ItemKey | null>(null);
+  const [selectedDevToolsCacheData, selectDevToolsCacheData] =
+    useState<DevToolsCacheData | null>(null);
   return (
     <DevToolWindow>
       <GlobalStyle />
@@ -68,7 +65,7 @@ export const SWRDevToolPanel = ({ cache }: Props) => {
           current={activePanel}
           onChange={(panel: PanelType) => {
             setActivePanel(panel);
-            setSelectedItemKey(null);
+            selectDevToolsCacheData(null);
           }}
         />
       </Header>
@@ -77,8 +74,8 @@ export const SWRDevToolPanel = ({ cache }: Props) => {
           <Panel
             cache={cache}
             type={activePanel}
-            selectedItemKey={selectedItemKey}
-            onSelectItem={setSelectedItemKey}
+            selectedItemKey={selectedDevToolsCacheData}
+            onSelectItem={selectDevToolsCacheData}
           />
         ) : (
           <NoteText>

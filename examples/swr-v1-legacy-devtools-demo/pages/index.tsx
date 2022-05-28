@@ -2,7 +2,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { highlight } from "sugar-high";
 import styles from "../styles/Home.module.css";
-import useSWR from "swr";
+import useSWR, { useSWRConfig } from "swr";
 import { useEffect } from "react";
 import { DevToolsView } from "../components/DevToolsView";
 
@@ -19,6 +19,8 @@ export default function Home() {
     }, 5000);
     return () => clearInterval(timerId);
   }, [mutate]);
+
+  console.log(useSWRConfig().cache);
 
   return (
     <div className={styles.container}>

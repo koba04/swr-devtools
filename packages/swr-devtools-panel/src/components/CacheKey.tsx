@@ -4,6 +4,7 @@ import styled from "styled-components";
 import {
   isInfiniteCache,
   getInfiniteCacheKey,
+  DevToolsCacheData,
 } from "swr-devtools/lib/swr-cache";
 import {
   ErrorLabel,
@@ -13,26 +14,24 @@ import {
 } from "./StatusLabel";
 
 export const CacheKey = ({
-  cacheKey,
-  cache,
+  devToolsCacheData,
 }: {
-  cacheKey: string;
-  cache: any;
+  devToolsCacheData: DevToolsCacheData;
 }) => {
-  if (isInfiniteCache(cacheKey)) {
+  if (isInfiniteCache(devToolsCacheData.key)) {
     return (
       <CacheText>
         <InfiniteLabel />
-        {getInfiniteCacheKey(cacheKey)}
+        {getInfiniteCacheKey(devToolsCacheData.key)}
       </CacheText>
     );
   }
   return (
     <CacheText>
-      {cache && cache.error && <ErrorLabel />}
-      {cache && cache.isLoading && <LoadingLabel />}
-      {cache && cache.isValidating && <ValidationgLabel />}
-      {cacheKey}
+      {devToolsCacheData.error && <ErrorLabel />}
+      {devToolsCacheData.isLoading && <LoadingLabel />}
+      {devToolsCacheData.isValidating && <ValidationgLabel />}
+      {devToolsCacheData.key}
     </CacheText>
   );
 };

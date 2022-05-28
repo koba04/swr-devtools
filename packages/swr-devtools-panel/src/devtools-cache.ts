@@ -4,8 +4,8 @@ import { Cache } from "swr";
 import {
   injectSWRCache,
   isMetaCache,
-  SWRCacheData,
-  convertCacheData,
+  DevToolsCacheData,
+  convertToDevToolsCacheData,
 } from "swr-devtools/lib/swr-cache";
 
 type Subscribe = (fn: (key: string, value: any) => void) => () => void;
@@ -34,15 +34,15 @@ const formatTime = (date: Date) =>
     date.getMinutes()
   ).padStart(2, "0")}:${String(date.getSeconds()).padStart(2, "0")}`;
 
-const cacheHistory = new Map<string, any>();
-const currentCacheData = new Map<string, any>();
+const cacheHistory = new Map<string, DevToolsCacheData>();
+const currentCacheData = new Map<string, DevToolsCacheData>();
 
 const getCacheHistoryKey = (key: string, timestamp: Date) =>
   `${key}__${timestamp.getTime()}`;
 
-const sortCacheDataFromLatest = (cacheData: Map<string, any>) => {
+const sortCacheDataFromLatest = (cacheData: Map<string, DevToolsCacheData>) => {
   return Array.from(cacheData.values())
-    .sort((a, b) => a.timestamp - b.timestamp)
+    .sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime())
     .reverse();
 };
 
@@ -53,26 +53,32 @@ const toJSON = (value: any) => {
 
 const retrieveCache = (
   key: string,
-  value: any
-): [SWRCacheData[], SWRCacheData[]] => {
+  value: Partial<DevToolsCacheData>
+): [DevToolsCacheData[], DevToolsCacheData[]] => {
   const date = new Date();
 
+  const currentDevToolsCacheData = currentCacheData.get(key);
+
+  const devToolsCacheData: DevToolsCacheData = Object.keys(
+    value
+  ).reduce<DevToolsCacheData>(
+    (acc, cacheKey) => ({
+      ...acc,
+      [cacheKey]: toJSON(value[cacheKey as keyof DevToolsCacheData]),
+    }),
+    {} as DevToolsCacheData
+  );
+
   currentCacheData.set(key, {
+    ...currentDevToolsCacheData,
+    ...devToolsCacheData,
     key,
-    // FIXME: cache is not appropriate name
-    cache: Object.keys(value).reduce(
-      (acc, cacheKey) => ({
-        ...acc,
-        [cacheKey]: toJSON(value[cacheKey]),
-      }),
-      {}
-    ),
     timestamp: date,
     timestampString: formatTime(date),
   });
 
   const cacheHistoryKey = getCacheHistoryKey(key, date);
-  cacheHistory.set(cacheHistoryKey, currentCacheData.get(key));
+  cacheHistory.set(cacheHistoryKey, currentCacheData.get(key)!);
 
   return [
     sortCacheDataFromLatest(currentCacheData),
@@ -82,18 +88,19 @@ const retrieveCache = (
 
 export const useDevToolsCache = (
   cache: Cache
-): [SWRCacheData[], SWRCacheData[]] => {
-  const [cacheData, setCacheData] = useState<[SWRCacheData[], SWRCacheData[]]>([
-    [],
-    [],
-  ]);
+): [DevToolsCacheData[], DevToolsCacheData[]] => {
+  const [cacheData, setCacheData] = useState<
+    [DevToolsCacheData[], DevToolsCacheData[]]
+  >([[], []]);
 
   useEffect(() => {
     const subscribe = createDevToolsCache(cache);
-    const unsubscribe = subscribe((key_: string, value_: any) => {
-      const { key, value } = convertCacheData(key_, value_, cache);
-      setCacheData(retrieveCache(key, value));
-    });
+    const unsubscribe = subscribe(
+      (key_: string, value_: Partial<DevToolsCacheData>) => {
+        const { key, value } = convertToDevToolsCacheData(key_, value_, cache);
+        setCacheData(retrieveCache(key, value));
+      }
+    );
     return () => {
       unsubscribe();
       cacheHistory.clear();
