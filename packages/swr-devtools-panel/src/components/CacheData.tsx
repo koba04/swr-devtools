@@ -1,48 +1,39 @@
 import React, { lazy, Suspense } from "react";
 import { ReactJsonViewProps } from "react-json-view";
 import styled from "styled-components";
-import { SWRCacheData } from "swr-devtools/lib/swr-cache";
+import { DevToolsCacheData } from "swr-devtools/lib/swr-cache";
 import { CacheKey } from "./CacheKey";
 import { ErrorLabel } from "./StatusLabel";
 
 type Props = {
-  cache: SWRCacheData;
+  devToolsCacheData: DevToolsCacheData;
 };
 
-export const CacheData = React.memo(
-  ({
-    cache: {
-      // @ts-ignore
-      cache: cacheData,
-      key,
-      timestampString,
-    },
-  }: Props) => (
-    <Wrapper>
-      <Title>
-        <CacheKey cacheKey={key} cache={cacheData} />
-        &nbsp;
-        <TimestampText>{timestampString}</TimestampText>
-      </Title>
-      <DataWrapper>
-        {cacheData.data && (
-          <>
-            <DataTitle>Data</DataTitle>
-            <CacheDataView data={cacheData.data} />
-          </>
-        )}
-        {cacheData.error && (
-          <>
-            <DataTitle>
-              <ErrorLabel>Error</ErrorLabel>
-            </DataTitle>
-            <CacheDataView data={cacheData.error} />
-          </>
-        )}
-      </DataWrapper>
-    </Wrapper>
-  )
-);
+export const CacheData = React.memo(({ devToolsCacheData }: Props) => (
+  <Wrapper>
+    <Title>
+      <CacheKey devToolsCacheData={devToolsCacheData} />
+      &nbsp;
+      <TimestampText>{devToolsCacheData.timestampString}</TimestampText>
+    </Title>
+    <DataWrapper>
+      {devToolsCacheData.data && (
+        <>
+          <DataTitle>Data</DataTitle>
+          <CacheDataView data={devToolsCacheData.data as any} />
+        </>
+      )}
+      {devToolsCacheData.error && (
+        <>
+          <DataTitle>
+            <ErrorLabel>Error</ErrorLabel>
+          </DataTitle>
+          <CacheDataView data={devToolsCacheData.error as any} />
+        </>
+      )}
+    </DataWrapper>
+  </Wrapper>
+));
 CacheData.displayName = "CacheData";
 
 const CacheDataView = ({ data }: { data: ReactJsonViewProps }) => {

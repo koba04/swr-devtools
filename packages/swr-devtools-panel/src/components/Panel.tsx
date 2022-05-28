@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Cache } from "swr";
 
-import { PanelType, ItemKey } from "./SWRDevToolPanel";
+import { PanelType } from "./SWRDevToolPanel";
 import { CacheData } from "./CacheData";
 import { CacheKey } from "./CacheKey";
 import { useDevToolsCache } from "../devtools-cache";
 import { SearchInput } from "./SearchInput";
+import { DevToolsCacheData } from "swr-devtools/lib/swr-cache";
 
 export const Panel = ({
   cache,
@@ -16,15 +17,17 @@ export const Panel = ({
 }: {
   cache: Cache;
   type: PanelType;
-  selectedItemKey: ItemKey | null;
-  onSelectItem: (itemKey: ItemKey) => void;
+  selectedItemKey: DevToolsCacheData | null;
+  onSelectItem: (devToolsCacheData: DevToolsCacheData) => void;
 }) => {
-  const [currentCache, historyCache] = useDevToolsCache(cache);
+  const [currentDevToolsCacheData, historyDevToolsCacheData] =
+    useDevToolsCache(cache);
   const [filterText, setFilterText] = useState("");
-  const cacheData = type === "history" ? historyCache : currentCache;
-  const currentData =
+  const allDevToolsCacheData =
+    type === "history" ? historyDevToolsCacheData : currentDevToolsCacheData;
+  const selectedDevToolsCacheData =
     selectedItemKey &&
-    cacheData.find(
+    allDevToolsCacheData.find(
       (c) =>
         c.key === selectedItemKey.key &&
         (type === "current" || c.timestamp === selectedItemKey.timestamp)
@@ -37,31 +40,37 @@ export const Panel = ({
           onChange={(text: string) => setFilterText(text)}
         />
         <CacheItems>
-          {cacheData
+          {allDevToolsCacheData
             .filter(({ key }) => filterText === "" || key.includes(filterText))
-            // @ts-ignore
-            .map(({ key, cache: cache_, timestampString, timestamp }) => (
+            .map((devToolsCacheData) => (
               <CacheItem
-                key={`${type}--${key}--${
-                  type === "history" ? timestamp.getTime() : ""
+                key={`${type}--${devToolsCacheData.key}--${
+                  type === "history"
+                    ? devToolsCacheData.timestamp.getTime()
+                    : ""
                 }`}
                 isSelected={
-                  selectedItemKey?.key === key &&
+                  selectedItemKey?.key === devToolsCacheData.key &&
                   (type === "current" ||
-                    selectedItemKey?.timestamp === timestamp)
+                    selectedItemKey?.timestamp === devToolsCacheData.timestamp)
                 }
               >
                 <CacheItemButton
-                  onClick={() => onSelectItem({ key, timestamp })}
+                  onClick={() => onSelectItem(devToolsCacheData)}
                 >
-                  <CacheKey cacheKey={key} cache={cache_} /> ({timestampString})
+                  <CacheKey devToolsCacheData={devToolsCacheData} /> (
+                  {devToolsCacheData.timestampString})
                 </CacheItemButton>
               </CacheItem>
             ))}
         </CacheItems>
       </PanelItem>
       <Hr />
-      <PanelItem>{currentData && <CacheData cache={currentData} />}</PanelItem>
+      <PanelItem>
+        {selectedDevToolsCacheData && (
+          <CacheData devToolsCacheData={selectedDevToolsCacheData} />
+        )}
+      </PanelItem>
     </PanelWrapper>
   );
 };

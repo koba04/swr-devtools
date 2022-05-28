@@ -1,10 +1,11 @@
 import { Cache } from "swr";
 
-export type SWRCacheData = {
+export type DevToolsCacheData = {
   key: string;
-  cache: any;
-  isValidating: boolean;
-  error: string;
+  data?: unknown;
+  isValidating?: boolean;
+  isLoading?: boolean;
+  error?: unknown;
   timestamp: Date;
   timestampString: string;
 };
@@ -56,7 +57,13 @@ const isV1MetaCache = (key: string) => {
   return /^\$swr\$/.test(key);
 };
 
-export const convertCacheData = (key: string, value: any, cache: Cache) => {
+// TODO: Support $req$ for isValidationg and useSWRInfinite keys
+// refs. https://github.com/koba04/swr-devtools/issues/48
+export const convertToDevToolsCacheData = (
+  key: string,
+  value: any,
+  cache: Cache
+): { key: string; value: Partial<DevToolsCacheData> } => {
   if (value !== undefined && isV2CacheData(value)) {
     // SWR v2
     return {
