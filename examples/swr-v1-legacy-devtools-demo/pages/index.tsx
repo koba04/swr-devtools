@@ -20,8 +20,6 @@ export default function Home() {
     return () => clearInterval(timerId);
   }, [mutate]);
 
-  console.log(useSWRConfig().cache);
-
   return (
     <div className={styles.container}>
       <Head>

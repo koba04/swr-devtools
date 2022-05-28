@@ -24,7 +24,6 @@ const convertToSerializableObject = (value: any) => {
 
 const inject = (cache: Cache) =>
   injectSWRCache(cache, (key: string, value: any) => {
-    console.log({ cache });
     if (isMetaCache(key)) {
       return;
     }
