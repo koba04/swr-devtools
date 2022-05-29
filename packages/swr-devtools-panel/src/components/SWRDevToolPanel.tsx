@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import { Cache } from "swr";
+import { NetworkPanel, EventEmitter } from "./NetworkPanel";
 
 import { Panel } from "./Panel";
 import { Tab } from "./Tab";
 
-export type PanelType = "current" | "history";
+export type PanelType = "current" | "history" | "network";
 export type Panel = { label: string; key: PanelType };
 
 const panels: Panel[] = [
@@ -17,10 +18,15 @@ const panels: Panel[] = [
     label: "History",
     key: "history",
   },
+  {
+    label: "Network",
+    key: "network",
+  },
 ];
 
 type Props = {
   cache: Cache | null;
+  events: EventEmitter | null;
   isFixedPosition?: boolean;
 };
 
@@ -55,7 +61,7 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-export const SWRDevToolPanel = ({ cache }: Props) => {
+export const SWRDevToolPanel = ({ cache, events }: Props) => {
   const [activePanel, setActivePanel] = useState<Panel["key"]>("current");
   const [selectedItemKey, setSelectedItemKey] = useState<ItemKey | null>(null);
   return (
@@ -73,13 +79,23 @@ export const SWRDevToolPanel = ({ cache }: Props) => {
         />
       </Header>
       <PanelWrapper>
-        {cache !== null ? (
-          <Panel
-            cache={cache}
-            type={activePanel}
-            selectedItemKey={selectedItemKey}
-            onSelectItem={setSelectedItemKey}
-          />
+        {cache !== null && events !== null ? (
+          activePanel === "network" ? (
+            <NetworkPanel
+              cache={cache}
+              events={events}
+              type={activePanel}
+              selectedItemKey={selectedItemKey}
+              onSelectItem={setSelectedItemKey}
+            />
+          ) : (
+            <Panel
+              cache={cache}
+              type={activePanel}
+              selectedItemKey={selectedItemKey}
+              onSelectItem={setSelectedItemKey}
+            />
+          )
         ) : (
           <NoteText>
             Haven&apos;t received any cache data from SWRDevTools

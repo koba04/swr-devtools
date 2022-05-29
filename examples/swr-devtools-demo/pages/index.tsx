@@ -3,11 +3,11 @@ import Link from "next/link";
 import { highlight } from "sugar-high";
 import styles from "../styles/Home.module.css";
 import useSWR from "swr";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { DevToolsView } from "../components/DevToolsView";
 
 export default function Home() {
-  // const { data, mutate } = useSWR("/api/hello?error=true");
+  useSWR("/api/hello?error=true");
   const { data, mutate, error } = useSWR(
     `/api/hello${typeof window !== "undefined" ? location.search : ""}`
   );
