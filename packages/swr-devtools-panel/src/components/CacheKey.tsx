@@ -1,11 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import {
-  isInfiniteCache,
-  getInfiniteCacheKey,
-  DevToolsCacheData,
-} from "swr-devtools/lib/swr-cache";
+import { DevToolsCacheData } from "swr-devtools/lib/swr-cache";
 import {
   ErrorLabel,
   InfiniteLabel,
@@ -18,20 +14,15 @@ export const CacheKey = ({
 }: {
   devToolsCacheData: DevToolsCacheData;
 }) => {
-  if (isInfiniteCache(devToolsCacheData.key)) {
-    return (
-      <CacheText>
-        <InfiniteLabel />
-        {getInfiniteCacheKey(devToolsCacheData.key)}
-      </CacheText>
-    );
-  }
   return (
     <CacheText>
+      {devToolsCacheData.isInfinite && <InfiniteLabel />}
       {devToolsCacheData.error && <ErrorLabel />}
       {devToolsCacheData.isLoading && <LoadingLabel />}
       {devToolsCacheData.isValidating && <ValidationgLabel />}
-      {devToolsCacheData.key}
+      {devToolsCacheData.isInfinite
+        ? devToolsCacheData.infiniteKey
+        : devToolsCacheData.key}
     </CacheText>
   );
 };

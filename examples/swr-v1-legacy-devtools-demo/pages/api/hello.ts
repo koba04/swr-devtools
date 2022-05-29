@@ -5,7 +5,9 @@ let counter = 1;
 export default (req, res) => {
   ++counter;
   if (req.query.error) {
-    res.status(500).json({ message: "this is an error message" });
+    setTimeout(() => {
+      res.status(500).json({ message: "this is an error message" });
+    }, 1000);
   } else {
     res.status(200).json({ name: `Hello World ${counter}` });
   }

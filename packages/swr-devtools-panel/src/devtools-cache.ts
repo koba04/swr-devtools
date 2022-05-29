@@ -3,7 +3,6 @@ import { Cache } from "swr";
 
 import {
   injectSWRCache,
-  isMetaCache,
   DevToolsCacheData,
   convertToDevToolsCacheData,
 } from "swr-devtools/lib/swr-cache";
@@ -19,9 +18,6 @@ const createDevToolsCache = (cache: Cache) => {
     };
   };
   injectSWRCache(cache, (key: string, value: any) => {
-    if (isMetaCache(key)) {
-      return;
-    }
     listeners.forEach((listener) => {
       listener(key, value);
     });
@@ -97,7 +93,7 @@ export const useDevToolsCache = (
     const subscribe = createDevToolsCache(cache);
     const unsubscribe = subscribe(
       (key_: string, value_: Partial<DevToolsCacheData>) => {
-        const { key, value } = convertToDevToolsCacheData(key_, value_, cache);
+        const { key, value } = convertToDevToolsCacheData(key_, value_);
         setCacheData(retrieveCache(key, value));
       }
     );
