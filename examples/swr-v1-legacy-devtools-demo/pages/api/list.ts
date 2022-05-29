@@ -70,5 +70,7 @@ const pages = {
 };
 
 export default (req, res) => {
-  res.status(200).json(pages[req.query.page] || null);
+  setTimeout(() => {
+    res.status(200).json(pages[req.query.page] || null);
+  }, 1000);
 };

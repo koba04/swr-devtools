@@ -1,7 +1,7 @@
 import React, { useLayoutEffect } from "react";
 import { useSWRConfig, SWRConfig, Middleware, Cache } from "swr";
 
-import { injectSWRCache, isMetaCache } from "./swr-cache";
+import { injectSWRCache } from "./swr-cache";
 
 const injected = new WeakSet();
 
@@ -24,9 +24,6 @@ const convertToSerializableObject = (value: any) => {
 
 const inject = (cache: Cache) =>
   injectSWRCache(cache, (key: string, value: any) => {
-    if (isMetaCache(key)) {
-      return;
-    }
     window.postMessage(
       {
         type: "updated_swr_cache",
