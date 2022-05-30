@@ -65,7 +65,11 @@ window.addEventListener("message", (e: MessageEvent<DevToolsMessage>) => {
       port.postMessage(e.data);
       break;
     }
-    case "updated_swr_cache": {
+    case "updated_swr_cache":
+    case "request_start":
+    case "request_success":
+    case "request_error":
+    case "request_discarded": {
       if (isDisplayedPanel) {
         port.postMessage(e.data);
       } else {
