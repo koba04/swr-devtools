@@ -1,12 +1,15 @@
 import { Cache } from "swr";
 
-export type SWRCacheData = {
+export type DevToolsCacheData = {
   key: string;
-  cache: any;
-  isValidating: boolean;
-  error: string;
+  data?: unknown;
+  isValidating?: boolean;
+  isLoading?: boolean;
+  error?: unknown;
   timestamp: Date;
   timestampString: string;
+  isInfinite?: boolean;
+  infiniteKey?: string;
 };
 
 export const injectSWRCache = (
@@ -16,35 +19,40 @@ export const injectSWRCache = (
   // intercept operations modifying the cache store
   const originalSet = cache.set;
   cache.set = (key: string, value: any) => {
-    watcher(key, value);
+    if (!isMetaCache(key)) {
+      watcher(key, value);
+    }
     return originalSet.call(cache, key, value);
   };
   const originalDelete = cache.delete;
   cache.delete = (key: string) => {
-    watcher(key, undefined);
+    if (!isMetaCache(key)) {
+      watcher(key, undefined);
+    }
     return originalDelete.call(cache, key);
   };
 };
 
-export const isMetaCache = (key: string) => {
-  return /^\$(?:req|ctx|len)\$/.test(key);
+const isMetaCache = (key: string) => {
+  return /^\$(?:ctx|len)\$/.test(key);
 };
 
-export const isErrorCache = (key: string) => {
+const isErrorCache = (key: string) => {
   return /^\$err\$/.test(key);
 };
 
-export const isInfiniteCache = (key: string) => {
-  return /^\$inf\$/.test(key);
+const isInfiniteCache = (key: string) => {
+  return /\$inf\$/.test(key);
 };
 
-export const getInfiniteCacheKey = (key: string) => {
-  const match = key.match(/^\$inf\$(?<cacheKey>.*)?/);
-  return match?.groups?.cacheKey ?? key;
+const isIsValidatingCache = (key: string) => {
+  return /^\$req\$/.test(key);
 };
 
-const getErrorCacheKey = (key: string) => {
-  const match = key.match(/^\$err\$(?<cacheKey>.*)?/);
+const filterMetaCacheKey = (key: string) => {
+  const match = key.match(
+    /^(?:\$(?:req|swr|err)\$)?(?:\$inf\$)(?<cacheKey>.*)?/
+  );
   return match?.groups?.cacheKey ?? key;
 };
 
@@ -56,34 +64,52 @@ const isV1MetaCache = (key: string) => {
   return /^\$swr\$/.test(key);
 };
 
-export const convertCacheData = (key: string, value: any, cache: Cache) => {
-  if (value !== undefined && isV2CacheData(value)) {
+// refs. https://github.com/koba04/swr-devtools/issues/48
+export const convertToDevToolsCacheData = (
+  key: string,
+  value: any
+): { key: string; value: Partial<DevToolsCacheData> } => {
+  const isInfinite = isInfiniteCache(key);
+  const infiniteKey = isInfinite ? filterMetaCacheKey(key) : undefined;
+  if (
+    value !== undefined &&
+    typeof value === "object" &&
+    isV2CacheData(value)
+  ) {
     // SWR v2
     return {
       key,
-      value,
+      value: { ...value, isInfinite, infiniteKey },
     };
   } else if (value !== undefined && isV1MetaCache(key)) {
     // SWR ^1.3.0 ($swr$ cache key)
-    const v1CacheKey = key.replace(/^\$swr\$/, "");
     return {
-      key: v1CacheKey,
-      value: {
-        data: cache.get(v1CacheKey),
-        error: value.error,
-      },
+      key: key.replace("$swr$", ""),
+      value: { ...value, isInfinite, infiniteKey },
     };
   } else if (isErrorCache(key)) {
     // SWR <1.3.0
     return {
-      key: getErrorCacheKey(key),
+      key: key.replace("$err$", ""),
       value: {
         error: value,
+        isInfinite,
+        infiniteKey,
+      },
+    };
+  } else if (isIsValidatingCache(key)) {
+    // SWR <1.3.0
+    return {
+      key: key.replace("$req$", ""),
+      value: {
+        isValidating: value,
+        isInfinite,
+        infiniteKey,
       },
     };
   }
   return {
     key,
-    value: { data: value },
+    value: { data: value, isInfinite },
   };
 };

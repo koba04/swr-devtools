@@ -1,31 +1,33 @@
 import React from "react";
 import styled from "styled-components";
 
+import { DevToolsCacheData } from "swr-devtools/lib/swr-cache";
 import {
-  isInfiniteCache,
-  getInfiniteCacheKey,
-} from "swr-devtools/lib/swr-cache";
+  ErrorLabel,
+  InfiniteLabel,
+  LoadingLabel,
+  ValidationgLabel,
+} from "./StatusLabel";
 
-export const CacheKey = ({ cacheKey }: { cacheKey: string }) => {
-  if (isInfiniteCache(cacheKey)) {
-    return (
-      <CacheText>
-        <CacheTag>Infinite</CacheTag>
-        {getInfiniteCacheKey(cacheKey)}
-      </CacheText>
-    );
-  }
-  return <CacheText>{cacheKey}</CacheText>;
+export const CacheKey = ({
+  devToolsCacheData,
+}: {
+  devToolsCacheData: DevToolsCacheData;
+}) => {
+  return (
+    <CacheText>
+      {devToolsCacheData.isInfinite && <InfiniteLabel />}
+      {devToolsCacheData.error && <ErrorLabel />}
+      {devToolsCacheData.isLoading && <LoadingLabel />}
+      {devToolsCacheData.isValidating && <ValidationgLabel />}
+      {devToolsCacheData.isInfinite
+        ? devToolsCacheData.infiniteKey
+        : devToolsCacheData.key}
+    </CacheText>
+  );
 };
 
 const CacheText = styled.span`
   display: inline-block;
   padding: 0.3rem;
-`;
-
-const CacheTag = styled.b`
-  margin-right: 0.3rem;
-  padding: 0.2rem;
-  background-color: var(--swr-devtools-tag-bg-color);
-  color: var(--swr-devtools-tag-text-color);
 `;

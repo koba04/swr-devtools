@@ -118,14 +118,10 @@ export const NetworkPanel = ({
   cache,
   type,
   events,
-  selectedItemKey,
-  onSelectItem,
 }: {
   cache: Cache;
   events: EventEmitter;
   type: PanelType;
-  selectedItemKey: ItemKey | null;
-  onSelectItem: (itemKey: ItemKey) => void;
 }) => {
   const startTime = useState(() => Date.now())[0];
   const requestsById = useRequests(events);

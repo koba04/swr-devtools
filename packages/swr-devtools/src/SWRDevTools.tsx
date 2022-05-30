@@ -7,7 +7,7 @@ import {
   unstable_serialize,
 } from "swr";
 
-import { injectSWRCache, isMetaCache } from "./swr-cache";
+import { injectSWRCache } from "./swr-cache";
 
 type EventListener = (...args: any[]) => void;
 
@@ -74,9 +74,6 @@ const convertToSerializableObject = (value: any) => {
 
 const inject = (cache: Cache) =>
   injectSWRCache(cache, (key: string, value: any) => {
-    if (isMetaCache(key)) {
-      return;
-    }
     window.postMessage(
       {
         type: "updated_swr_cache",
