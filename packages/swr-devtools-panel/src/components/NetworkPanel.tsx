@@ -2,7 +2,7 @@ import React, { useCallback, useLayoutEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { Cache } from "swr";
 
-import { PanelType, ItemKey } from "./SWRDevToolPanel";
+import { PanelType } from "./SWRDevToolPanel";
 import { Timeline } from "./timeline";
 
 type EventListener = (...args: any[]) => void;
