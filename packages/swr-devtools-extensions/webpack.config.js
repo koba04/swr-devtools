@@ -9,7 +9,10 @@ module.exports = {
     devtools: "./src/devtools.ts",
   },
   output: {
-    path: path.resolve(__dirname, "dist"),
+    path: path.resolve(
+      __dirname,
+      process.env.MANIFEST_VERSION === "2" ? "dist-v2" : "dist"
+    ),
     filename: "[name].js",
   },
   devtool: "inline-source-map",
@@ -26,7 +29,13 @@ module.exports = {
     new CopyPlugin({
       patterns: [
         { from: "src/*.html", to: "[name].html" },
-        { from: "manifest.json" },
+        {
+          from:
+            process.env.MANIFEST_VERSION === "2"
+              ? "manifest-v2.json"
+              : "manifest.json",
+          to: "manifest.json",
+        },
         { from: "icons/*.png" },
       ],
     }),
