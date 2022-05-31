@@ -6,13 +6,19 @@
   "license": "MIT",
   "scripts": {
     "prebuild": "yarn clean",
-    "build:zip": "cd dist && zip -r ../extension.zip * && cd ../",
-    "build:webpack": "webpack --mode production",
-    "build": "run-s build:webpack build:zip",
-    "clean": "rimraf dist/ extension.zip",
+    "build:zip:chrome": "cd dist && zip -r ../extension.zip * && cd ../",
+    "build:webpack:chrome": "webpack --mode production",
+    "build:chrome": "run-s build:webpack:chrome build:zip:chrome",
+    "build:zip:firefox": "cd dist-v2 && zip -r ../extension-v2.zip * && cd ../",
+    "build:webpack:firefox": "MANIFEST_VERSION=2 webpack --mode production",
+    "build:firefox": "run-s build:webpack:firefox build:zip:firefox",
+    "build": "run-p build:chrome build:firefox",
+    "clean": "rimraf dist/ dist-v2/ extension.zip",
     "lint": "tsc --noEmit",
-    "start": "webpack --mode development --watch",
-    "start:firefox": "web-ext run -s dist"
+    "start:chrome": "webpack --mode development --watch",
+    "start:firefox:build": "MANIFEST_VERSION=2 webpack --mode development --watch",
+    "start:firefox:webext": "web-ext run -s dist-v2",
+    "start:firefox": "run-p start:firefox:*"
   },
   "devDependencies": {
     "@types/chrome": "^0.0.154",

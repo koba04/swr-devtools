@@ -1,4 +1,6 @@
 node_modules/
 dist/
+dist-v2/
 extension.zip
+extension-v2.zip
 *.tsbuildinfo

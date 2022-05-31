@@ -17,7 +17,6 @@
     "release": "lerna publish --conventional-commits",
     "start:demo": "yarn workspace swr-devtools-demo dev",
     "start:dev": "yarn workspace swr-devtools start",
-    "start:extensions": "yarn workspace swr-devtools-extensions start",
     "start:panel": "yarn workspace swr-devtools-panel start",
     "start": "run-p -l start:*",
     "v1": "yarn workspace swr-v1-devtools-demo dev",
