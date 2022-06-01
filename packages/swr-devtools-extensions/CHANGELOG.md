@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/koba04/swr-devtools/compare/v0.4.0...v0.5.0) (2022-06-01)
+
+
+### Features
+
+* support manifest v3 ([#53](https://github.com/koba04/swr-devtools/issues/53)) ([eb638bf](https://github.com/koba04/swr-devtools/commit/eb638bf83ec00971458b283da80741150fc5554c))
+* support SWR v2 ([#44](https://github.com/koba04/swr-devtools/issues/44)) ([388a4bf](https://github.com/koba04/swr-devtools/commit/388a4bff545c76414f768c26b34aa858bc1f0291))
+
+
+
+
+
 # [0.4.0](https://github.com/koba04/swr-devtools/compare/v0.3.0...v0.4.0) (2021-12-05)
 
 **Note:** Version bump only for package swr-devtools-extensions

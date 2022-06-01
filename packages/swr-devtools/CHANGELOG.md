@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/koba04/swr-devtools/compare/v0.4.0...v0.5.0) (2022-06-01)
+
+
+### Features
+
+* display errors in SWRCache ([#41](https://github.com/koba04/swr-devtools/issues/41)) ([7f7f672](https://github.com/koba04/swr-devtools/commit/7f7f67224b2aca32b1976d311a7d6271c4dfcfba))
+* support SWR v2 ([#44](https://github.com/koba04/swr-devtools/issues/44)) ([388a4bf](https://github.com/koba04/swr-devtools/commit/388a4bff545c76414f768c26b34aa858bc1f0291))
+
+
+
+
+
 # [0.4.0](https://github.com/koba04/swr-devtools/compare/v0.3.0...v0.4.0) (2021-12-05)
 
 

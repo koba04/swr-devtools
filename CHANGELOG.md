@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/koba04/swr-devtools/compare/v0.4.0...v0.5.0) (2022-06-01)
+
+
+### Features
+
+* display errors in SWRCache ([#41](https://github.com/koba04/swr-devtools/issues/41)) ([7f7f672](https://github.com/koba04/swr-devtools/commit/7f7f67224b2aca32b1976d311a7d6271c4dfcfba))
+* emoji label ([#47](https://github.com/koba04/swr-devtools/issues/47)) ([09d616d](https://github.com/koba04/swr-devtools/commit/09d616da60a027927c82a587ff36512f4c3ff6a4))
+* support manifest v3 ([#53](https://github.com/koba04/swr-devtools/issues/53)) ([eb638bf](https://github.com/koba04/swr-devtools/commit/eb638bf83ec00971458b283da80741150fc5554c))
+* support SWR v2 ([#44](https://github.com/koba04/swr-devtools/issues/44)) ([388a4bf](https://github.com/koba04/swr-devtools/commit/388a4bff545c76414f768c26b34aa858bc1f0291))
+* **swr-devtools-demo:** refine the webpage of SWRDevTools ([#43](https://github.com/koba04/swr-devtools/issues/43)) ([b4969e5](https://github.com/koba04/swr-devtools/commit/b4969e5c562e87286f60379cd46134b230ac5edc))
+
+
+
+
+
 # [0.4.0](https://github.com/koba04/swr-devtools/compare/v0.3.0...v0.4.0) (2021-12-05)
 
 
