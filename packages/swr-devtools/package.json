@@ -45,7 +45,7 @@
     "lint": "tsc --noEmit"
   },
   "peerDependencies": {
-    "react": "^17.0.2",
+    "react": ">=17.0.2",
     "swr": ">=1.0.0"
   },
   "devDependencies": {
