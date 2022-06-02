@@ -298,6 +298,7 @@ const PanelWrapper = styled.section`
     Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji,
     Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
   border-top: solid 1px var(--swr-devtools-border-color);
+  background-color: var(--swr-devtools-network-row-bg-color);
   overscroll-behavior: contain;
   font-size: 0.8rem;
   --swr-devtools-ongoing-request-background: #f5f5f5;
@@ -336,13 +337,16 @@ const Request = styled.div<{
 const TrackRow = styled.div<{ i: number }>`
   height: 24px;
   min-width: 100%;
-  ${(props) => (props.i % 2 ? "background: #f8f8f8;" : "")}
+  ${(props) =>
+    props.i % 2
+      ? "background: var(--swr-devtools-network-row-bg-alt-color);"
+      : ""}
   &:hover {
-    background: #eee;
+    background: var(--swr-devtools-network-hovered-row-bg-color);
   }
   &:hover .swr-devtools-track-label {
-    color: #000;
-    background: #eee;
+    color: var(--swr-devtools-text-color);
+    background: var(--swr-devtools-network-hovered-row-bg-color);
   }
 `;
 
@@ -350,10 +354,13 @@ const TrackLabel = styled.div<{ i: number }>`
   padding: 0 4px;
   height: 24px;
   line-height: 24px;
-  color: #555;
-  border-right: 1px solid #ddd;
+  color: var(--swr-devtools-timeline-track-color);
+  border-right: 1px solid #8383835e;
   font-size: 11px;
-  background: ${(props) => (props.i % 2 ? "#f8f8f8" : "white")};
+  background: ${(props) =>
+    props.i % 2
+      ? "var(--swr-devtools-network-row-bg-alt-color)"
+      : "var(--swr-devtools-network-row-bg-color)"};
   text-overflow: ellipsis;
   white-space: nowrap;
   cursor: default;
@@ -383,7 +390,7 @@ const Header = styled.div`
   z-index: 2;
   cursor: default;
   user-select: none;
-  background: #f3f3f3;
+  background: var(--swr-devtools-network-panel-bg-color);
   box-shadow: 0 1px 2px #0000002e;
 `;
 
@@ -396,7 +403,8 @@ const HeaderLabel = styled.div`
   line-height: 20px;
   box-sizing: border-box;
   padding: 0 4px;
-  background: #f3f3f3;
+  color: var(--swr-devtools-network-panel-color);
+  background: var(--swr-devtools-network-panel-bg-color);
   z-index: 1;
 `;
 
@@ -405,7 +413,7 @@ const HeaderScale = styled.div`
   vertical-align: top;
   line-height: 20px;
   font-size: 10px;
-  color: #555;
+  color: var(--swr-devtools-network-panel-color);
   position: absolute;
   overflow: hidden;
   width: calc(100% - 100px);
@@ -415,7 +423,7 @@ const HeaderScale = styled.div`
 const HeaderScaleTimestamp = styled.div`
   position: absolute;
   padding: 0 5px;
-  border-left: 1px solid #ddd;
+  border-left: 1px solid var(--swr-devtools-timeline-scale-color);
   top: 10px;
   height: 10px;
   line-height: 0px;
@@ -424,7 +432,7 @@ const HeaderScaleTimestamp = styled.div`
 `;
 
 const HeaderController = styled.div`
-  background: #f3f3f3;
+  background: var(--swr-devtools-network-panel-bg-color);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -450,6 +458,6 @@ const TimelineRuler = styled.div`
   width: 1px;
   height: 100%;
   top: 20px;
-  background: #0000001f;
+  background: var(--swr-devtools-timeline-ruler-color);
   z-index: 1;
 `;
