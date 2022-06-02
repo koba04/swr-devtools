@@ -146,7 +146,7 @@ const createSWRDevtools = () => {
             "*"
           );
           try {
-            const res = fn.apply(null, args);
+            const res = fn(...args);
             if (res && "then" in res && typeof res.then === "function") {
               return res
                 .then((r) => {

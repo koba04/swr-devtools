@@ -34,6 +34,7 @@ function useRequests(events: EventEmitter) {
           let channelKey = key;
           let channelNum = 0;
 
+          let currentRequests;
           const activeRequests = activeRequestsRef.current;
 
           switch (type) {
@@ -43,7 +44,7 @@ function useRequests(events: EventEmitter) {
                 channelKey = `${key}-${++channelNum}`;
               }
 
-              const currentRequests = currentRequestsByKey[channelKey] || [];
+              currentRequests = currentRequestsByKey[channelKey] || [];
 
               activeRequests[id] = {
                 id,
@@ -157,8 +158,9 @@ export const NetworkPanel = ({
       return 0;
     });
 
-    t.forEach((t, i) => {
-      t.data.index = i;
+    // Re-assign indexes.
+    t.forEach((t_, i) => {
+      t_.data.index = i;
     });
 
     return t;
@@ -170,6 +172,9 @@ export const NetworkPanel = ({
   const [endTime, trackWidth] = React.useMemo(() => {
     const e = Date.now() + 500;
     return [e, (e - startTime) / (2 * trackScale)];
+    // We have to include `requestsById` here just to refresh the
+    // timeline whenever there's any udpate.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [requestsById, startTime, trackScale]);
 
   const onPointerMove = useCallback((e) => {
@@ -211,10 +216,10 @@ export const NetworkPanel = ({
           labelWidth={100}
           trackWidth={trackWidth}
           trackHeight={24}
-          renderHeader={(startTime, endTime, scrollLeft, viewportWidth) => {
+          renderHeader={(startTime_, endTime_, scrollLeft, viewportWidth) => {
             // Linear scale
             const scales = [];
-            const r = (endTime - startTime) / trackWidth;
+            const r = (endTime_ - startTime_) / trackWidth;
             const length = viewportWidth * r;
 
             const n = Math.floor(length / 100);

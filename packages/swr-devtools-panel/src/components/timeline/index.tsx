@@ -81,6 +81,7 @@ const TimelineItem: React.FC<{
     </TrackItem>
   );
 });
+TimelineItem.displayName = "TimelineItem";
 
 const TimelineTrack: React.FC<{
   track: Track;
@@ -163,6 +164,7 @@ const TimelineTrack: React.FC<{
     );
   }
 );
+TimelineTrack.displayName = "TimelineTrack";
 
 const debounced = (fn: (arg: any) => void, delay: number) => {
   let timer: any;

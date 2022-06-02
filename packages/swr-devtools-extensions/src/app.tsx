@@ -4,6 +4,8 @@ import { runtime } from "webextension-polyfill";
 
 import type { ContentMessage } from "./content";
 
+type EventListener = (...args: any[]) => void;
+
 class EventEmitter {
   listeners: EventListener[] = [];
   subscribe(fn: EventListener) {
@@ -13,8 +15,8 @@ class EventEmitter {
       this.listeners.splice(index, 1);
     };
   }
-  emit(...args: any) {
-    this.listeners.forEach((fn) => fn.apply(null, args));
+  emit(...args: any[]) {
+    this.listeners.forEach((fn) => fn(...args));
   }
 }
 
