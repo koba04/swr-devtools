@@ -103,5 +103,6 @@ export const useDevToolsCache = (
       currentCacheData.clear();
     };
   }, [cache]);
+
   return cacheData;
 };

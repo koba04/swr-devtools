@@ -2,7 +2,9 @@
 
 let counter = 1;
 
-export default (req, res) => {
+export default async (req, res) => {
+  await new Promise((resolve) => setTimeout(resolve, Math.random() * 2000));
+
   ++counter;
   if (req.query.error) {
     setTimeout(() => {

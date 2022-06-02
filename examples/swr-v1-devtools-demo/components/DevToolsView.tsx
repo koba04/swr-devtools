@@ -11,7 +11,7 @@ export const DevToolsView = () => {
         height: "400px",
       }}
     >
-      <SWRDevToolPanel cache={cache} />
+      <SWRDevToolPanel cache={cache} events={null} />
     </div>
   );
 };
