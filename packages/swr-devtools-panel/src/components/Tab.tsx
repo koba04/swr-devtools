@@ -23,7 +23,7 @@ export const Tab = ({ onChange, current, panels }: TabProps) => (
   </TabGroup>
 );
 
-const TabButton = styled.button.attrs({ type: "button" })<{
+const TabButton = styled.button.attrs({ type: "button" }) <{
   isSelected: boolean;
   children: React.ReactNode;
 }>`
@@ -44,10 +44,11 @@ const TabButton = styled.button.attrs({ type: "button" })<{
   cursor: pointer;
   &:hover {
     background-color: ${(props) =>
-      props.isSelected
-        ? "var(--swr-devtools-selected-bg-color)"
-        : "var(--swr-devtools-hover-bg-color)"};
+    props.isSelected
+      ? "var(--swr-devtools-selected-bg-color)"
+      : "var(--swr-devtools-hover-bg-color)"};
   }
+  user-select: none;
 `;
 
 const TabGroup = styled.ul`

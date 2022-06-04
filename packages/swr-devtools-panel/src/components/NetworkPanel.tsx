@@ -290,6 +290,7 @@ export const NetworkPanel = ({
 };
 
 const PanelWrapper = styled.section`
+  box-sizing: border-box;
   display: flex;
   justify-content: space-around;
   padding: 0;
