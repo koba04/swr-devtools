@@ -35,6 +35,7 @@ port.onDisconnect.addListener(() => {
 
 let mounted = false;
 port.onMessage.addListener((message: ContentMessage) => {
+  console.log("message on app.tsx", message);
   switch (message.type) {
     // loaded a new page
     case "load": {

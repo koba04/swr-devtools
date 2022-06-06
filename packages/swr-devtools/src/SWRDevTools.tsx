@@ -92,24 +92,26 @@ const inject = (cache: Cache) =>
     );
   });
 
-const createSWRDevtools = () => {
+export const createSWRDevtools = () => {
   const events = new EventEmitter();
 
+  // We cannot use React Hooks on the extension side because this cannot reference the same React instance with the application side.
+  // useRef
+  const requestIdRef = { current: 0 };
+
   const swrdevtools: Middleware = (useSWRNext) => (key, fn, config) => {
-    useLayoutEffect(() => {
-      window.postMessage({ type: "initialized" }, "*");
-    }, []);
-    // FIXME: I'll use mutate to support mutating from a devtool panel.
-    const { cache /* , mutate */ } = useSWRConfig();
+    const cache = config.cache;
 
     if (!injected.has(cache)) {
+      window.postMessage({ type: "initialized" }, "*");
       inject(cache);
       injected.add(cache);
     }
 
-    const requestIdRef = useRef<number>(0);
     const serializedKey = unstable_serialize(key);
 
+    // We cannot use React Hooks on the extension side because this cannot reference the same React instance with the application side.
+    /*
     useEffect(() => {
       return () => {
         // When the key changes or unmounts, ongoing requests should be discarded.
@@ -127,6 +129,7 @@ const createSWRDevtools = () => {
         }
       };
     }, [serializedKey]);
+    */
 
     const wrappedFn = fn
       ? (...args: any) => {

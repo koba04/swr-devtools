@@ -70,6 +70,7 @@ port.postMessage({
 window.addEventListener("message", (e: MessageEvent<DevToolsMessage>) => {
   switch (e.data?.type) {
     case "initialized": {
+      console.log("received message from web-accessible resources", e.data);
       port.postMessage(e.data);
       break;
     }
@@ -78,6 +79,7 @@ window.addEventListener("message", (e: MessageEvent<DevToolsMessage>) => {
     case "request_success":
     case "request_error":
     case "request_discarded": {
+      console.log("received message from web-accessible resources", e.data);
       if (isDisplayedPanel) {
         port.postMessage(e.data);
       } else {
