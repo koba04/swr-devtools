@@ -102,7 +102,7 @@ export const createSWRDevtools = () => {
   const swrdevtools: Middleware = (useSWRNext) => (key, fn, config) => {
     const cache = config.cache;
 
-    if (!injected.has(cache)) {
+    if (typeof window !== "undefined" && !injected.has(cache)) {
       window.postMessage({ type: "initialized" }, "*");
       inject(cache);
       injected.add(cache);
