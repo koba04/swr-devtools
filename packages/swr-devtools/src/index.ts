@@ -1,6 +1,2 @@
-export {
-  SWRDevTools,
-  DevToolsMessage,
-  SWRDevToolsContext,
-  createSWRDevtools,
-} from "./SWRDevTools";
+export { SWRDevTools, SWRDevToolsContext } from "./SWRDevTools";
+export { DevToolsMessage, createSWRDevtools } from "./createSWRDevTools";
