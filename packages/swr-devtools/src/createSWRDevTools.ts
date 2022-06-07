@@ -93,7 +93,9 @@ const noop = () => {
 const dummyHooks = {
   useLayoutEffect: noop,
   useEffect: noop,
-  useRef: <T>(a: T) => a,
+  useRef: <T>(a: T) => ({
+    current: a,
+  }),
 };
 
 export const createSWRDevtools = () => {
