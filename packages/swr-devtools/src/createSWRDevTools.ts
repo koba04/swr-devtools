@@ -87,14 +87,27 @@ const inject = (cache: Cache) =>
     );
   });
 
+const noop = () => {
+  /* noop */
+};
+const dummyHooks = {
+  useLayoutEffect: noop,
+  useEffect: noop,
+  useRef: <T>(a: T) => a,
+};
+
 export const createSWRDevtools = () => {
   const events = new EventEmitter();
 
   const swrdevtools: Middleware = (useSWRNext) => (key, fn, config) => {
     // use the same React instance with the application
     const { useLayoutEffect, useEffect, useRef } =
+      typeof window !== "undefined" &&
       // @ts-expect-error
-      window.__SWR_DEVTOOLS_REACT__;
+      typeof window.__SWR_DEVTOOLS_REACT__ !== "undefined"
+        ? // @ts-expect-error
+          window.__SWR_DEVTOOLS_REACT__
+        : dummyHooks;
 
     useLayoutEffect(() => {
       window.postMessage({ type: "initialized" }, "*");
@@ -108,7 +121,7 @@ export const createSWRDevtools = () => {
       injected.add(cache);
     }
 
-    const requestIdRef = useRef<number>(0);
+    const requestIdRef = useRef(0);
     const serializedKey = unstable_serialize(key);
 
     useEffect(() => {
