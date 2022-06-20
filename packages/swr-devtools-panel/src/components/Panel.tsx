@@ -44,10 +44,11 @@ export const Panel = ({
             .filter(({ key }) => filterText === "" || key.includes(filterText))
             .map((devToolsCacheData) => (
               <CacheItem
-                key={`${type}--${devToolsCacheData.key}--${type === "history"
+                key={`${type}--${devToolsCacheData.key}--${
+                  type === "history"
                     ? devToolsCacheData.timestamp.getTime()
                     : ""
-                  }`}
+                }`}
                 isSelected={
                   selectedItemKey?.key === devToolsCacheData.key &&
                   (type === "current" ||
@@ -101,9 +102,9 @@ const CacheItem = styled.li<{ isSelected: boolean }>`
     props.isSelected ? "var(--swr-devtools-selected-bg-color)" : "none"};
   &:hover {
     background-color: ${(props) =>
-    props.isSelected
-      ? "var(--swr-devtools-selected-bg-color)"
-      : "var(--swr-devtools-hover-bg-color)"};
+      props.isSelected
+        ? "var(--swr-devtools-selected-bg-color)"
+        : "var(--swr-devtools-hover-bg-color)"};
   }
 `;
 
