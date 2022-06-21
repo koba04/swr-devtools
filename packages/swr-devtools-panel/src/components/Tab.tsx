@@ -48,6 +48,7 @@ const TabButton = styled.button.attrs({ type: "button" })<{
         ? "var(--swr-devtools-selected-bg-color)"
         : "var(--swr-devtools-hover-bg-color)"};
   }
+  user-select: none;
 `;
 
 const TabGroup = styled.ul`

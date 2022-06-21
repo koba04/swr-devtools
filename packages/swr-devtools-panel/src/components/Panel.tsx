@@ -58,14 +58,14 @@ export const Panel = ({
                 <CacheItemButton
                   onClick={() => onSelectItem(devToolsCacheData)}
                 >
-                  <CacheKey devToolsCacheData={devToolsCacheData} /> (
-                  {devToolsCacheData.timestampString})
+                  <CacheKey devToolsCacheData={devToolsCacheData} />
+                  <Timestamp>{devToolsCacheData.timestampString}</Timestamp>
                 </CacheItemButton>
               </CacheItem>
             ))}
         </CacheItems>
       </PanelItem>
-      <Hr />
+      <VerticalDivider />
       <PanelItem>
         {selectedDevToolsCacheData && (
           <CacheData devToolsCacheData={selectedDevToolsCacheData} />
@@ -76,6 +76,7 @@ export const Panel = ({
 };
 
 const PanelWrapper = styled.section`
+  box-sizing: border-box;
   display: flex;
   justify-content: space-around;
   padding: 0;
@@ -85,7 +86,7 @@ const PanelWrapper = styled.section`
 
 const PanelItem = styled.div`
   flex: 1;
-  overflow: scroll;
+  overflow: auto;
 `;
 
 const CacheItems = styled.ul`
@@ -121,6 +122,11 @@ const CacheItemButton = styled.button`
   text-align: left;
 `;
 
-const Hr = styled.hr`
-  border-color: var(--swr-devtools-border-color);
+const VerticalDivider = styled.div`
+  background-color: var(--swr-devtools-border-color);
+  width: 1px;
+`;
+
+const Timestamp = styled.span`
+  margin-right: 8px;
 `;
