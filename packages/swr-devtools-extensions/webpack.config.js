@@ -5,6 +5,7 @@ module.exports = {
   entry: {
     app: "./src/app.tsx",
     background: "./src/background.ts",
+    "web-accessible": "./src/web-accessible.ts",
     content: "./src/content.ts",
     devtools: "./src/devtools.ts",
   },
