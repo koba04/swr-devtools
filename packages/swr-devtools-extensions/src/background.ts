@@ -21,15 +21,22 @@ runtime.onConnect.addListener((port) => {
     contentPort.onDisconnect.addListener(() => {
       contentPort = null;
     });
-    contentPort.onMessage.addListener((message: ContentMessage) => {
-      console.log("sent message from content to panel", message);
-      if (panelPort !== null) {
-        panelPort.postMessage(message);
-      } else {
-        // not ready for sending messages
-        queuedContentMessages.push(message);
+    contentPort.onMessage.addListener(
+      (message: ContentMessage, { sender }: Runtime.Port) => {
+        // this might not be necessary
+        const data = {
+          ...message,
+          tabId: sender?.tab?.id,
+        };
+        console.log("sent message from content to panel", data, { sender });
+        if (panelPort !== null) {
+          panelPort.postMessage(data);
+        } else {
+          // not ready for sending messages
+          queuedContentMessages.push(data);
+        }
       }
-    });
+    );
     // A port between the SWR panel in devtools
   } else if (port.name === "panel") {
     panelPort = port;
@@ -47,8 +54,9 @@ runtime.onConnect.addListener((port) => {
     panelPort.onDisconnect.addListener(() => {
       panelPort = null;
     });
-    panelPort.onMessage.addListener((message) => {
-      console.log("sent message from panel to content", message);
+    panelPort.onMessage.addListener((message, sender: any) => {
+      // ??
+      console.log("sent message from panel to content", message, { sender });
       if (contentPort !== null) {
         contentPort.postMessage(message);
       }

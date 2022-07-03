@@ -12,32 +12,40 @@ injectDevToolsHook();
 export type ContentMessage =
   | {
       type: "load";
+      tabId: number;
     }
   | {
       type: "initialized";
+      tabId: number;
     }
   | {
       type: "updated_swr_cache";
       payload: any;
+      tabId: number;
     }
   | {
       type: "load";
+      tabId: number;
     }
   | {
       type: "request_start";
       payload: any;
+      tabId: number;
     }
   | {
       type: "request_success";
       payload: any;
+      tabId: number;
     }
   | {
       type: "request_error";
       payload: any;
+      tabId: number;
     }
   | {
       type: "request_discarded";
       payload: any;
+      tabId: number;
     };
 
 // queued messages until a panel is displayed
@@ -50,8 +58,8 @@ let isDisplayedPanel = false;
 
 // proxy messages from applications to a background script
 const port = runtime.connect({ name: "content" });
+// cannot get tabId here
 port.onMessage.addListener((message: any) => {
-  console.log("received from background -> content", message);
   // a panel has been displayed, so we sent queued messages
   if (message.type === "displayed_panel") {
     queuedMessages.forEach((m) => {

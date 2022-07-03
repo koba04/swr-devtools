@@ -1,6 +1,6 @@
 import ReactDOM from "react-dom";
 import { SWRDevToolPanel } from "swr-devtools-panel";
-import { runtime } from "webextension-polyfill";
+import { runtime, devtools, Runtime } from "webextension-polyfill";
 
 import type { ContentMessage } from "./content";
 
@@ -21,72 +21,91 @@ class EventEmitter {
 }
 
 const eventEmitter = new EventEmitter();
-const cache = new Map();
+const cacheMap = new Map();
 const rootEl = document.getElementById("app");
 
 const port = runtime.connect({
   name: "panel",
 });
+
+/*
 port.onDisconnect.addListener(() => {
   cache.clear();
   mounted = false;
   ReactDOM.render(<SWRDevToolPanel cache={null} events={null} />, rootEl);
 });
+*/
 
 let mounted = false;
-port.onMessage.addListener((message: ContentMessage) => {
-  switch (message.type) {
-    // loaded a new page
-    case "load": {
-      ReactDOM.render(<SWRDevToolPanel cache={null} events={null} />, rootEl);
-      break;
+port.onMessage.addListener(
+  // sender is undefined
+  (message: ContentMessage, { sender }: Runtime.Port) => {
+    const tabId = message.tabId; // sender?.tab?.id;
+    console.log("tabId is ", tabId, {
+      sender,
+      cacheMap,
+      currentTabId: devtools.inspectedWindow.tabId,
+    });
+    const cache = cacheMap.get(tabId) || new Map();
+    if (!cacheMap.has(tabId)) {
+      cacheMap.set(tabId, cache);
     }
-
-    // initialized SWRDevTools, start rendering a devtool panel
-    case "initialized": {
-      cache.clear();
-      mounted = true;
-      ReactDOM.render(
-        <SWRDevToolPanel cache={cache} events={eventEmitter} />,
-        rootEl
-      );
-      break;
-    }
-
-    case "updated_swr_cache": {
-      const { key, value } = message.payload;
-      // trigger re-rendering
-      cache.set(key, value);
-
-      // mount a devtool panel if it hasn't been mounted yet.
-      if (mounted === false) {
+    switch (message.type) {
+      // loaded a new page
+      case "load": {
         ReactDOM.render(
-          <SWRDevToolPanel cache={cache} events={eventEmitter} />,
+          <SWRDevToolPanel cache={null} events={null} key={tabId} />,
           rootEl
         );
-        mounted = true;
+        break;
       }
-      break;
-    }
 
-    case "request_start":
-    case "request_success":
-    case "request_error":
-    case "request_discarded": {
-      // mount a devtool panel if it hasn't been mounted yet.
-      if (mounted === false) {
+      // initialized SWRDevTools, start rendering a devtool panel
+      case "initialized": {
+        cache.clear();
+        mounted = true;
         ReactDOM.render(
-          <SWRDevToolPanel cache={cache} events={eventEmitter} />,
+          <SWRDevToolPanel cache={cache} events={eventEmitter} key={tabId} />,
           rootEl
         );
-        mounted = true;
+        break;
       }
-      eventEmitter.emit(message.type, message.payload);
-      break;
-    }
 
-    default: {
-      // noop
+      case "updated_swr_cache": {
+        const { key, value } = message.payload;
+        // trigger re-rendering
+        cache.set(key, value);
+
+        // mount a devtool panel if it hasn't been mounted yet.
+        if (mounted === false) {
+          ReactDOM.render(
+            <SWRDevToolPanel cache={cache} events={eventEmitter} key={tabId} />,
+            rootEl
+          );
+          mounted = true;
+        }
+        break;
+      }
+
+      case "request_start":
+      case "request_success":
+      case "request_error":
+      case "request_discarded": {
+        // mount a devtool panel if it hasn't been mounted yet.
+        if (mounted === false) {
+          ReactDOM.render(
+            <SWRDevToolPanel cache={cache} events={eventEmitter} key={tabId} />,
+            rootEl
+          );
+          mounted = true;
+        }
+        eventEmitter.emit(message.type, message.payload);
+        break;
+      }
+
+      default: {
+        // noop
+      }
     }
   }
-});
+);
