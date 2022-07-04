@@ -1,35 +1,46 @@
 import { runtime, Runtime } from "webextension-polyfill";
 import type { ContentMessage } from "./content";
-// background.js
-let panelPort: Runtime.Port | null = null;
-let contentPort: Runtime.Port | null = null;
+
+const contentPortMap = new Map();
+const panelPortMap = new Map();
 
 // queued messages until a panel is connected
 const queuedContentMessages: any[] = [];
 
 runtime.onConnect.addListener((port) => {
-  console.log("on connect", port.name);
+  const tabId = port.sender?.tab?.id || +port.name.replace("panel:", "");
+  // console.log("on connect", { name: port.name, port, tabId });
+
   // A port between a content page
   if (port.name === "content") {
-    contentPort = port;
-    if (panelPort !== null) {
+    contentPortMap.set(tabId, port);
+    if (panelPortMap.has(tabId)) {
       // notify that a panel is connected
-      contentPort.postMessage({
+      port.postMessage({
         type: "displayed_panel",
       });
     }
-    contentPort.onDisconnect.addListener(() => {
-      contentPort = null;
+    port.onDisconnect.addListener(() => {
+      contentPortMap.delete(tabId);
     });
-    contentPort.onMessage.addListener(
+    port.onMessage.addListener(
       (message: ContentMessage, { sender }: Runtime.Port) => {
         // this might not be necessary
         const data = {
           ...message,
-          tabId: sender?.tab?.id,
+          tabId,
         };
-        console.log("sent message from content to panel", data, { sender });
-        if (panelPort !== null) {
+
+        const panelPort = panelPortMap.get(tabId);
+        /*
+        console.log("sent message from content to panel", data, {
+          sender,
+          tabId,
+          panelPortMap,
+          panelPort,
+        });
+        */
+        if (panelPort) {
           panelPort.postMessage(data);
         } else {
           // not ready for sending messages
@@ -38,9 +49,11 @@ runtime.onConnect.addListener((port) => {
       }
     );
     // A port between the SWR panel in devtools
-  } else if (port.name === "panel") {
-    panelPort = port;
-    if (contentPort !== null) {
+  } else if (port.name.startsWith("panel")) {
+    panelPortMap.set(tabId, port);
+    // console.log("panelport", { tabId, panelPortMap, contentPortMap });
+    const contentPort = contentPortMap.get(tabId);
+    if (contentPort) {
       // notify that a panel is connected
       contentPort.postMessage({
         type: "displayed_panel",
@@ -48,15 +61,14 @@ runtime.onConnect.addListener((port) => {
     }
     // flush queued messages
     if (queuedContentMessages.length > 0) {
-      queuedContentMessages.forEach((m) => panelPort?.postMessage(m));
+      queuedContentMessages.forEach((m) => port?.postMessage(m));
       queuedContentMessages.length = 0;
     }
-    panelPort.onDisconnect.addListener(() => {
-      panelPort = null;
+    port.onDisconnect.addListener(() => {
+      panelPortMap.delete(tabId);
     });
-    panelPort.onMessage.addListener((message, sender: any) => {
-      // ??
-      console.log("sent message from panel to content", message, { sender });
+    port.onMessage.addListener((message) => {
+      console.log("sent message from panel to content", message);
       if (contentPort !== null) {
         contentPort.postMessage(message);
       }

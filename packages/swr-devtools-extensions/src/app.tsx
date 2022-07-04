@@ -25,7 +25,7 @@ const cacheMap = new Map();
 const rootEl = document.getElementById("app");
 
 const port = runtime.connect({
-  name: "panel",
+  name: "panel:" + devtools.inspectedWindow.tabId,
 });
 
 /*
@@ -41,12 +41,16 @@ port.onMessage.addListener(
   // sender is undefined
   (message: ContentMessage, { sender }: Runtime.Port) => {
     const tabId = message.tabId; // sender?.tab?.id;
-    console.log("tabId is ", tabId, {
-      sender,
-      cacheMap,
-      currentTabId: devtools.inspectedWindow.tabId,
-    });
     const cache = cacheMap.get(tabId) || new Map();
+    /*
+    console.log("received in app.tsx", {
+      message,
+      tabId,
+      sender,
+      cache,
+    });
+    */
+
     if (!cacheMap.has(tabId)) {
       cacheMap.set(tabId, cache);
     }
@@ -57,6 +61,7 @@ port.onMessage.addListener(
           <SWRDevToolPanel cache={null} events={null} key={tabId} />,
           rootEl
         );
+        mounted = false;
         break;
       }
 

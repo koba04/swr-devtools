@@ -1,5 +1,5 @@
 import { DevToolsMessage } from "swr-devtools";
-import { runtime } from "webextension-polyfill";
+import { Runtime, runtime } from "webextension-polyfill";
 
 const injectDevToolsHook = () => {
   const script = document.createElement("script");
@@ -56,26 +56,40 @@ const enqueueMessage = (message: any) => {
 
 let isDisplayedPanel = false;
 
+let port_: Runtime.Port | null = null;
+
+const getPort = () => {
+  if (port_ !== null) return port_;
+  port_ = runtime.connect({ name: "content" });
+  const onMessage = (message: any) => {
+    // a panel has been displayed, so we sent queued messages
+    if (message.type === "displayed_panel") {
+      queuedMessages.forEach((m) => {
+        port_?.postMessage(m);
+      });
+      isDisplayedPanel = true;
+    }
+  };
+  // cannot get tabId here
+  port_.onMessage.addListener(onMessage);
+  port_.onDisconnect.addListener(() => {
+    port_?.onMessage.removeListener(onMessage);
+    port_ = null;
+  });
+
+  return port_;
+};
+
 // proxy messages from applications to a background script
-const port = runtime.connect({ name: "content" });
-// cannot get tabId here
-port.onMessage.addListener((message: any) => {
-  // a panel has been displayed, so we sent queued messages
-  if (message.type === "displayed_panel") {
-    queuedMessages.forEach((m) => {
-      port.postMessage(m);
-    });
-    isDisplayedPanel = true;
-  }
-});
 
 // A new page has been loaded.
 // this event is sent with any pages that don't have SWRDevTools
-port.postMessage({
+getPort().postMessage({
   type: "load",
 });
 
 window.addEventListener("message", (e: MessageEvent<DevToolsMessage>) => {
+  const port = getPort();
   switch (e.data?.type) {
     case "initialized": {
       port.postMessage(e.data);
