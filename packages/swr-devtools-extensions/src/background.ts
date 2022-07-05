@@ -9,7 +9,7 @@ const queuedContentMessages: any[] = [];
 
 runtime.onConnect.addListener((port) => {
   const tabId = port.sender?.tab?.id || +port.name.replace("panel:", "");
-  // console.log("on connect", { name: port.name, port, tabId });
+  console.log("on connect", { name: port.name, tabId });
 
   // A port between a content page
   if (port.name === "content") {
