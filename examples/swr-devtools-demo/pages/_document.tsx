@@ -10,6 +10,7 @@ export default class MyDocument extends Document {
       ctx.renderPage = () =>
         originalRenderPage({
           enhanceApp: (App) => (props) =>
+            // @ts-expect-error  error TS2786: 'App' cannot be used as a JSX component.
             sheet.collectStyles(<App {...props} />),
         });
 

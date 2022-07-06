@@ -79,6 +79,7 @@ export const SWRDevToolPanel = ({ cache, events }: Props) => {
     useState<DevToolsCacheData | null>(null);
   return (
     <DevToolWindow>
+      {/* @ts-expect-error https://github.com/styled-components/styled-components/issues/3738 */}
       <GlobalStyle />
       <Header>
         <HeaderLogoWrapper>

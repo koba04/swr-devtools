@@ -1,5 +1,5 @@
-import React, { lazy, Suspense } from "react";
-import { ReactJsonViewProps } from "react-json-view";
+import React from "react";
+import { JSONTree } from "react-json-tree";
 import styled from "styled-components";
 import { DevToolsCacheData } from "swr-devtools/lib/swr-cache";
 import { CacheKey } from "./CacheKey";
@@ -17,44 +17,34 @@ export const CacheData = React.memo(({ devToolsCacheData }: Props) => (
       <TimestampText>{devToolsCacheData.timestampString}</TimestampText>
     </Title>
     <DataWrapper>
-      {devToolsCacheData.data && (
-        <>
-          <DataTitle>Data</DataTitle>
-          <CacheDataView data={devToolsCacheData.data as any} />
-        </>
-      )}
-      {devToolsCacheData.error && (
-        <>
-          <DataTitle>
-            <ErrorLabel>Error</ErrorLabel>
-          </DataTitle>
-          <CacheDataView data={devToolsCacheData.error as any} />
-        </>
-      )}
+      <>
+        {devToolsCacheData.data && (
+          <>
+            <DataTitle>Data</DataTitle>
+            <CacheDataView data={devToolsCacheData.data as any} />
+          </>
+        )}
+        {devToolsCacheData.error && (
+          <>
+            <DataTitle>
+              <ErrorLabel>Error</ErrorLabel>
+            </DataTitle>
+            <CacheDataView data={devToolsCacheData.error as any} />
+          </>
+        )}
+      </>
     </DataWrapper>
   </Wrapper>
 ));
 CacheData.displayName = "CacheData";
 
-const CacheDataView = ({ data }: { data: ReactJsonViewProps }) => {
+const CacheDataView = ({ data }: { data: any }) => {
   if (typeof window === "undefined") return null;
   return (
-    <Suspense fallback="loading">
-      <AsyncReactJson data={data} />
-    </Suspense>
-  );
-};
-
-const AsyncReactJson = ({ data }: { data: ReactJsonViewProps }) => {
-  const ReactJson = lazy(() => import("react-json-view"));
-  return (
-    <ReactJson
-      src={data}
-      theme={
-        matchMedia("(prefers-color-scheme: dark)").matches
-          ? "railscasts"
-          : "rjv-default"
-      }
+    <JSONTree
+      data={data}
+      theme="railscasts"
+      invertTheme={!matchMedia("(prefers-color-scheme: dark)").matches}
     />
   );
 };

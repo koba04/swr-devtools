@@ -19,6 +19,8 @@
 
 ### Wrap your application in the SWRDevTools component
 
+**If you use SWR v2.0.0-beta.6 or later versions, you don't need to install `swr-devtools` and wrap your application. SWR Devtools does it for you.**
+
 ```shell
 npm install swr-devtools
 # Install peerDependencies
@@ -26,10 +28,10 @@ npm install react swr
 ```
 
 ```jsx
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import { SWRDevTools } from "swr-devtools";
 
-ReactDOM.render(
+createRoot(document.getElementById("app")).render(
   <SWRDevTools>
     <MainApp />
   </SWRDevTools>,

@@ -1,4 +1,10 @@
-import React, { useCallback, useLayoutEffect, useRef, useState } from "react";
+import React, {
+  MouseEvent,
+  useCallback,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import styled from "styled-components";
 import { Cache } from "swr";
 
@@ -177,7 +183,7 @@ export const NetworkPanel = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [requestsById, startTime, trackScale]);
 
-  const onPointerMove = useCallback((e) => {
+  const onPointerMove = useCallback((e: MouseEvent) => {
     setTimelineHoverX(~~e.nativeEvent.offsetX + 100);
   }, []);
 
