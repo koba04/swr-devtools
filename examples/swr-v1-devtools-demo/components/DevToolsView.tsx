@@ -11,6 +11,7 @@ export const DevToolsView = () => {
         height: "400px",
       }}
     >
+      {/* @ts-expect-error */}
       <SWRDevToolPanel cache={cache} events={null} />
     </div>
   );

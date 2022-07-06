@@ -21,14 +21,13 @@ npm install react swr
 ### Wrap your application in the SWRDevTools component
 
 ```jsx
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import { SWRDevTools } from "swr-devtools";
 
-ReactDOM.render(
+createRoot(document.getElementById("app")).render(
   <SWRDevTools>
     <MainApp />
-  </SWRDevTools>,
-  document.getElementById("app")
+  </SWRDevTools>
 );
 ```
 

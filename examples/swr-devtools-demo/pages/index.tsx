@@ -74,14 +74,13 @@ export default function Home() {
             <code
               dangerouslySetInnerHTML={{
                 __html: highlight(`
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import { SWRDevTools } from "swr-devtools";
 
-ReactDOM.render(
+createRoot(document.getElementById("app")).render(
   <SWRDevTools>
     <MainApp />
-  </SWRDevTools>,
-  document.getElementById("app")
+  </SWRDevTools>
 );
           `),
               }}

@@ -22,10 +22,12 @@ export const CacheKey = ({
           : devToolsCacheData.key}
       </div>
       <Labels>
-        {devToolsCacheData.isInfinite && <InfiniteLabel />}
-        {devToolsCacheData.error && <ErrorLabel />}
-        {devToolsCacheData.isLoading && <LoadingLabel />}
-        {devToolsCacheData.isValidating && <ValidationgLabel />}
+        <>
+          {devToolsCacheData.isInfinite && <InfiniteLabel />}
+          {devToolsCacheData.error && <ErrorLabel />}
+          {devToolsCacheData.isLoading && <LoadingLabel />}
+          {devToolsCacheData.isValidating && <ValidationgLabel />}
+        </>
       </Labels>
     </CacheText>
   );
