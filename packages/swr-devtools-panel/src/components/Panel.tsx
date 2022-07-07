@@ -10,24 +10,20 @@ import { SearchInput } from "./SearchInput";
 import { DevToolsCacheData } from "swr-devtools/lib/swr-cache";
 
 export const Panel = ({
-  cache,
+  cacheData,
   type,
   selectedItemKey,
   onSelectItem,
 }: {
-  cache: Cache;
+  cacheData: DevToolsCacheData[];
   type: PanelType;
   selectedItemKey: DevToolsCacheData | null;
   onSelectItem: (devToolsCacheData: DevToolsCacheData) => void;
 }) => {
-  const [currentDevToolsCacheData, historyDevToolsCacheData] =
-    useDevToolsCache(cache);
   const [filterText, setFilterText] = useState("");
-  const allDevToolsCacheData =
-    type === "history" ? historyDevToolsCacheData : currentDevToolsCacheData;
   const selectedDevToolsCacheData =
     selectedItemKey &&
-    allDevToolsCacheData.find(
+    cacheData.find(
       (c) =>
         c.key === selectedItemKey.key &&
         (type === "current" || c.timestamp === selectedItemKey.timestamp)
@@ -40,7 +36,7 @@ export const Panel = ({
           onChange={(text: string) => setFilterText(text)}
         />
         <CacheItems>
-          {allDevToolsCacheData
+          {cacheData
             .filter(({ key }) => filterText === "" || key.includes(filterText))
             .map((devToolsCacheData) => (
               <CacheItem

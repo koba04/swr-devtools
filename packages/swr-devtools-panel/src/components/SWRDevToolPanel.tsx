@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import { Cache } from "swr";
-import { NetworkPanel, EventEmitter } from "./NetworkPanel";
+import { NetworkPanel } from "./NetworkPanel";
 import { DevToolsCacheData } from "swr-devtools/lib/swr-cache";
 
 import { Panel } from "./Panel";
 import { Tab } from "./Tab";
+import { EventEmitter, useRequests, useTracks } from "../request";
+import { useDevToolsCache } from "../devtools-cache";
 
 export type PanelType = "current" | "history" | "network";
 export type Panel = { label: string; key: PanelType };
@@ -77,6 +79,12 @@ export const SWRDevToolPanel = ({ cache, events }: Props) => {
   const [activePanel, setActivePanel] = useState<Panel["key"]>("current");
   const [selectedDevToolsCacheData, selectDevToolsCacheData] =
     useState<DevToolsCacheData | null>(null);
+
+  const requestsById = useRequests(events);
+  const tracks = useTracks(requestsById);
+  const startTime = useState(() => Date.now())[0];
+  const [currentCacheData, historyCacheData] = useDevToolsCache(cache);
+
   return (
     <DevToolWindow>
       {/* @ts-expect-error https://github.com/styled-components/styled-components/issues/3738 */}
@@ -103,10 +111,16 @@ export const SWRDevToolPanel = ({ cache, events }: Props) => {
       <PanelWrapper>
         {cache !== null && events !== null ? (
           activePanel === "network" ? (
-            <NetworkPanel cache={cache} events={events} type={activePanel} />
+            <NetworkPanel
+              requestsById={requestsById}
+              tracks={tracks}
+              startTime={startTime}
+            />
           ) : (
             <Panel
-              cache={cache}
+              cacheData={
+                activePanel === "current" ? currentCacheData : historyCacheData
+              }
               type={activePanel}
               selectedItemKey={selectedDevToolsCacheData}
               onSelectItem={selectDevToolsCacheData}
