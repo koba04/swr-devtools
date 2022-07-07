@@ -45,6 +45,8 @@ const CacheDataView = ({ data }: { data: any }) => {
       data={data}
       theme="railscasts"
       invertTheme={!matchMedia("(prefers-color-scheme: dark)").matches}
+      hideRoot
+      shouldExpandNode={(_keyPath, _data, level) => level < 3}
     />
   );
 };
