@@ -83,13 +83,14 @@ const retrieveCache = (
 };
 
 export const useDevToolsCache = (
-  cache: Cache
+  cache: Cache | null
 ): [DevToolsCacheData[], DevToolsCacheData[]] => {
   const [cacheData, setCacheData] = useState<
     [DevToolsCacheData[], DevToolsCacheData[]]
   >([[], []]);
 
   useEffect(() => {
+    if (cache === null) return;
     const subscribe = createDevToolsCache(cache);
     const unsubscribe = subscribe(
       (key_: string, value_: Partial<DevToolsCacheData>) => {
