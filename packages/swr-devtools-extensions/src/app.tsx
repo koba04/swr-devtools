@@ -1,3 +1,4 @@
+import type { ReactElement } from "react";
 import { createRoot } from "react-dom/client";
 import { SWRDevToolPanel } from "swr-devtools-panel";
 import { runtime, devtools, Runtime } from "webextension-polyfill";
@@ -28,11 +29,14 @@ const port = runtime.connect({
   name: "panel:" + devtools.inspectedWindow.tabId,
 });
 
+const root = createRoot(rootEl);
+const render = (el: ReactElement) => root.render(el);
+
 /*
 port.onDisconnect.addListener(() => {
   cache.clear();
   mounted = false;
-  createRoot(rootEl).render(<SWRDevToolPanel cache={null} events={null} />);
+  render(<SWRDevToolPanel cache={null} events={null} />);
 });
 */
 
@@ -57,9 +61,7 @@ port.onMessage.addListener(
     switch (message.type) {
       // loaded a new page
       case "load": {
-        createRoot(rootEl).render(
-          <SWRDevToolPanel cache={null} events={null} key={tabId} />
-        );
+        render(<SWRDevToolPanel cache={null} events={null} key={tabId} />);
         mounted = false;
         break;
       }
@@ -68,7 +70,7 @@ port.onMessage.addListener(
       case "initialized": {
         cache.clear();
         mounted = true;
-        createRoot(rootEl).render(
+        render(
           <SWRDevToolPanel cache={cache} events={eventEmitter} key={tabId} />
         );
         break;
@@ -81,7 +83,7 @@ port.onMessage.addListener(
 
         // mount a devtool panel if it hasn't been mounted yet.
         if (mounted === false) {
-          createRoot(rootEl).render(
+          render(
             <SWRDevToolPanel cache={cache} events={eventEmitter} key={tabId} />
           );
           mounted = true;
@@ -95,7 +97,7 @@ port.onMessage.addListener(
       case "request_discarded": {
         // mount a devtool panel if it hasn't been mounted yet.
         if (mounted === false) {
-          createRoot(rootEl).render(
+          render(
             <SWRDevToolPanel cache={cache} events={eventEmitter} key={tabId} />
           );
           mounted = true;
