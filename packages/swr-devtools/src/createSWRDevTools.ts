@@ -45,6 +45,7 @@ export type DevToolsMessage =
       payload: {
         key: string;
         id: number;
+        data: any;
       };
     }
   | {
@@ -52,6 +53,7 @@ export type DevToolsMessage =
       payload: {
         key: string;
         id: number;
+        error: any;
       };
     }
   | {
@@ -186,6 +188,7 @@ export const createSWRDevtools = () => {
       events.emit("request_success", {
         key: unstable_serialize(args[1]),
         id: requestIdRef.current,
+        data: convertToSerializableObject(args[0]),
       });
       window.postMessage(
         {
@@ -193,6 +196,7 @@ export const createSWRDevtools = () => {
           payload: {
             key: unstable_serialize(args[1]),
             id: requestIdRef.current,
+            data: convertToSerializableObject(args[0]),
           },
         },
         "*"
@@ -203,6 +207,7 @@ export const createSWRDevtools = () => {
       events.emit("request_error", {
         key: unstable_serialize(args[1]),
         id: requestIdRef.current,
+        error: convertToSerializableObject(args[0]),
       });
       window.postMessage(
         {
@@ -210,6 +215,7 @@ export const createSWRDevtools = () => {
           payload: {
             key: unstable_serialize(args[1]),
             id: requestIdRef.current,
+            error: convertToSerializableObject(args[0]),
           },
         },
         "*"

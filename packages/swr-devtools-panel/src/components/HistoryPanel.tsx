@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import { CacheData } from "./CacheData";
 
 const TYPE_MAP = {
   success: "✅",
@@ -8,6 +9,7 @@ const TYPE_MAP = {
 };
 
 export const HistoryPanel = ({ tracks }: { tracks: any[] }) => {
+  const [selectedData, setSelectedData] = useState(null);
   const histories = tracks.flatMap((track) => track.items);
   histories.sort((a, b) => {
     if (a.data.startTime < b.data.startTime) return 1;
@@ -20,7 +22,20 @@ export const HistoryPanel = ({ tracks }: { tracks: any[] }) => {
         <CacheItems>
           {histories.map((track) => (
             <CacheItem key={track.key} isSelected={false}>
-              <CacheItemButton>
+              <CacheItemButton
+                onClick={() => {
+                  if (
+                    track.data.type === "success" ||
+                    track.data.type === "error"
+                  ) {
+                    setSelectedData({
+                      ...track.data,
+                      timestamp: track.data.endTime,
+                      timestampString: formatTime(track.data.endTime),
+                    });
+                  }
+                }}
+              >
                 <CacheText>
                   <div>{track.data.key}</div>
                   {/* @ts-expect-error */}
@@ -33,7 +48,9 @@ export const HistoryPanel = ({ tracks }: { tracks: any[] }) => {
         </CacheItems>
       </PanelItem>
       <VerticalDivider />
-      <PanelItem />
+      <PanelItem>
+        {selectedData && <CacheData devToolsCacheData={selectedData} />}
+      </PanelItem>
     </PanelWrapper>
   );
 };
