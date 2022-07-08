@@ -8,8 +8,15 @@ const TYPE_MAP = {
   error: "❌",
 };
 
-export const HistoryPanel = ({ tracks }: { tracks: any[] }) => {
-  const [selectedData, setSelectedData] = useState(null);
+export const HistoryPanel = ({
+  tracks,
+  selectedItem,
+  onSelectedItem,
+}: {
+  tracks: any[];
+  selectedItem: any;
+  onSelectedItem: (data: any) => void;
+}) => {
   const histories = tracks.flatMap((track) => track.items);
   histories.sort((a, b) => {
     if (a.data.startTime < b.data.startTime) return 1;
@@ -21,14 +28,17 @@ export const HistoryPanel = ({ tracks }: { tracks: any[] }) => {
       <PanelItem>
         <CacheItems>
           {histories.map((track) => (
-            <CacheItem key={track.key} isSelected={false}>
+            <CacheItem
+              key={track.key}
+              isSelected={selectedItem && selectedItem.id === track.data.id}
+            >
               <CacheItemButton
                 onClick={() => {
                   if (
                     track.data.type === "success" ||
                     track.data.type === "error"
                   ) {
-                    setSelectedData({
+                    onSelectedItem({
                       ...track.data,
                       timestamp: track.data.endTime,
                       timestampString: formatTime(track.data.endTime),
@@ -49,7 +59,7 @@ export const HistoryPanel = ({ tracks }: { tracks: any[] }) => {
       </PanelItem>
       <VerticalDivider />
       <PanelItem>
-        {selectedData && <CacheData devToolsCacheData={selectedData} />}
+        {selectedItem && <CacheData devToolsCacheData={selectedItem} />}
       </PanelItem>
     </PanelWrapper>
   );
