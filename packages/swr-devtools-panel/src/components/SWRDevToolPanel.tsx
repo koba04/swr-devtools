@@ -79,7 +79,7 @@ const GlobalStyle = createGlobalStyle`
 export const SWRDevToolPanel = ({ cache, events }: Props) => {
   const [activePanel, setActivePanel] = useState<Panel["key"]>("current");
   const [selectedDevToolsCacheData, selectDevToolsCacheData] =
-    useState<DevToolsCacheData | null>(null);\
+    useState<DevToolsCacheData | null>(null);
   const [selectedHistoryData, setSelectedHistoryData] = useState<any>(null);
 
   const requestsById = useRequests(events);
@@ -119,7 +119,11 @@ export const SWRDevToolPanel = ({ cache, events }: Props) => {
               startTime={startTime}
             />
           ) : activePanel === "history" ? (
-            <HistoryPanel tracks={tracks} selectedItem={selectedHistoryData} onSelectedItem={(data: any) => setSelectedHistoryData(data)} />
+            <HistoryPanel
+              tracks={tracks}
+              selectedItem={selectedHistoryData}
+              onSelectedItem={(data: any) => setSelectedHistoryData(data)}
+            />
           ) : (
             <CachePanel
               cacheData={cacheData}
