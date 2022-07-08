@@ -1,15 +1,13 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Cache } from "swr";
 
 import { PanelType } from "./SWRDevToolPanel";
 import { CacheData } from "./CacheData";
 import { CacheKey } from "./CacheKey";
-import { useDevToolsCache } from "../devtools-cache";
 import { SearchInput } from "./SearchInput";
 import { DevToolsCacheData } from "swr-devtools/lib/swr-cache";
 
-export const Panel = ({
+export const CachePanel = ({
   cacheData,
   type,
   selectedItemKey,

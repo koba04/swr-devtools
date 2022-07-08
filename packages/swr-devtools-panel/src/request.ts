@@ -11,6 +11,8 @@ type SWRRequest = {
   type: "success" | "error" | "discarded" | "ongoing";
   startTime: Date;
   endTime: Date | null;
+  data?: any;
+  error?: any;
 };
 
 export type RequestsById = Record<string, SWRRequest[]>;
@@ -25,7 +27,15 @@ export function useRequests(events: EventEmitter | null) {
     if (events === null) return;
 
     return events.subscribe(
-      (type, { id, key }: { id: number; key: string }) => {
+      (
+        type,
+        {
+          id,
+          key,
+          data,
+          error,
+        }: { id: number; key: string; data?: any; error?: any }
+      ) => {
         setRequestsById((currentRequestsByKey) => {
           let channelKey = key;
           let channelNum = 0;
@@ -65,6 +75,8 @@ export function useRequests(events: EventEmitter | null) {
 
                 activeRequests[id].type = "success";
                 activeRequests[id].endTime = new Date();
+                activeRequests[id].data = data;
+
                 delete activeRequests[id];
                 delete activeRequests[channelKey];
 
@@ -77,6 +89,7 @@ export function useRequests(events: EventEmitter | null) {
 
                 activeRequests[id].type = "error";
                 activeRequests[id].endTime = new Date();
+                activeRequests[id].error = error;
                 delete activeRequests[id];
                 delete activeRequests[channelKey];
 

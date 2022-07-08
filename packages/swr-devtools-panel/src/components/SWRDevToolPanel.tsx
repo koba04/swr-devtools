@@ -4,7 +4,8 @@ import { Cache } from "swr";
 import { NetworkPanel } from "./NetworkPanel";
 import { DevToolsCacheData } from "swr-devtools/lib/swr-cache";
 
-import { Panel } from "./Panel";
+import { CachePanel } from "./CachePanel";
+import { HistoryPanel } from "./HistoryPanel";
 import { Tab } from "./Tab";
 import { EventEmitter, useRequests, useTracks } from "../request";
 import { useDevToolsCache } from "../devtools-cache";
@@ -79,11 +80,12 @@ export const SWRDevToolPanel = ({ cache, events }: Props) => {
   const [activePanel, setActivePanel] = useState<Panel["key"]>("current");
   const [selectedDevToolsCacheData, selectDevToolsCacheData] =
     useState<DevToolsCacheData | null>(null);
+  const [selectedHistoryData, setSelectedHistoryData] = useState<any>(null);
 
   const requestsById = useRequests(events);
   const tracks = useTracks(requestsById);
   const startTime = useState(() => Date.now())[0];
-  const [currentCacheData, historyCacheData] = useDevToolsCache(cache);
+  const [cacheData] = useDevToolsCache(cache);
 
   return (
     <DevToolWindow>
@@ -116,11 +118,15 @@ export const SWRDevToolPanel = ({ cache, events }: Props) => {
               tracks={tracks}
               startTime={startTime}
             />
+          ) : activePanel === "history" ? (
+            <HistoryPanel
+              tracks={tracks}
+              selectedItem={selectedHistoryData}
+              onSelectedItem={(data: any) => setSelectedHistoryData(data)}
+            />
           ) : (
-            <Panel
-              cacheData={
-                activePanel === "current" ? currentCacheData : historyCacheData
-              }
+            <CachePanel
+              cacheData={cacheData}
               type={activePanel}
               selectedItemKey={selectedDevToolsCacheData}
               onSelectItem={selectDevToolsCacheData}

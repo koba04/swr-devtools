@@ -2,6 +2,7 @@ import React, { MouseEvent, useCallback, useState } from "react";
 import styled from "styled-components";
 import { Cache } from "swr";
 import { EventEmitter, RequestsById, useRequests, useTracks } from "../request";
+import { CacheData } from "./CacheData";
 
 import { PanelType } from "./SWRDevToolPanel";
 import { Timeline } from "./timeline";
@@ -12,6 +13,11 @@ function formatTime(time: number, step: number) {
   return time + "ms";
 }
 
+const formatDateTime = (date: Date) =>
+  `${String(date.getHours()).padStart(2, "0")}:${String(
+    date.getMinutes()
+  ).padStart(2, "0")}:${String(date.getSeconds()).padStart(2, "0")}`;
+
 export const NetworkPanel = ({
   requestsById,
   tracks,
@@ -21,7 +27,7 @@ export const NetworkPanel = ({
   tracks: any[];
   startTime: number;
 }) => {
-  const [requestDetail, setRequestDetail] = useState<null | string>(null);
+  const [requestDetail, setRequestDetail] = useState<null | any>(null);
 
   const [trackScale, setTrackScale] = React.useState(5);
   const [timelineHoverX, setTimelineHoverX] = React.useState(-1);
@@ -46,8 +52,10 @@ export const NetworkPanel = ({
     <PanelWrapper>
       {requestDetail ? (
         <Detail>
-          {requestDetail}
-          <button onClick={() => setRequestDetail(null)}>Close</button>
+          <CacheData devToolsCacheData={requestDetail} />
+          <CloseButtonWrapper>
+            <button onClick={() => setRequestDetail(null)}>Close</button>
+          </CloseButtonWrapper>
         </Detail>
       ) : null}
       <TimelineWrapper>
@@ -119,7 +127,13 @@ export const NetworkPanel = ({
               <Request
                 title={`(${item.data.type}) ` + item.data.key}
                 type={item.data.type}
-                onClick={() => setRequestDetail(JSON.stringify(item.data))}
+                onClick={() =>
+                  setRequestDetail({
+                    ...item.data,
+                    timestamp: item.data.endTime,
+                    timestampString: formatDateTime(item.data.endTime),
+                  })
+                }
               >
                 {item.data.key}
               </Request>
@@ -228,16 +242,22 @@ const TrackLabel = styled.div<{ i: number }>`
 
 const Detail = styled.div`
   position: absolute;
-  background: white;
+  background: var(--swr-devtools-network-panel-bg-color);
   z-index: 2;
   height: 70%;
   top: 15%;
   padding: 10px;
+  overflow: scroll;
   box-sizing: border-box;
   border-radius: 5px;
   box-shadow: 0 3px 10px #0000001a;
   border: 1px solid #0000001a;
-  max-width: 500px;
+  width: 50%;
+`;
+
+const CloseButtonWrapper = styled.div`
+  text-align: center;
+  padding: 10px;
 `;
 
 const Header = styled.div`
