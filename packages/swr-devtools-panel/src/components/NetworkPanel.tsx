@@ -130,8 +130,8 @@ export const NetworkPanel = ({
                 onClick={() =>
                   setRequestDetail({
                     ...item.data,
-                    timestamp: item.data.endTime,
-                    timestampString: formatDateTime(item.data.endTime),
+                    timestamp: item.data.startTime,
+                    timestampString: formatDateTime(item.data.startTime),
                   })
                 }
               >

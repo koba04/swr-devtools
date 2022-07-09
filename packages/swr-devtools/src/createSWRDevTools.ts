@@ -169,10 +169,36 @@ export const createSWRDevtools = () => {
               return res
                 .then((r) => {
                   requestIdRef.current = id;
+                  const payload = {
+                    key: unstable_serialize(args[0]),
+                    id,
+                    data: convertToSerializableObject(r),
+                  };
+                  events.emit("request_success", payload);
+                  window.postMessage(
+                    {
+                      type: "request_success",
+                      payload,
+                    },
+                    "*"
+                  );
                   return r;
                 })
                 .catch((e) => {
                   requestIdRef.current = id;
+                  const payload = {
+                    key: unstable_serialize(args[0]),
+                    id,
+                    error: convertToSerializableObject(e),
+                  };
+                  events.emit("request_error", payload);
+                  window.postMessage(
+                    {
+                      type: "request_error",
+                      payload,
+                    },
+                    "*"
+                  );
                   throw e;
                 });
             }
@@ -184,44 +210,7 @@ export const createSWRDevtools = () => {
           }
         }
       : fn;
-    const onSuccess = (...args: any) => {
-      events.emit("request_success", {
-        key: unstable_serialize(args[1]),
-        id: requestIdRef.current,
-        data: convertToSerializableObject(args[0]),
-      });
-      window.postMessage(
-        {
-          type: "request_success",
-          payload: {
-            key: unstable_serialize(args[1]),
-            id: requestIdRef.current,
-            data: convertToSerializableObject(args[0]),
-          },
-        },
-        "*"
-      );
-      return config.onSuccess ? config.onSuccess.apply(null, args) : null;
-    };
-    const onError = (...args: any) => {
-      events.emit("request_error", {
-        key: unstable_serialize(args[1]),
-        id: requestIdRef.current,
-        error: convertToSerializableObject(args[0]),
-      });
-      window.postMessage(
-        {
-          type: "request_error",
-          payload: {
-            key: unstable_serialize(args[1]),
-            id: requestIdRef.current,
-            error: convertToSerializableObject(args[0]),
-          },
-        },
-        "*"
-      );
-      return config.onError ? config.onError.apply(null, args) : null;
-    };
+    // FIXME: we should get the id of discarded fetcher request. requestIdRef is the latest id of ongoing requests
     const onDiscarded = (...args: any) => {
       events.emit("request_discarded", {
         key: unstable_serialize(args[0]),
@@ -242,8 +231,6 @@ export const createSWRDevtools = () => {
 
     return useSWRNext(key, wrappedFn, {
       ...config,
-      onSuccess,
-      onError,
       onDiscarded,
     });
   };
