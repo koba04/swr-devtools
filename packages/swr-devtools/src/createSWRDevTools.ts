@@ -69,6 +69,20 @@ const convertToSerializableObject = (value: any) => {
   return value instanceof Error ? { message: value.message } : value;
 };
 
+const convertValue = (value: any) => {
+  if (typeof value !== "object" || value === null) return value;
+  if (Array.isArray(value)) {
+    return value.map(convertToSerializableObject);
+  }
+  return Object.keys(value).reduce(
+    (acc, cacheKey) => ({
+      ...acc,
+      [cacheKey]: convertToSerializableObject(value[cacheKey]),
+    }),
+    {}
+  );
+};
+
 const inject = (cache: Cache) =>
   injectSWRCache(cache, (key: string, value: any) => {
     window.postMessage(
@@ -76,13 +90,7 @@ const inject = (cache: Cache) =>
         type: "updated_swr_cache",
         payload: {
           key,
-          value: Object.keys(value).reduce(
-            (acc, cacheKey) => ({
-              ...acc,
-              [cacheKey]: convertToSerializableObject(value[cacheKey]),
-            }),
-            {}
-          ),
+          value: convertValue(value),
         },
       },
       "*"
