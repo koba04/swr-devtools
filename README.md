@@ -1,5 +1,7 @@
 # swr-devtools
 
+A DevTools for SWR
+
 [![](https://github.com/koba04/swr-devtools/workflows/lint/badge.svg)](https://github.com/koba04/swr-devtools/actions?workflow=lint)
 
 ![A screenshot of SWR Devtools (light theme)](./imgs/light.png)
@@ -17,7 +19,7 @@
 - Firefox
     - https://addons.mozilla.org/en-US/firefox/addon/swr-devtools/
 
-### Wrap your application in the SWRDevTools component
+### (SWR v1) Wrap your application in the SWRDevTools component
 
 **If you use SWR v2.0.0-beta.6 or later versions, you don't need to install `swr-devtools` and wrap your application. SWR Devtools does it for you.**
 
