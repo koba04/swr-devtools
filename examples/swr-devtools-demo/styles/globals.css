@@ -6,7 +6,7 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   background-color: #fafafa;
 }
-ul {
+ul, ol {
   padding: 0;
 }
 

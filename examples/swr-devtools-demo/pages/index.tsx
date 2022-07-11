@@ -1,6 +1,5 @@
 import Head from "next/head";
 import Link from "next/link";
-import { highlight } from "sugar-high";
 import styles from "../styles/Home.module.css";
 import useSWR from "swr";
 import { useEffect, useState } from "react";
@@ -35,13 +34,13 @@ export default function Home() {
             <a href="https://swr.vercel.app/" target="_blank" rel="noreferrer">
               SWR
             </a>
-            &nbsp;to enable you to inspect your SWR cache data.
+            &nbsp;to enable you to inspect your SWR.
           </p>
         </header>
         <section className={styles.section}>
           <h2 className={styles.subTitle}>Download</h2>
           <p className={styles.paragraph}>
-            You can download SWRDevTools extensions at the following.
+            You can download SWRDevTools at the following.
           </p>
           <ul className={styles.list}>
             <li>
@@ -65,30 +64,25 @@ export default function Home() {
           </ul>
         </section>
         <section className={styles.section}>
-          <h2 className={styles.subTitle}>How to use</h2>
-          <p>
-            First, you can install <code>swr-devtools</code> and wrap your app
-            with the <code>SWRDevTools</code> component
-          </p>
-          <pre>
-            <code
-              dangerouslySetInnerHTML={{
-                __html: highlight(`
-import { createRoot } from "react-dom/client";
-import { SWRDevTools } from "swr-devtools";
-
-createRoot(document.getElementById("app")).render(
-  <SWRDevTools>
-    <MainApp />
-  </SWRDevTools>
-);
-          `),
-              }}
-            />
-          </pre>
-          <p>
-            Then, open the SWR Devtools from the browser&apos;s developer tools
-          </p>
+          <h2 className={styles.subTitle}>Setup</h2>
+          <ol className={styles.list}>
+            <li>Install SWRDevTools in the above links</li>
+            <li>
+              <b>
+                [<code>swr@1.x</code> only]
+              </b>{" "}
+              install <code>swr-devtools</code> and wrap your application with
+              the <code>SWRDevTools</code> component. Please see the more
+              details in{" "}
+              <a
+                href="https://github.com/koba04/swr-devtools/#how-to-use"
+                target="_blank"
+                rel="noreferrer"
+              >
+                the documentation
+              </a>
+            </li>
+          </ol>
         </section>
         <section className={styles.section}>
           <h2 className={styles.subTitle}>Online Demo</h2>
