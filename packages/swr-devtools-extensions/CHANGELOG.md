@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0](https://github.com/koba04/swr-devtools/compare/v1.0.0...v1.1.0) (2022-07-12)
+
+
+### Bug Fixes
+
+* a hydration error in SSR apps ([#76](https://github.com/koba04/swr-devtools/issues/76)) ([c30626f](https://github.com/koba04/swr-devtools/commit/c30626f44ec2eab1dabe81ee101aef4fbf19c2d2))
+
+
+
+
+
 # [0.5.0](https://github.com/koba04/swr-devtools/compare/v0.4.0...v0.5.0) (2022-06-01)
 
 

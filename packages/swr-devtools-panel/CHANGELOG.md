@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0](https://github.com/koba04/swr-devtools/compare/v1.0.0...v1.1.0) (2022-07-12)
+
+
+### Features
+
+* close a dialog when clicking outside of elements ([#77](https://github.com/koba04/swr-devtools/issues/77)) ([0062d08](https://github.com/koba04/swr-devtools/commit/0062d0833e6751db0b91aa596ee26d499ef365a3))
+
+
+
+
+
 # [0.5.0](https://github.com/koba04/swr-devtools/compare/v0.4.0...v0.5.0) (2022-06-01)
 
 
