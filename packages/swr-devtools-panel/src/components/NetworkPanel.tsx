@@ -1,10 +1,8 @@
-import React, { MouseEvent, useCallback, useState } from "react";
+import React, { MouseEvent, useCallback, useRef, useState } from "react";
 import styled from "styled-components";
-import { Cache } from "swr";
-import { EventEmitter, RequestsById, useRequests, useTracks } from "../request";
+import { RequestsById } from "../request";
 import { CacheData } from "./CacheData";
 
-import { PanelType } from "./SWRDevToolPanel";
 import { Timeline } from "./timeline";
 
 function formatTime(time: number, step: number) {
@@ -48,15 +46,25 @@ export const NetworkPanel = ({
     setTimelineHoverX(-1);
   }, []);
 
+  const detailRef = useRef<HTMLDivElement>(null);
+
   return (
     <PanelWrapper>
       {requestDetail ? (
-        <Detail>
-          <CacheData devToolsCacheData={requestDetail} />
-          <CloseButtonWrapper>
-            <button onClick={() => setRequestDetail(null)}>Close</button>
-          </CloseButtonWrapper>
-        </Detail>
+        <DialogWrapper
+          onClick={(e) => {
+            // a click within a DetailDialog
+            if (detailRef.current?.contains(e.target as Node)) return;
+            setRequestDetail(null);
+          }}
+        >
+          <DetailDialog ref={detailRef}>
+            <CacheData devToolsCacheData={requestDetail} />
+            <CloseButtonWrapper>
+              <button onClick={() => setRequestDetail(null)}>Close</button>
+            </CloseButtonWrapper>
+          </DetailDialog>
+        </DialogWrapper>
       ) : null}
       <TimelineWrapper>
         <HeaderController>
@@ -161,6 +169,7 @@ export const NetworkPanel = ({
 };
 
 const PanelWrapper = styled.section`
+  position: relative;
   box-sizing: border-box;
   display: flex;
   justify-content: space-around;
@@ -240,12 +249,22 @@ const TrackLabel = styled.div<{ i: number }>`
   overflow: hidden;
 `;
 
-const Detail = styled.div`
+// FIXME: use dialog element
+const DialogWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: absolute;
-  background: var(--swr-devtools-network-panel-bg-color);
+  top: 0;
+  left: 0;
   z-index: 2;
+  width: 100%;
+  height: 100%;
+`;
+
+const DetailDialog = styled.div`
+  background: var(--swr-devtools-network-panel-bg-color);
   height: 70%;
-  top: 15%;
   padding: 10px;
   overflow: scroll;
   box-sizing: border-box;
