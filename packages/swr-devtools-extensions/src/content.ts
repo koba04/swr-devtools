@@ -1,14 +1,6 @@
 import { DevToolsMessage } from "swr-devtools";
 import { Runtime, runtime } from "webextension-polyfill";
 
-const injectDevToolsHook = () => {
-  const script = document.createElement("script");
-  script.setAttribute("type", "text/javascript");
-  script.setAttribute("src", chrome.runtime.getURL("web-accessible.js"));
-  document.documentElement.appendChild(script);
-};
-injectDevToolsHook();
-
 export type ContentMessage =
   | {
       type: "load";

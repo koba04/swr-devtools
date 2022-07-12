@@ -13,6 +13,14 @@
   "background": {
     "service_worker": "background.js"
   },
+  "permissions": [
+    "scripting",
+    "tabs"
+  ],
+  "host_permissions": [
+    "http://*/",
+    "https://*/"
+  ],
   "content_scripts": [
     {
       "matches": [
@@ -23,18 +31,6 @@
         "content.js"
       ],
       "run_at": "document_start"
-    }
-  ],
-  "web_accessible_resources": [
-    {
-      "resources": [
-        "web-accessible.js"
-      ],
-      "matches": [
-        "https://*/*",
-        "http://*/*"
-
-      ]
     }
   ]
 }
