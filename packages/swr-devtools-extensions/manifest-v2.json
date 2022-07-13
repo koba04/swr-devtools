@@ -15,12 +15,6 @@
       "background.js"
     ]
   },
-  "permissions": [
-    "scripting",
-    "tabs",
-    "http://*/",
-    "https://*/"
-  ],
   "content_scripts": [
     {
       "matches": [
