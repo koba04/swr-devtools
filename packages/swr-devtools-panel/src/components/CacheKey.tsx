@@ -9,24 +9,16 @@ import {
   ValidationgLabel,
 } from "./StatusLabel";
 
-export const CacheKey = ({
-  devToolsCacheData,
-}: {
-  devToolsCacheData: DevToolsCacheData;
-}) => {
+export const CacheKey = ({ cacheData }: { cacheData: DevToolsCacheData }) => {
   return (
     <CacheText>
-      <div>
-        {devToolsCacheData.isInfinite
-          ? devToolsCacheData.infiniteKey
-          : devToolsCacheData.key}
-      </div>
+      <div>{cacheData.isInfinite ? cacheData.infiniteKey : cacheData.key}</div>
       <Labels>
         <>
-          {devToolsCacheData.isInfinite && <InfiniteLabel />}
-          {devToolsCacheData.error && <ErrorLabel />}
-          {devToolsCacheData.isLoading && <LoadingLabel />}
-          {devToolsCacheData.isValidating && <ValidationgLabel />}
+          {cacheData.isInfinite && <InfiniteLabel />}
+          {cacheData.error && <ErrorLabel />}
+          {cacheData.isLoading && <LoadingLabel />}
+          {cacheData.isValidating && <ValidationgLabel />}
         </>
       </Labels>
     </CacheText>

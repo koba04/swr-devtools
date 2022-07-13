@@ -60,7 +60,7 @@ export const HistoryPanel = ({
       </PanelItem>
       <VerticalDivider />
       <PanelItem>
-        {selectedItem && <CacheData devToolsCacheData={selectedItem} />}
+        {selectedItem && <CacheData cacheData={selectedItem} />}
       </PanelItem>
     </PanelWrapper>
   );

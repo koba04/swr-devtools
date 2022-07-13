@@ -127,7 +127,6 @@ export const SWRDevToolPanel = ({ cache, events }: Props) => {
           ) : (
             <CachePanel
               cacheData={cacheData}
-              type={activePanel}
               selectedItemKey={selectedDevToolsCacheData}
               onSelectItem={selectDevToolsCacheData}
             />

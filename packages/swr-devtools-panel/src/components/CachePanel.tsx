@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-import { PanelType } from "./SWRDevToolPanel";
 import { CacheData } from "./CacheData";
 import { CacheKey } from "./CacheKey";
 import { SearchInput } from "./SearchInput";
@@ -9,23 +8,16 @@ import { DevToolsCacheData } from "swr-devtools/lib/swr-cache";
 
 export const CachePanel = ({
   cacheData,
-  type,
   selectedItemKey,
   onSelectItem,
 }: {
   cacheData: DevToolsCacheData[];
-  type: PanelType;
   selectedItemKey: DevToolsCacheData | null;
   onSelectItem: (devToolsCacheData: DevToolsCacheData) => void;
 }) => {
   const [filterText, setFilterText] = useState("");
-  const selectedDevToolsCacheData =
-    selectedItemKey &&
-    cacheData.find(
-      (c) =>
-        c.key === selectedItemKey.key &&
-        (type === "current" || c.timestamp === selectedItemKey.timestamp)
-    );
+  const selectedCacheData =
+    selectedItemKey && cacheData.find((c) => c.key === selectedItemKey.key);
   return (
     <PanelWrapper>
       <PanelItem>
@@ -36,24 +28,14 @@ export const CachePanel = ({
         <CacheItems>
           {cacheData
             .filter(({ key }) => filterText === "" || key.includes(filterText))
-            .map((devToolsCacheData) => (
+            .map((cacheItem) => (
               <CacheItem
-                key={`${type}--${devToolsCacheData.key}--${
-                  type === "history"
-                    ? devToolsCacheData.timestamp.getTime()
-                    : ""
-                }`}
-                isSelected={
-                  selectedItemKey?.key === devToolsCacheData.key &&
-                  (type === "current" ||
-                    selectedItemKey?.timestamp === devToolsCacheData.timestamp)
-                }
+                key={cacheItem.key}
+                isSelected={selectedItemKey?.key === cacheItem.key}
               >
-                <CacheItemButton
-                  onClick={() => onSelectItem(devToolsCacheData)}
-                >
-                  <CacheKey devToolsCacheData={devToolsCacheData} />
-                  <Timestamp>{devToolsCacheData.timestampString}</Timestamp>
+                <CacheItemButton onClick={() => onSelectItem(cacheItem)}>
+                  <CacheKey cacheData={cacheItem} />
+                  <Timestamp>{cacheItem.timestampString}</Timestamp>
                 </CacheItemButton>
               </CacheItem>
             ))}
@@ -61,9 +43,7 @@ export const CachePanel = ({
       </PanelItem>
       <VerticalDivider />
       <PanelItem>
-        {selectedDevToolsCacheData && (
-          <CacheData devToolsCacheData={selectedDevToolsCacheData} />
-        )}
+        {selectedCacheData && <CacheData cacheData={selectedCacheData} />}
       </PanelItem>
     </PanelWrapper>
   );

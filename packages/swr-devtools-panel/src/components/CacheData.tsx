@@ -6,30 +6,30 @@ import { CacheKey } from "./CacheKey";
 import { ErrorLabel } from "./StatusLabel";
 
 type Props = {
-  devToolsCacheData: DevToolsCacheData;
+  cacheData: DevToolsCacheData;
 };
 
-export const CacheData = React.memo(({ devToolsCacheData }: Props) => (
+export const CacheData = React.memo(({ cacheData }: Props) => (
   <Wrapper>
     <Title>
-      <CacheKey devToolsCacheData={devToolsCacheData} />
+      <CacheKey cacheData={cacheData} />
       &nbsp;
-      <TimestampText>{devToolsCacheData.timestampString}</TimestampText>
+      <TimestampText>{cacheData.timestampString}</TimestampText>
     </Title>
     <DataWrapper>
       <>
-        {devToolsCacheData.data && (
+        {cacheData.data && (
           <>
             <DataTitle>Data</DataTitle>
-            <CacheDataView data={devToolsCacheData.data as any} />
+            <CacheDataView data={cacheData.data as any} />
           </>
         )}
-        {devToolsCacheData.error && (
+        {cacheData.error && (
           <>
             <DataTitle>
               <ErrorLabel>Error</ErrorLabel>
             </DataTitle>
-            <CacheDataView data={devToolsCacheData.error as any} />
+            <CacheDataView data={cacheData.error as any} />
           </>
         )}
       </>

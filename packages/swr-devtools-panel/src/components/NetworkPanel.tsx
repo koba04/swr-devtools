@@ -55,7 +55,7 @@ export const NetworkPanel = ({
           }}
         >
           <DetailDialog ref={detailRef}>
-            <CacheData devToolsCacheData={requestDetail} />
+            <CacheData cacheData={requestDetail} />
             <CloseButtonWrapper>
               <button onClick={() => setRequestDetail(null)}>Close</button>
             </CloseButtonWrapper>
