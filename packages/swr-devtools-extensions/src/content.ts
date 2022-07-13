@@ -6,6 +6,7 @@ const injectDevToolsHook = () => {
   script.setAttribute("type", "text/javascript");
   script.setAttribute("src", chrome.runtime.getURL("web-accessible.js"));
   document.documentElement.appendChild(script);
+  script.parentNode?.removeChild(script);
 };
 injectDevToolsHook();
 
