@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
+import { formatDateTime } from "../format";
 import { CacheData } from "./CacheData";
 
 const TYPE_MAP = {
@@ -41,7 +42,7 @@ export const HistoryPanel = ({
                     onSelectedItem({
                       ...track.data,
                       timestamp: track.data.endTime,
-                      timestampString: formatTime(track.data.endTime),
+                      timestampString: formatDateTime(track.data.endTime),
                     });
                   }
                 }}
@@ -51,7 +52,7 @@ export const HistoryPanel = ({
                   {/* @ts-expect-error */}
                   <Labels>{TYPE_MAP[track.data.type]}</Labels>
                 </CacheText>
-                <Timestamp>{formatTime(track.data.startTime)}</Timestamp>
+                <Timestamp>{formatDateTime(track.data.startTime)}</Timestamp>
               </CacheItemButton>
             </CacheItem>
           ))}
@@ -64,11 +65,6 @@ export const HistoryPanel = ({
     </PanelWrapper>
   );
 };
-
-const formatTime = (date: Date) =>
-  `${String(date.getHours()).padStart(2, "0")}:${String(
-    date.getMinutes()
-  ).padStart(2, "0")}:${String(date.getSeconds()).padStart(2, "0")}`;
 
 const PanelWrapper = styled.section`
   box-sizing: border-box;

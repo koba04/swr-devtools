@@ -6,6 +6,7 @@ import {
   DevToolsCacheData,
   convertToDevToolsCacheData,
 } from "swr-devtools/lib/swr-cache";
+import { formatDateTime, toJSON } from "./format";
 
 type Subscribe = (fn: (key: string, value: any) => void) => () => void;
 
@@ -25,22 +26,12 @@ const createDevToolsCache = (cache: Cache) => {
   return subscribe;
 };
 
-const formatTime = (date: Date) =>
-  `${String(date.getHours()).padStart(2, "0")}:${String(
-    date.getMinutes()
-  ).padStart(2, "0")}:${String(date.getSeconds()).padStart(2, "0")}`;
-
 const cacheDataMap = new Map<string, DevToolsCacheData>();
 
 const sortCacheDataFromLatest = (cacheData: Map<string, DevToolsCacheData>) => {
   return Array.from(cacheData.values())
     .sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime())
     .reverse();
-};
-
-// TODO: this is a draft implementation
-const toJSON = (value: any) => {
-  return value instanceof Error ? { message: value.message } : value;
 };
 
 const retrieveCache = (
@@ -66,7 +57,7 @@ const retrieveCache = (
     ...updatedCacheData,
     key,
     timestamp: date,
-    timestampString: formatTime(date),
+    timestampString: formatDateTime(date),
   });
 
   return sortCacheDataFromLatest(cacheDataMap);

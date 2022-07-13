@@ -1,5 +1,6 @@
 import React, { MouseEvent, useCallback, useRef, useState } from "react";
 import styled from "styled-components";
+import { formatDateTime } from "../format";
 import { RequestsById } from "../request";
 import { CacheData } from "./CacheData";
 
@@ -10,11 +11,6 @@ function formatTime(time: number, step: number) {
   if (time >= 10000) return time / 1000 + "s";
   return time + "ms";
 }
-
-const formatDateTime = (date: Date) =>
-  `${String(date.getHours()).padStart(2, "0")}:${String(
-    date.getMinutes()
-  ).padStart(2, "0")}:${String(date.getSeconds()).padStart(2, "0")}`;
 
 export const NetworkPanel = ({
   requestsById,
