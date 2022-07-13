@@ -2,6 +2,15 @@ import React from "react";
 import styled from "styled-components";
 import { formatDateTime } from "../format";
 import { CacheData } from "./CacheData";
+import {
+  CacheItem,
+  CacheItemButton,
+  CacheItems,
+  PanelItem,
+  PanelWrapper,
+  Timestamp,
+  VerticalDivider,
+} from "./Panel";
 
 const TYPE_MAP = {
   success: "✅",
@@ -66,44 +75,6 @@ export const HistoryPanel = ({
   );
 };
 
-const PanelWrapper = styled.section`
-  box-sizing: border-box;
-  display: flex;
-  justify-content: space-around;
-  padding: 0;
-  height: 100%;
-  border-top: solid 1px var(--swr-devtools-border-color);
-`;
-
-const PanelItem = styled.div`
-  flex: 1;
-  overflow: auto;
-`;
-
-const CacheItems = styled.ul`
-  margin: 0;
-  list-style: none;
-  padding-inline-start: 0;
-`;
-
-const CacheItem = styled.li<{ isSelected: boolean }>`
-  padding: 0;
-  border-bottom: solid 1px var(--swr-devtools-border-color);
-  background-color: ${(props) =>
-    props.isSelected ? "var(--swr-devtools-selected-bg-color)" : "none"};
-  &:hover {
-    background-color: ${(props) =>
-      props.isSelected
-        ? "var(--swr-devtools-selected-bg-color)"
-        : "var(--swr-devtools-hover-bg-color)"};
-  }
-`;
-
-const VerticalDivider = styled.div`
-  background-color: var(--swr-devtools-border-color);
-  width: 1px;
-`;
-
 const CacheText = styled.div`
   display: inline-flex;
   align-items: center;
@@ -112,24 +83,6 @@ const CacheText = styled.div`
   flex: 1;
   padding-left: 8px;
   min-height: 2em;
-`;
-
-const CacheItemButton = styled.button`
-  display: flex;
-  align-items: center;
-  gap: 2px;
-  width: 100%;
-  height: 100%;
-  padding: 0.2rem 0;
-  border: none;
-  background: transparent;
-  color: var(--swr-devtools-text-color);
-  cursor: pointer;
-  text-align: left;
-`;
-
-const Timestamp = styled.span`
-  margin-right: 8px;
 `;
 
 const Labels = styled.div`

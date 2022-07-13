@@ -1,23 +1,31 @@
 import React, { useState } from "react";
-import styled from "styled-components";
 
 import { CacheData } from "./CacheData";
 import { CacheKey } from "./CacheKey";
 import { SearchInput } from "./SearchInput";
 import { DevToolsCacheData } from "swr-devtools/lib/swr-cache";
+import {
+  CacheItem,
+  CacheItemButton,
+  CacheItems,
+  PanelItem,
+  PanelWrapper,
+  Timestamp,
+  VerticalDivider,
+} from "./Panel";
 
 export const CachePanel = ({
   cacheData,
-  selectedItemKey,
+  selectedItem,
   onSelectItem,
 }: {
   cacheData: DevToolsCacheData[];
-  selectedItemKey: DevToolsCacheData | null;
+  selectedItem: DevToolsCacheData | null;
   onSelectItem: (devToolsCacheData: DevToolsCacheData) => void;
 }) => {
   const [filterText, setFilterText] = useState("");
   const selectedCacheData =
-    selectedItemKey && cacheData.find((c) => c.key === selectedItemKey.key);
+    selectedItem && cacheData.find((c) => c.key === selectedItem.key);
   return (
     <PanelWrapper>
       <PanelItem>
@@ -31,7 +39,7 @@ export const CachePanel = ({
             .map((cacheItem) => (
               <CacheItem
                 key={cacheItem.key}
-                isSelected={selectedItemKey?.key === cacheItem.key}
+                isSelected={selectedItem?.key === cacheItem.key}
               >
                 <CacheItemButton onClick={() => onSelectItem(cacheItem)}>
                   <CacheKey cacheData={cacheItem} />
@@ -48,59 +56,3 @@ export const CachePanel = ({
     </PanelWrapper>
   );
 };
-
-const PanelWrapper = styled.section`
-  box-sizing: border-box;
-  display: flex;
-  justify-content: space-around;
-  padding: 0;
-  height: 100%;
-  border-top: solid 1px var(--swr-devtools-border-color);
-`;
-
-const PanelItem = styled.div`
-  flex: 1;
-  overflow: auto;
-`;
-
-const CacheItems = styled.ul`
-  margin: 0;
-  list-style: none;
-  padding-inline-start: 0;
-`;
-
-const CacheItem = styled.li<{ isSelected: boolean }>`
-  padding: 0;
-  border-bottom: solid 1px var(--swr-devtools-border-color);
-  background-color: ${(props) =>
-    props.isSelected ? "var(--swr-devtools-selected-bg-color)" : "none"};
-  &:hover {
-    background-color: ${(props) =>
-      props.isSelected
-        ? "var(--swr-devtools-selected-bg-color)"
-        : "var(--swr-devtools-hover-bg-color)"};
-  }
-`;
-
-const CacheItemButton = styled.button`
-  display: flex;
-  align-items: center;
-  gap: 2px;
-  width: 100%;
-  height: 100%;
-  padding: 0.2rem 0;
-  border: none;
-  background: transparent;
-  color: var(--swr-devtools-text-color);
-  cursor: pointer;
-  text-align: left;
-`;
-
-const VerticalDivider = styled.div`
-  background-color: var(--swr-devtools-border-color);
-  width: 1px;
-`;
-
-const Timestamp = styled.span`
-  margin-right: 8px;
-`;
