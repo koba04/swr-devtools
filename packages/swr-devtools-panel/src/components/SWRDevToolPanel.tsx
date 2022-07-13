@@ -85,7 +85,7 @@ export const SWRDevToolPanel = ({ cache, events }: Props) => {
   const requestsById = useRequests(events);
   const tracks = useTracks(requestsById);
   const startTime = useState(() => Date.now())[0];
-  const [cacheData] = useDevToolsCache(cache);
+  const cacheData = useDevToolsCache(cache);
 
   return (
     <DevToolWindow>

@@ -30,11 +30,7 @@ const formatTime = (date: Date) =>
     date.getMinutes()
   ).padStart(2, "0")}:${String(date.getSeconds()).padStart(2, "0")}`;
 
-const cacheHistory = new Map<string, DevToolsCacheData>();
-const currentCacheData = new Map<string, DevToolsCacheData>();
-
-const getCacheHistoryKey = (key: string, timestamp: Date) =>
-  `${key}__${timestamp.getTime()}`;
+const cacheDataMap = new Map<string, DevToolsCacheData>();
 
 const sortCacheDataFromLatest = (cacheData: Map<string, DevToolsCacheData>) => {
   return Array.from(cacheData.values())
@@ -50,12 +46,12 @@ const toJSON = (value: any) => {
 const retrieveCache = (
   key: string,
   value: Partial<DevToolsCacheData>
-): [DevToolsCacheData[], DevToolsCacheData[]] => {
+): DevToolsCacheData[] => {
   const date = new Date();
 
-  const currentDevToolsCacheData = currentCacheData.get(key);
+  const cacheData = cacheDataMap.get(key);
 
-  const devToolsCacheData: DevToolsCacheData = Object.keys(
+  const updatedCacheData: DevToolsCacheData = Object.keys(
     value
   ).reduce<DevToolsCacheData>(
     (acc, cacheKey) => ({
@@ -65,29 +61,19 @@ const retrieveCache = (
     {} as DevToolsCacheData
   );
 
-  currentCacheData.set(key, {
-    ...currentDevToolsCacheData,
-    ...devToolsCacheData,
+  cacheDataMap.set(key, {
+    ...cacheData,
+    ...updatedCacheData,
     key,
     timestamp: date,
     timestampString: formatTime(date),
   });
 
-  const cacheHistoryKey = getCacheHistoryKey(key, date);
-  cacheHistory.set(cacheHistoryKey, currentCacheData.get(key)!);
-
-  return [
-    sortCacheDataFromLatest(currentCacheData),
-    sortCacheDataFromLatest(cacheHistory),
-  ];
+  return sortCacheDataFromLatest(cacheDataMap);
 };
 
-export const useDevToolsCache = (
-  cache: Cache | null
-): [DevToolsCacheData[], DevToolsCacheData[]] => {
-  const [cacheData, setCacheData] = useState<
-    [DevToolsCacheData[], DevToolsCacheData[]]
-  >([[], []]);
+export const useDevToolsCache = (cache: Cache | null): DevToolsCacheData[] => {
+  const [cacheData, setCacheData] = useState<DevToolsCacheData[]>([]);
 
   useEffect(() => {
     if (cache === null) return;
@@ -100,8 +86,7 @@ export const useDevToolsCache = (
     );
     return () => {
       unsubscribe();
-      cacheHistory.clear();
-      currentCacheData.clear();
+      cacheDataMap.clear();
     };
   }, [cache]);
 
