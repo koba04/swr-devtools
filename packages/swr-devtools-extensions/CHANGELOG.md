@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.1](https://github.com/koba04/swr-devtools/compare/v1.1.0...v1.1.1) (2022-07-13)
+
+
+### Bug Fixes
+
+* remove the inserted script after loading ([13b4216](https://github.com/koba04/swr-devtools/commit/13b42168d550ad16f0fb23aaaeffd57867aa2121))
+
+
+### Reverts
+
+* Revert "fix: a hydration error in SSR apps (#76)" (#78) ([238244d](https://github.com/koba04/swr-devtools/commit/238244d7a9acee3d9149aa06d6ce78049b83c742)), closes [#76](https://github.com/koba04/swr-devtools/issues/76) [#78](https://github.com/koba04/swr-devtools/issues/78)
+
+
+
+
+
 # [1.1.0](https://github.com/koba04/swr-devtools/compare/v1.0.0...v1.1.0) (2022-07-12)
 
 
