@@ -1,6 +1,6 @@
 import "../styles/globals.css";
 import { SWRConfig } from "swr";
-import { SWRDevTools } from "swr-devtools";
+// import { SWRDevTools } from "swr-devtools";
 
 const fetcher = async (url) => {
   const res = await fetch(url);
@@ -14,9 +14,7 @@ const fetcher = async (url) => {
 function MyApp({ Component, pageProps }) {
   return (
     <SWRConfig value={{ fetcher }}>
-      <SWRDevTools>
-        <Component {...pageProps} />
-      </SWRDevTools>
+      <Component {...pageProps} />
     </SWRConfig>
   );
 }

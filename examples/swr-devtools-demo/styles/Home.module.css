@@ -40,6 +40,10 @@
   border-bottom: solid 1px rgba(128 128 128 / 20%)
 }
 
+.lead {
+  font-size: 1.2rem;
+}
+
 .paragraph {
   margin: 0.2rem 0;
 }
@@ -54,8 +58,13 @@
 }
 
 .list {
-  margin: 0.5rem 0 0 1.2rem;
+  margin: 1rem 0 0 1.2rem;
   line-height: 1.5;
+}
+
+.list > li {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;;
 }
 
 .section {
@@ -80,4 +89,12 @@
 
 .footer {
   text-align: center;;
+}
+
+.link {
+  color: #0077FF;
+}
+
+.screenshot {
+  width: 50%;
 }
