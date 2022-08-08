@@ -91,20 +91,27 @@ export default function Home() {
           </ul>
         </section>
         <section className={styles.section}>
-          <h2 className={styles.subTitle}>How to use</h2>
+          <h2 className={styles.subTitle}>Features</h2>
+          <p>
+            Open the Developer Tools of browsers and select the SWR Panel, you
+            can see the following panels.
+          </p>
           <h3>Cache Panel</h3>
+          <p>The Cache panel shows SWR Cache data on the page.</p>
           <img
             src="img/cache-view.png"
             className={styles.screenshot}
             alt="A screenshot of cache panel"
           />
           <h3>History Panel</h3>
+          <p>The History panel shows logs of fetcher results.</p>
           <img
             src="img/history-view.png"
             className={styles.screenshot}
             alt="A screenshot of history panel"
           />
-          <h3>Network Panel</h3>
+          <h3>Network Panel (Experimental)</h3>
+          <p>The Network panel shows a waterfall chart of fetcher results.</p>
           <img
             src="img/network-view.png"
             className={styles.screenshot}
@@ -113,6 +120,7 @@ export default function Home() {
         </section>
         <section className={styles.section}>
           <h2 className={styles.subTitle}>Online Demo</h2>
+          <p>You can try SWRDevTools on this page!</p>
           <div className={styles.demo}>
             <h3>App</h3>
             <div className={styles.demoApp}>
