@@ -2,7 +2,7 @@ import Head from "next/head";
 import Link from "next/link";
 import styles from "../styles/Home.module.css";
 import useSWR from "swr";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { DevToolsView } from "../components/DevToolsView";
 
 export default function Home() {
@@ -29,18 +29,23 @@ export default function Home() {
       <main className={styles.main}>
         <header className={styles.header}>
           <h1 className={styles.title}>SWR DevTools</h1>
-          <p className={styles.paragraph}>
-            A devtools for{" "}
-            <a href="https://swr.vercel.app/" target="_blank" rel="noreferrer">
+          <p className={styles.lead}>
+            A developer tool for{" "}
+            <a
+              href="https://swr.vercel.app/"
+              target="_blank"
+              rel="noreferrer"
+              className={styles.link}
+            >
               SWR
             </a>
-            &nbsp;to enable you to inspect your SWR.
+            &nbsp;to help you debug SWR Cache.
           </p>
         </header>
         <section className={styles.section}>
           <h2 className={styles.subTitle}>Download</h2>
           <p className={styles.paragraph}>
-            You can download SWRDevTools at the following.
+            You can download the SWRDevTools extension at the following.
           </p>
           <ul className={styles.list}>
             <li>
@@ -48,6 +53,7 @@ export default function Home() {
                 href="https://chrome.google.com/webstore/detail/swr-devtools/liidbicegefhheghhjbomajjaehnjned"
                 target="_blank"
                 rel="noreferrer"
+                className={styles.link}
               >
                 Chrome
               </a>
@@ -57,6 +63,7 @@ export default function Home() {
                 href="https://addons.mozilla.org/en-US/firefox/addon/swr-devtools/"
                 target="_blank"
                 rel="noreferrer"
+                className={styles.link}
               >
                 Firefox
               </a>
@@ -64,14 +71,13 @@ export default function Home() {
           </ul>
         </section>
         <section className={styles.section}>
-          <h2 className={styles.subTitle}>Setup</h2>
-          <ol className={styles.list}>
-            <li>Install SWRDevTools in the above links</li>
+          <h2 className={styles.subTitle}>Setup (SWR v1 only)</h2>
+          <ul className={styles.list}>
             <li>
               <b>
-                [<code>swr@1.x</code> only]
+                [<code>SWR v1.x</code> only]
               </b>{" "}
-              install <code>swr-devtools</code> and wrap your application with
+              Install <code>swr-devtools</code> and wrap your application with
               the <code>SWRDevTools</code> component. Please see the more
               details in{" "}
               <a
@@ -82,10 +88,39 @@ export default function Home() {
                 the documentation
               </a>
             </li>
-          </ol>
+          </ul>
+        </section>
+        <section className={styles.section}>
+          <h2 className={styles.subTitle}>Features</h2>
+          <p>
+            Open the Developer Tools of browsers and select the SWR Panel, you
+            can see the following panels.
+          </p>
+          <h3>Cache Panel</h3>
+          <p>The Cache panel shows SWR Cache data on the page.</p>
+          <img
+            src="img/cache-view.png"
+            className={styles.screenshot}
+            alt="A screenshot of cache panel"
+          />
+          <h3>History Panel</h3>
+          <p>The History panel shows logs of fetcher results.</p>
+          <img
+            src="img/history-view.png"
+            className={styles.screenshot}
+            alt="A screenshot of history panel"
+          />
+          <h3>Network Panel (Experimental)</h3>
+          <p>The Network panel shows a waterfall chart of fetcher results.</p>
+          <img
+            src="img/network-view.png"
+            className={styles.screenshot}
+            alt="A screenshot of network panel"
+          />
         </section>
         <section className={styles.section}>
           <h2 className={styles.subTitle}>Online Demo</h2>
+          <p>You can try SWRDevTools on this page!</p>
           <div className={styles.demo}>
             <h3>App</h3>
             <div className={styles.demoApp}>
@@ -118,6 +153,7 @@ export default function Home() {
             href="https://github.com/koba04/swr-devtools"
             target="_blank"
             rel="noreferrer"
+            className={styles.link}
           >
             koba04/swr-devtools
           </a>
