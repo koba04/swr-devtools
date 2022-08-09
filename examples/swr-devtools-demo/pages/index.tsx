@@ -1,9 +1,14 @@
 import Head from "next/head";
 import Link from "next/link";
+import Image from "next/future/image";
 import styles from "../styles/Home.module.css";
 import useSWR from "swr";
 import { useEffect } from "react";
 import { DevToolsView } from "../components/DevToolsView";
+
+import cachePanelImage from "../public/img/cache-view.png";
+import historyPanelImage from "../public/img/history-view.png";
+import networkPanelImage from "../public/img/network-view.png";
 
 export default function Home() {
   useSWR("/api/hello?error=true");
@@ -98,23 +103,35 @@ export default function Home() {
           </p>
           <h3>Cache Panel</h3>
           <p>The Cache panel shows SWR Cache data on the page.</p>
-          <img
-            src="img/cache-view.png"
-            className={styles.screenshot}
+          <Image
+            src={cachePanelImage}
+            style={{
+              width: "50%",
+              height: "auto",
+            }}
+            priority
             alt="A screenshot of cache panel"
           />
           <h3>History Panel</h3>
           <p>The History panel shows logs of fetcher results.</p>
-          <img
-            src="img/history-view.png"
-            className={styles.screenshot}
+          <Image
+            src={historyPanelImage}
+            style={{
+              width: "50%",
+              height: "auto",
+            }}
+            priority
             alt="A screenshot of history panel"
           />
           <h3>Network Panel (Experimental)</h3>
           <p>The Network panel shows a waterfall chart of fetcher results.</p>
-          <img
-            src="img/network-view.png"
-            className={styles.screenshot}
+          <Image
+            src={networkPanelImage}
+            style={{
+              width: "50%",
+              height: "auto",
+            }}
+            priority
             alt="A screenshot of network panel"
           />
         </section>
