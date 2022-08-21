@@ -112,6 +112,7 @@ export const createSWRDevtools = () => {
   const events = new EventEmitter();
 
   const swrdevtools: Middleware = (useSWRNext) => (key, fn, config) => {
+    //    console.log({ config: JSON.stringify(config) });
     // use the same React instance with the application
     const { useLayoutEffect, useEffect, useRef } =
       typeof window !== "undefined" &&
@@ -154,12 +155,25 @@ export const createSWRDevtools = () => {
       };
     }, [serializedKey]);
 
+    const config_ = Object.keys(config)
+      // @ts-expect-error
+      .filter((k) => typeof config[k] !== "function")
+      .filter((k) => k !== "cache" && k !== "use")
+      .reduce((acc, cur) => {
+        return {
+          ...acc,
+          // @ts-expect-error
+          [cur]: config[cur],
+        };
+      }, {});
+
     const wrappedFn = fn
       ? (...args: any) => {
           const id = ~~(Math.random() * 1e8);
           events.emit("request_start", {
             key: unstable_serialize(args[0]),
             id,
+            config: config_,
           });
           window.postMessage(
             {
@@ -167,6 +181,7 @@ export const createSWRDevtools = () => {
               payload: {
                 key: unstable_serialize(args[0]),
                 id,
+                config: config_,
               },
             },
             "*"

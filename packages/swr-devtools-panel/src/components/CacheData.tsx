@@ -32,6 +32,14 @@ export const CacheData = React.memo(({ cacheData }: Props) => (
             <CacheDataView data={cacheData.error as any} />
           </>
         )}
+        {/* @ts-expect-error */}
+        {cacheData.config && (
+          <>
+            <DataTitle>Config</DataTitle>
+            {/* @ts-expect-error */}
+            <CacheDataView data={cacheData.config as any} />
+          </>
+        )}
       </>
     </DataWrapper>
   </Wrapper>

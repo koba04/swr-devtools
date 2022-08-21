@@ -52,6 +52,7 @@ export const HistoryPanel = ({
                       ...track.data,
                       timestamp: track.data.endTime,
                       timestampString: formatDateTime(track.data.endTime),
+                      config: track.config,
                     });
                   }
                 }}

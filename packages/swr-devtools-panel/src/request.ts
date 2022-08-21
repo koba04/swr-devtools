@@ -34,6 +34,8 @@ export function useRequests(events: EventEmitter | null) {
           key,
           data,
           error,
+          // @ts-expect-error
+          config,
         }: { id: number; key: string; data?: any; error?: any }
       ) => {
         setRequestsById((currentRequestsByKey) => {
@@ -52,12 +54,16 @@ export function useRequests(events: EventEmitter | null) {
 
               currentRequests = currentRequestsByKey[channelKey] || [];
 
+              console.log({ config });
+
               activeRequests[id] = {
                 id,
                 key,
                 type: "ongoing",
                 startTime: new Date(),
                 endTime: null,
+                // @ts-expect-error
+                config,
               };
               activeRequests[channelKey] = activeRequests[id];
 
@@ -138,6 +144,8 @@ export const useTracks = (requestsById: RequestsById) => {
             data: request,
             start: request.startTime.getTime(),
             end: (request.endTime || new Date()).getTime(),
+            // @ts-expect-error
+            config: request.config,
           };
         }),
       });
