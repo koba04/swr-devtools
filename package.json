@@ -29,9 +29,9 @@
   "author": "Toru Kobayashi <koba0004@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "@cybozu/eslint-config": "^17.0.2",
-    "eslint": "^8.19.0",
-    "lerna": "^5.1.6",
+    "@cybozu/eslint-config": "^17.0.3",
+    "eslint": "^8.23.1",
+    "lerna": "^5.5.2",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.7.1",
     "rimraf": "^3.0.2"
