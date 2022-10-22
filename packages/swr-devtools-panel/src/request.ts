@@ -1,4 +1,4 @@
-import { useLayoutEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 
 type EventListener = (...args: any[]) => void;
 export type EventEmitter = {
@@ -15,13 +15,16 @@ type SWRRequest = {
   error?: any;
 };
 
+export const useIsomorphicLayoutEffect =
+  typeof window === "undefined" ? useEffect : useLayoutEffect;
+
 export type RequestsById = Record<string, SWRRequest[]>;
 
 export function useRequests(events: EventEmitter | null) {
   const [requestsById, setRequestsById] = useState<RequestsById>({});
   const activeRequestsRef = useRef<Record<number | string, SWRRequest>>({});
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     // Which channel does this request belong to.
     const idMap: Record<number, string> = {};
     if (events === null) return;
