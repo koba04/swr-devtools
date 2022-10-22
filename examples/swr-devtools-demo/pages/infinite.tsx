@@ -6,7 +6,7 @@ import { DevToolsView } from "../components/DevToolsView";
 import styles from "../styles/infinite.module.css";
 
 export default function Home() {
-  const { data, setSize } = useSWRInfinite(
+  const { data, setSize, isValidating } = useSWRInfinite(
     (index) => `/api/list?page=${index + 1}`
   );
 
@@ -15,12 +15,12 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <Head>
-        <title>SWR DevTools Demo (useSWRInfinite)</title>
+        <title>useSWRInfinite Demo</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>SWR DevTools Demo (useSWRInfinite)</h1>
+        <h1 className={styles.title}>useSWRInfinite Demo</h1>
         <section className={styles.content}>
           <ul className={styles.list}>
             {pages.map((page) => (
@@ -33,15 +33,16 @@ export default function Home() {
           </ul>
           <div className={styles.buttonArea}>
             <button
+              disabled={isValidating}
               className={styles.button}
               onClick={() => setSize((size) => size + 1)}
             >
-              Load more
+              {isValidating ? "...loading" : "Load more"}
             </button>
           </div>
         </section>
         <nav className={styles.nav}>
-          <Link href="/">Top</Link>
+          <Link href="/">Go back</Link>
         </nav>
       </main>
       <footer>
