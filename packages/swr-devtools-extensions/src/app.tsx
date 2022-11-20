@@ -1,6 +1,7 @@
 import type { ReactElement } from "react";
 import { createRoot } from "react-dom/client";
 import { SWRDevToolPanel } from "swr-devtools-panel";
+import { deserializePayload } from "swr-devtools";
 import { runtime, devtools, Runtime } from "webextension-polyfill";
 
 import type { ContentMessage } from "./content";
@@ -77,7 +78,7 @@ port.onMessage.addListener(
       }
 
       case "updated_swr_cache": {
-        const { key, value } = message.payload;
+        const { key, value } = deserializePayload(message.payload) as any;
         // trigger re-rendering
         cache.set(key, value);
 
@@ -95,6 +96,8 @@ port.onMessage.addListener(
       case "request_success":
       case "request_error":
       case "request_discarded": {
+        const type = message.type;
+        const payload = deserializePayload(message.payload);
         // mount a devtool panel if it hasn't been mounted yet.
         if (mounted === false) {
           render(
@@ -102,7 +105,7 @@ port.onMessage.addListener(
           );
           mounted = true;
         }
-        eventEmitter.emit(message.type, message.payload);
+        eventEmitter.emit(type, payload);
         break;
       }
 
