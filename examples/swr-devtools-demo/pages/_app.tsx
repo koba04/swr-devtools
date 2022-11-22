@@ -12,11 +12,13 @@ const fetcher = async (url) => {
         // test for serialize values
         // Symbol is stripped through postMessage
         // Map is serialized
+        /*
         symbol: Symbol.for("test"),
         map: new Map([
           ["foo", "foo1"],
           ["bar", "bar1"],
         ]),
+        */
       };
     }
     return json;
