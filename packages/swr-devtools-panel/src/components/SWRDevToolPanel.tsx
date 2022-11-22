@@ -120,15 +120,16 @@ const GlobalStyle = createGlobalStyle<ModeProps>`${(props) => `
 `}`;
 
 function useColorMode() {
+  const [modeType, setModeType] = useState<string>("System");
 
-  let [modeType, setModeType] = useState<string>("System");
-
-  typeof window !== 'undefined' && window.addEventListener('beforeunload', () => {
-    localStorage.setItem("swr-devtools-color-mode", modeType);
-  })
+  typeof window !== "undefined" &&
+    window.addEventListener("beforeunload", () => {
+      localStorage.setItem("swr-devtools-color-mode", modeType);
+    });
 
   useEffect(() => {
-    let savedMode = localStorage.getItem("swr-devtools-color-mode") || "System";
+    const savedMode =
+      localStorage.getItem("swr-devtools-color-mode") || "System";
     setModeType(savedMode);
   }, []);
 
@@ -145,7 +146,7 @@ export const SWRDevToolPanel = ({ cache, events }: Props) => {
   const tracks = useTracks(requestsById);
   const startTime = useState(() => Date.now())[0];
   const cacheData = useDevToolsCache(cache);
-  let { modeType, setModeType } = useColorMode();
+  const { modeType, setModeType } = useColorMode();
 
   return (
     <DevToolWindow>
@@ -218,7 +219,7 @@ function ColorMode({
   setModeType: (nextMode: string) => void;
   activePanel: string;
 }) {
-  let [showMenu, setShowMenu] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
 
   const openMenu = () => {
     if (!showMenu) setShowMenu(!showMenu);
@@ -229,14 +230,14 @@ function ColorMode({
   };
 
   const changeModeType = (ev: React.UIEvent<HTMLDivElement>) => {
-    let newMode = (ev.target as HTMLElement).textContent as string;
+    const newMode = (ev.target as HTMLElement).textContent as string;
     setModeType(newMode);
     closeMenu();
   };
 
   useEffect(() => {
     const closeMenuOnWindow = (ev: MouseEvent) => {
-      let element = (ev.target as HTMLElement).textContent;
+      const element = (ev.target as HTMLElement).textContent;
       if (element !== "Dark" && element !== "Light" && element !== "System")
         closeMenu();
     };
@@ -266,9 +267,24 @@ function ColorMode({
         )}
       </ColorModeIconWrapper>
       <ColorModeMenu showMenu={showMenu}>
-        <ColorModeItem selectedMode={(modeType === 'Light')} onClick={changeModeType}>Light</ColorModeItem>
-        <ColorModeItem selectedMode={(modeType === 'Dark')} onClick={changeModeType}>Dark</ColorModeItem>
-        <ColorModeItem selectedMode={(modeType === 'System')} onClick={changeModeType}>System</ColorModeItem>
+        <ColorModeItem
+          selectedMode={modeType === "Light"}
+          onClick={changeModeType}
+        >
+          Light
+        </ColorModeItem>
+        <ColorModeItem
+          selectedMode={modeType === "Dark"}
+          onClick={changeModeType}
+        >
+          Dark
+        </ColorModeItem>
+        <ColorModeItem
+          selectedMode={modeType === "System"}
+          onClick={changeModeType}
+        >
+          System
+        </ColorModeItem>
       </ColorModeMenu>
     </ColorModeWrapper>
   );
@@ -312,17 +328,23 @@ const ColorModeMenu = styled.div<{ showMenu: boolean }>`
   z-index: 1;
 `;
 
-const ColorModeItem = styled.div<{selectedMode: boolean}>`
+const ColorModeItem = styled.div<{ selectedMode: boolean }>`
   width: calc(100% - 4px);
   display: flex;
   align-items: center;
   padding-left: 4px;
   cursor: pointer;
   flex-grow: 1;
-  background-color: ${({selectedMode}) => selectedMode ? 'var(--swr-devtools-selected-bg-color)' : 'var(--swr-devtools-bg-color)'};
+  background-color: ${({ selectedMode }) =>
+    selectedMode
+      ? "var(--swr-devtools-selected-bg-color)"
+      : "var(--swr-devtools-bg-color)"};
 
   &:hover {
-    background-color: ${({selectedMode}) => selectedMode ? 'var(--swr-devtools-selected-bg-color)' : 'var(--swr-devtools-hover-bg-color)'};;
+    background-color: ${({ selectedMode }) =>
+      selectedMode
+        ? "var(--swr-devtools-selected-bg-color)"
+        : "var(--swr-devtools-hover-bg-color)"};
   }
 `;
 

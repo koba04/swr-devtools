@@ -22,12 +22,12 @@ export const HistoryPanel = ({
   tracks,
   selectedItem,
   onSelectedItem,
-  modeType
+  modeType,
 }: {
   tracks: any[];
   selectedItem: any;
   onSelectedItem: (data: any) => void;
-  modeType: string
+  modeType: string;
 }) => {
   const histories = tracks.flatMap((track) => track.items);
   histories.sort((a, b) => {
@@ -71,7 +71,9 @@ export const HistoryPanel = ({
       </PanelItem>
       <VerticalDivider />
       <PanelItem>
-        {selectedItem && <CacheData cacheData={selectedItem} modeType={modeType} />}
+        {selectedItem && (
+          <CacheData cacheData={selectedItem} modeType={modeType} />
+        )}
       </PanelItem>
     </PanelWrapper>
   );

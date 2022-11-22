@@ -39,14 +39,20 @@ export const CacheData = React.memo(({ cacheData, modeType }: Props) => (
 ));
 CacheData.displayName = "CacheData";
 
-const CacheDataView = ({ data, modeType }: { data: any, modeType: string }) => {
+const CacheDataView = ({ data, modeType }: { data: any; modeType: string }) => {
   if (typeof window === "undefined") return null;
 
   return (
     <JSONTree
       data={data}
       theme="railscasts"
-      invertTheme={!(modeType === 'Dark' || modeType === 'System' && matchMedia("(prefers-color-scheme: dark)").matches)}
+      invertTheme={
+        !(
+          modeType === "Dark" ||
+          (modeType === "System" &&
+            matchMedia("(prefers-color-scheme: dark)").matches)
+        )
+      }
       hideRoot
       shouldExpandNode={(_keyPath, _data, level) => level < 3}
     />

@@ -16,12 +16,12 @@ export const NetworkPanel = ({
   requestsById,
   tracks,
   startTime,
-  modeType
+  modeType,
 }: {
   requestsById: RequestsById;
   tracks: any[];
   startTime: number;
-  modeType: string
+  modeType: string;
 }) => {
   const [requestDetail, setRequestDetail] = useState<null | any>(null);
 
