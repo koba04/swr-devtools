@@ -16,10 +16,12 @@ export const NetworkPanel = ({
   requestsById,
   tracks,
   startTime,
+  modeType,
 }: {
   requestsById: RequestsById;
   tracks: any[];
   startTime: number;
+  modeType: string;
 }) => {
   const [requestDetail, setRequestDetail] = useState<null | any>(null);
 
@@ -55,7 +57,7 @@ export const NetworkPanel = ({
           }}
         >
           <DetailDialog ref={detailRef}>
-            <CacheData cacheData={requestDetail} />
+            <CacheData cacheData={requestDetail} modeType={modeType} />
             <CloseButtonWrapper>
               <button onClick={() => setRequestDetail(null)}>Close</button>
             </CloseButtonWrapper>
