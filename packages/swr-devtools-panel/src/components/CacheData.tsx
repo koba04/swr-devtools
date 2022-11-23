@@ -4,13 +4,13 @@ import styled from "styled-components";
 import { DevToolsCacheData } from "swr-devtools/lib/swr-cache";
 import { CacheKey } from "./CacheKey";
 import { ErrorLabel } from "./StatusLabel";
+import { useTheme } from "./ThemeProvider";
 
 type Props = {
   cacheData: DevToolsCacheData;
-  modeType: string;
 };
 
-export const CacheData = React.memo(({ cacheData, modeType }: Props) => (
+export const CacheData = React.memo(({ cacheData }: Props) => (
   <Wrapper>
     <Title>
       <CacheKey cacheData={cacheData} />
@@ -22,7 +22,7 @@ export const CacheData = React.memo(({ cacheData, modeType }: Props) => (
         {cacheData.data && (
           <>
             <DataTitle>Data</DataTitle>
-            <CacheDataView data={cacheData.data as any} modeType={modeType} />
+            <CacheDataView data={cacheData.data as any} />
           </>
         )}
         {cacheData.error && (
@@ -30,7 +30,7 @@ export const CacheData = React.memo(({ cacheData, modeType }: Props) => (
             <DataTitle>
               <ErrorLabel>Error</ErrorLabel>
             </DataTitle>
-            <CacheDataView data={cacheData.error as any} modeType={modeType} />
+            <CacheDataView data={cacheData.error as any} />
           </>
         )}
       </>
@@ -39,20 +39,16 @@ export const CacheData = React.memo(({ cacheData, modeType }: Props) => (
 ));
 CacheData.displayName = "CacheData";
 
-const CacheDataView = ({ data, modeType }: { data: any; modeType: string }) => {
+const CacheDataView = ({ data }: { data: any }) => {
+  const theme = useTheme();
+
   if (typeof window === "undefined") return null;
 
   return (
     <JSONTree
       data={data}
       theme="railscasts"
-      invertTheme={
-        !(
-          modeType === "Dark" ||
-          (modeType === "System" &&
-            matchMedia("(prefers-color-scheme: dark)").matches)
-        )
-      }
+      invertTheme={theme !== "dark"}
       hideRoot
       shouldExpandNode={(_keyPath, _data, level) => level < 3}
     />

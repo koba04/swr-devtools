@@ -18,12 +18,10 @@ export const CachePanel = ({
   cacheData,
   selectedItem,
   onSelectItem,
-  modeType,
 }: {
   cacheData: DevToolsCacheData[];
   selectedItem: DevToolsCacheData | null;
   onSelectItem: (devToolsCacheData: DevToolsCacheData) => void;
-  modeType: string;
 }) => {
   const [filterText, setFilterText] = useState("");
   const selectedCacheData =
@@ -53,9 +51,7 @@ export const CachePanel = ({
       </PanelItem>
       <VerticalDivider />
       <PanelItem>
-        {selectedCacheData && (
-          <CacheData cacheData={selectedCacheData} modeType={modeType} />
-        )}
+        {selectedCacheData && <CacheData cacheData={selectedCacheData} />}
       </PanelItem>
     </PanelWrapper>
   );
