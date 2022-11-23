@@ -6,7 +6,7 @@ import { useThemePreference } from "./ThemeProvider";
 const capitalizeFirstCharacter = (s: string) =>
   s.charAt(0).toUpperCase() + s.slice(1);
 
-export const ThemeSwitcher = ({ activePanel }: { activePanel: string }) => {
+export const ThemeSwitcher = () => {
   const [theme, setTheme] = useThemePreference();
   const [showMenu, setShowMenu] = useState(false);
   const switcherRef = useRef<HTMLDivElement>(null);
@@ -36,9 +36,6 @@ export const ThemeSwitcher = ({ activePanel }: { activePanel: string }) => {
     window.addEventListener("click", closeMenuOnWindow);
     return () => window.removeEventListener("click", closeMenuOnWindow);
   }, []);
-
-  // Hide theme button on network tab
-  if (activePanel === "network") return null;
 
   return (
     <ThemeSwitcherWrapper ref={switcherRef}>
@@ -123,7 +120,7 @@ const ThemeSwitcherMenu = styled.div`
   top: 2rem;
   border: solid 1px var(--swr-devtools-border-color);
   border-radius: 4px;
-  z-index: 1;
+  z-index: 10;
   font-size: 0.8rem;
 `;
 

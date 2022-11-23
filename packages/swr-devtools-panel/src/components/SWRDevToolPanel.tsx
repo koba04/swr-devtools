@@ -105,7 +105,7 @@ export const SWRDevToolPanel = ({ cache, events }: Props) => {
               selectDevToolsCacheData(null);
             }}
           />
-          <ThemeSwitcher activePanel={activePanel} />
+          <ThemeSwitcher />
         </Header>
         <PanelWrapper>
           {cache !== null && events !== null ? (
