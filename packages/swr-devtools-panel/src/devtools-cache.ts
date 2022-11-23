@@ -6,7 +6,7 @@ import {
   DevToolsCacheData,
   convertToDevToolsCacheData,
 } from "swr-devtools/lib/swr-cache";
-import { formatDateTime, toJSON } from "./format";
+import { formatDateTime } from "./format";
 
 type Subscribe = (fn: (key: string, value: any) => void) => () => void;
 
@@ -47,7 +47,7 @@ const retrieveCache = (
   ).reduce<DevToolsCacheData>(
     (acc, cacheKey) => ({
       ...acc,
-      [cacheKey]: toJSON(value[cacheKey as keyof DevToolsCacheData]),
+      [cacheKey]: value[cacheKey as keyof DevToolsCacheData],
     }),
     {} as DevToolsCacheData
   );
