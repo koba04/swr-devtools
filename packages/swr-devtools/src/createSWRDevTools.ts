@@ -2,7 +2,7 @@
 // we have to use the same React instance with the application
 import { Middleware, Cache, unstable_serialize } from "swr";
 
-import { injectSWRCache } from "./swr-cache";
+import { injectSWRCache, serializePayload } from "./swr-cache";
 
 type EventListener = (...args: any[]) => void;
 
@@ -64,34 +64,15 @@ export type DevToolsMessage =
       };
     };
 
-// TOOD: we have to support more types
-const convertToSerializableObject = (value: any) => {
-  return value instanceof Error ? { message: value.message } : value;
-};
-
-const convertValue = (value: any) => {
-  if (typeof value !== "object" || value === null) return value;
-  if (Array.isArray(value)) {
-    return value.map(convertToSerializableObject);
-  }
-  return Object.keys(value).reduce(
-    (acc, cacheKey) => ({
-      ...acc,
-      [cacheKey]: convertToSerializableObject(value[cacheKey]),
-    }),
-    {}
-  );
-};
-
 const inject = (cache: Cache) =>
   injectSWRCache(cache, (key: string, value: any) => {
     window.postMessage(
       {
         type: "updated_swr_cache",
-        payload: {
+        payload: serializePayload({
           key,
-          value: convertValue(value),
-        },
+          value,
+        }),
       },
       "*"
     );
@@ -164,10 +145,10 @@ export const createSWRDevtools = () => {
           window.postMessage(
             {
               type: "request_start",
-              payload: {
+              payload: serializePayload({
                 key: unstable_serialize(args[0]),
                 id,
-              },
+              }),
             },
             "*"
           );
@@ -180,13 +161,13 @@ export const createSWRDevtools = () => {
                   const payload = {
                     key: unstable_serialize(args[0]),
                     id,
-                    data: convertToSerializableObject(r),
+                    data: r,
                   };
                   events.emit("request_success", payload);
                   window.postMessage(
                     {
                       type: "request_success",
-                      payload,
+                      payload: serializePayload(payload),
                     },
                     "*"
                   );
@@ -197,13 +178,13 @@ export const createSWRDevtools = () => {
                   const payload = {
                     key: unstable_serialize(args[0]),
                     id,
-                    error: convertToSerializableObject(e),
+                    error: e,
                   };
                   events.emit("request_error", payload);
                   window.postMessage(
                     {
                       type: "request_error",
-                      payload,
+                      payload: serializePayload(payload),
                     },
                     "*"
                   );
@@ -227,10 +208,10 @@ export const createSWRDevtools = () => {
       window.postMessage(
         {
           type: "request_discarded",
-          payload: {
+          payload: serializePayload({
             key: unstable_serialize(args[0]),
             id: requestIdRef.current,
-          },
+          }),
         },
         "*"
       );

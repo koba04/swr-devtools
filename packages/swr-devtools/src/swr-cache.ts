@@ -1,4 +1,5 @@
 import { Cache } from "swr";
+import superjson from "superjson";
 
 export type DevToolsCacheData = {
   key: string;
@@ -11,6 +12,12 @@ export type DevToolsCacheData = {
   isInfinite?: boolean;
   infiniteKey?: string;
 };
+
+export const serializePayload = (payload: any) => superjson.stringify(payload);
+export const deserializePayload = (payload: any) =>
+  // this check is required to support the case using the SWRDevTools component directly
+  // In this case, the payload is not serialized
+  typeof payload === "string" ? superjson.parse(payload) : payload;
 
 export const injectSWRCache = (
   cache: Cache,
