@@ -3,44 +3,49 @@ import styled from "styled-components";
 import { Theme } from "./SWRDevToolPanel";
 import { useThemePreference } from "./ThemeProvider";
 
+const capitalizeFirstCharacter = (s: string) =>
+  s.charAt(0).toUpperCase() + s.slice(1);
+
 export const ThemeSwitcher = ({ activePanel }: { activePanel: string }) => {
   const [theme, setTheme] = useThemePreference();
   const [showMenu, setShowMenu] = useState(false);
+  const switcherRef = useRef<HTMLDivElement>(null);
 
-  const openMenu = () => {
-    setShowMenu(true);
+  const toggleMenu = () => {
+    setShowMenu((v) => !v);
   };
 
   const closeMenu = () => {
     setShowMenu(false);
   };
 
-  const changeModeType = (ev: React.UIEvent<HTMLDivElement>) => {
-    const newTheme = (
-      ev.target as HTMLElement
-    ).textContent?.toLowerCase() as Theme;
-    console.log({ newTheme });
+  const changeModeType = (newTheme: Theme) => {
     setTheme(newTheme);
     closeMenu();
   };
 
   useEffect(() => {
     const closeMenuOnWindow = (ev: MouseEvent) => {
-      const element = (ev.target as HTMLElement).textContent;
-      if (element !== "Dark" && element !== "Light" && element !== "System")
+      if (
+        switcherRef.current !== null &&
+        !switcherRef.current.contains(ev.target as HTMLElement)
+      ) {
         closeMenu();
+      }
     };
     window.addEventListener("click", closeMenuOnWindow);
     return () => window.removeEventListener("click", closeMenuOnWindow);
-  });
+  }, []);
 
   // Hide theme button on network tab
   if (activePanel === "network") return null;
 
   return (
-    <ColorModeWrapper onClick={openMenu}>
-      <div>{theme[0].toUpperCase() + theme.slice(1)}</div>
-      <ColorModeIconWrapper>
+    <ThemeSwitcherWrapper ref={switcherRef}>
+      <ThemeSwitcherMenuButton onClick={toggleMenu}>
+        {capitalizeFirstCharacter(theme)}
+      </ThemeSwitcherMenuButton>
+      <ThemeSwitcherIconWrapper>
         {theme === "system" || theme === "light" ? (
           <svg viewBox="0 0 20 20" width="1em" height="1em" fill="currentColor">
             <path
@@ -54,39 +59,46 @@ export const ThemeSwitcher = ({ activePanel }: { activePanel: string }) => {
             <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
           </svg>
         )}
-      </ColorModeIconWrapper>
-      <ColorModeMenu showMenu={showMenu}>
-        <ColorModeItem
-          selectedMode={theme === "light"}
-          onClick={changeModeType}
-        >
-          Light
-        </ColorModeItem>
-        <ColorModeItem selectedMode={theme === "dark"} onClick={changeModeType}>
-          Dark
-        </ColorModeItem>
-        <ColorModeItem
-          selectedMode={theme === "system"}
-          onClick={changeModeType}
-        >
-          System
-        </ColorModeItem>
-      </ColorModeMenu>
-    </ColorModeWrapper>
+      </ThemeSwitcherIconWrapper>
+      {showMenu && (
+        <ThemeSwitcherMenu>
+          <ThemeSwitcherMenuItem
+            selected={theme === "light"}
+            onClick={() => changeModeType("light")}
+          >
+            Light
+          </ThemeSwitcherMenuItem>
+          <ThemeSwitcherMenuItem
+            selected={theme === "dark"}
+            onClick={() => changeModeType("dark")}
+          >
+            Dark
+          </ThemeSwitcherMenuItem>
+          <ThemeSwitcherMenuItem
+            selected={theme === "system"}
+            onClick={() => changeModeType("system")}
+          >
+            System
+          </ThemeSwitcherMenuItem>
+        </ThemeSwitcherMenu>
+      )}
+    </ThemeSwitcherWrapper>
   );
 };
 
-const ColorModeWrapper = styled.button`
-  border: 0;
-  background-color: var(--swr-devtools-bg-color);
-  color: var(--swr-devtools-text-color);
-  margin: auto 1rem auto auto;
-  padding: 4px;
-  border-radius: 4px;
+const ThemeSwitcherWrapper = styled.div`
   display: flex;
   align-items: center;
   position: relative;
-  user-select: none;
+  margin: auto 1rem auto auto;
+`;
+
+const ThemeSwitcherMenuButton = styled.button`
+  border: 0;
+  background-color: var(--swr-devtools-bg-color);
+  color: var(--swr-devtools-text-color);
+  padding: 8px;
+  border-radius: 4px;
   cursor: pointer;
 
   &:hover {
@@ -94,41 +106,43 @@ const ColorModeWrapper = styled.button`
   }
 `;
 
-const ColorModeIconWrapper = styled.div`
+const ThemeSwitcherIconWrapper = styled.div`
   display: flex;
   align-items: center;
   margin: 0 4px;
 `;
 
-const ColorModeMenu = styled.div<{ showMenu: boolean }>`
-  display: ${(props) => (props.showMenu ? "flex" : "none")};
+const ThemeSwitcherMenu = styled.div`
+  display: flex;
   flex-direction: column;
   background-color: var(--swr-devtools-bg-color);
   width: 5rem;
   height: 5rem;
   position: absolute;
   right: 0;
-  top: 1.3rem;
+  top: 2rem;
   border: solid 1px var(--swr-devtools-border-color);
   border-radius: 4px;
   z-index: 1;
+  font-size: 0.8rem;
 `;
 
-const ColorModeItem = styled.div<{ selectedMode: boolean }>`
-  width: calc(100% - 4px);
+const ThemeSwitcherMenuItem = styled.button<{ selected: boolean }>`
+  width: 100%;
   display: flex;
   align-items: center;
-  padding-left: 4px;
   cursor: pointer;
   flex-grow: 1;
-  background-color: ${({ selectedMode }) =>
-    selectedMode
+  border: 0;
+  color: var(--swr-devtools-text-color);
+  background-color: ${({ selected }) =>
+    selected
       ? "var(--swr-devtools-selected-bg-color)"
       : "var(--swr-devtools-bg-color)"};
 
   &:hover {
-    background-color: ${({ selectedMode }) =>
-      selectedMode
+    background-color: ${({ selected }) =>
+      selected
         ? "var(--swr-devtools-selected-bg-color)"
         : "var(--swr-devtools-hover-bg-color)"};
   }
