@@ -76,24 +76,23 @@ export default function Home() {
           </ul>
         </section>
         <section className={styles.section}>
-          <h2 className={styles.subTitle}>Setup (SWR v1 only)</h2>
-          <ul className={styles.list}>
-            <li>
-              <b>
-                [<code>SWR v1.x</code> only]
-              </b>{" "}
-              Install <code>swr-devtools</code> and wrap your application with
-              the <code>SWRDevTools</code> component. Please see the more
-              details in{" "}
-              <a
-                href="https://github.com/koba04/swr-devtools/#how-to-use"
-                target="_blank"
-                rel="noreferrer"
-              >
-                the documentation
-              </a>
-            </li>
-          </ul>
+          <h2 className={styles.subTitle}>How to Use</h2>
+          <p>
+            You don&apos;t need any setup if you use SWR v2, just open
+            SWRDevTools extension on your application!
+          </p>
+          <p>
+            ⚠️ If you use SWR v1, Install <code>swr-devtools</code> and wrap
+            your application with the <code>SWRDevTools</code> component. Please
+            see the more details in{" "}
+            <a
+              href="https://github.com/koba04/swr-devtools/#how-to-use"
+              target="_blank"
+              rel="noreferrer"
+            >
+              the documentation
+            </a>
+          </p>
         </section>
         <section className={styles.section}>
           <h2 className={styles.subTitle}>Features</h2>
