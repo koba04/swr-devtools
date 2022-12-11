@@ -162,6 +162,7 @@ const DevToolWindow = styled.div`
 
 const Header = styled.header`
   display: flex;
+  overflow: scroll;
   /* TODO: stop using the fixed size */
   height: 36px;
   color: var(--swr-devtools-text-color);
