@@ -106,6 +106,7 @@ export default function Home() {
             src={cachePanelImage}
             style={{
               width: "50%",
+              minWidth: "300px",
               height: "auto",
             }}
             priority
@@ -117,6 +118,7 @@ export default function Home() {
             src={historyPanelImage}
             style={{
               width: "50%",
+              minWidth: "300px",
               height: "auto",
             }}
             priority
@@ -128,6 +130,7 @@ export default function Home() {
             src={networkPanelImage}
             style={{
               width: "50%",
+              minWidth: "300px",
               height: "auto",
             }}
             priority
