@@ -11,16 +11,17 @@ import historyPanelImage from "../public/img/history-view.png";
 import networkPanelImage from "../public/img/network-view.png";
 
 export default function Home() {
-  useSWR("/api/hello?error=true");
+  useSWR("/api/hello?error=true", {
+    shouldRetryOnError: false,
+  });
   const { data, mutate, error } = useSWR(
     `/api/hello${typeof window !== "undefined" ? location.search : ""}`
   );
-  const { data: data2 } = useSWR("/api/hello?foo");
 
   useEffect(() => {
     const timerId = setInterval(() => {
       mutate();
-    }, 5000);
+    }, 5 * 1000);
     return () => clearInterval(timerId);
   }, [mutate]);
 
@@ -151,10 +152,6 @@ export default function Home() {
                 <span className={styles.note}>
                   (auto increment in 5 seconds)
                 </span>
-              </p>
-              <p className={styles.row}>
-                <span className={styles.cacheKey}>/api/hello?foo</span>
-                <span>{data2 ? data2.name : "...loading"}</span>
               </p>
             </div>
             <DevToolsView />
