@@ -7,7 +7,9 @@ const panelPortMap = new Map();
 // queued messages until a panel is connected
 const queuedContentMessages: any[] = [];
 
-runtime.onConnect.addListener((port) => {
+let showPanel = false;
+
+runtime.onConnect.addListener((port: Runtime.Port) => {
   const tabId = port.sender?.tab?.id || +port.name.replace("panel:", "");
   console.log("on connect", { name: port.name, tabId });
 
@@ -16,11 +18,18 @@ runtime.onConnect.addListener((port) => {
     contentPortMap.set(tabId, port);
     if (panelPortMap.has(tabId)) {
       // notify that a panel is connected
+      /*
       port.postMessage({
         type: "displayed_panel",
       });
+      */
+
+      port.postMessage({
+        type: showPanel ? "show_panel" : "hide_panel",
+      });
     }
     port.onDisconnect.addListener(() => {
+      console.log("disconnected content port => ", tabId);
       contentPortMap.delete(tabId);
     });
     port.onMessage.addListener(
@@ -52,26 +61,32 @@ runtime.onConnect.addListener((port) => {
   } else if (port.name.startsWith("panel")) {
     panelPortMap.set(tabId, port);
     // console.log("panelport", { tabId, panelPortMap, contentPortMap });
-    const contentPort = contentPortMap.get(tabId);
-    if (contentPort) {
-      // notify that a panel is connected
+    // if (contentPort) {
+    // notify that a panel is connected
+    /*
       contentPort.postMessage({
         type: "displayed_panel",
       });
-    }
+      */
+    // }
     // flush queued messages
     if (queuedContentMessages.length > 0) {
       queuedContentMessages.forEach((m) => port?.postMessage(m));
       queuedContentMessages.length = 0;
     }
     port.onDisconnect.addListener(() => {
+      console.log("disconnected panel port => ", tabId);
       panelPortMap.delete(tabId);
     });
     port.onMessage.addListener((message) => {
-      console.log("sent message from panel to content", message);
-      if (contentPort !== null) {
-        contentPort.postMessage(message);
+      const contentPort = contentPortMap.get(tabId);
+      console.log("sent message from panel to content", message, contentPort);
+      if (message.type === "show_panel") {
+        showPanel = true;
+      } else if (message.type === "hide_panel") {
+        showPanel = false;
       }
+      contentPort?.postMessage(message);
     });
   }
 });

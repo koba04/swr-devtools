@@ -1,5 +1,5 @@
 import { DevToolsMessage } from "swr-devtools";
-import { Runtime, runtime } from "webextension-polyfill";
+import { Runtime, devtools, runtime } from "webextension-polyfill";
 
 const injectDevToolsHook = () => {
   const script = document.createElement("script");
@@ -49,37 +49,57 @@ export type ContentMessage =
       tabId: number;
     };
 
-// queued messages until a panel is displayed
-const queuedMessages: any[] = [];
-const enqueueMessage = (message: any) => {
-  queuedMessages.push(message);
-};
-
 let isDisplayedPanel = false;
+// TODO: how to use the flag?
+let isPanelShown = false;
 
 let port_: Runtime.Port | null = null;
 
+// TODO: リロードされたら必ず false
+// devtools 表示されたら true
+
+console.log({ isPanelShown });
+
 const getPort = () => {
   if (port_ !== null) return port_;
+  console.log("reconnect content port");
   port_ = runtime.connect({ name: "content" });
   const onMessage = (message: any) => {
-    // a panel has been displayed, so we sent queued messages
-    if (message.type === "displayed_panel") {
-      queuedMessages.forEach((m) => {
-        port_?.postMessage(m);
-      });
+    console.log("receive event", { message });
+    if (message.type === "show_panel") {
+      isPanelShown = true;
       isDisplayedPanel = true;
+      window.postMessage({ type: "show_panel" });
+    } else if (message.type === "hide_panel") {
+      isPanelShown = false;
+      isDisplayedPanel = false;
+      window.postMessage({ type: "hide_panel" });
+      // a panel has been displayed, so we sent queued messages
+    } else if (message.type === "displayed_panel") {
+      // isDisplayedPanel = true;
+      window.postMessage({ type: "displayed_panel" });
+    } else if (message.type === "disconnected_panel") {
+      isDisplayedPanel = false;
+      window.postMessage({ type: "disconnected_panel" });
     }
   };
   // cannot get tabId here
   port_.onMessage.addListener(onMessage);
   port_.onDisconnect.addListener(() => {
+    console.log("disconnect content panel port");
+    isDisplayedPanel = false;
     port_?.onMessage.removeListener(onMessage);
     port_ = null;
   });
 
   return port_;
 };
+
+// wait for loading applications
+
+setTimeout(() => {
+  window.postMessage({ type: "load", payload: isPanelShown });
+}, 1000);
 
 // proxy messages from applications to a background script
 
@@ -103,9 +123,6 @@ window.addEventListener("message", (e: MessageEvent<DevToolsMessage>) => {
     case "request_discarded": {
       if (isDisplayedPanel) {
         port.postMessage(e.data);
-      } else {
-        // enqueue a message if a panel hasn't been displayed
-        enqueueMessage(e.data);
       }
       break;
     }

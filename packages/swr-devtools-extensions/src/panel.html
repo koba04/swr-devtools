@@ -6,7 +6,9 @@
       html {
         height: 100%;
         background-color: white;
-        @media (prefers-color-scheme: dark) {
+      }
+      @media (prefers-color-scheme: dark) {
+        html {
           background-color: rgb(39, 40, 34);
         }
       }
@@ -15,10 +17,30 @@
         height: 100%;
         margin: 0;
       }
+      div#loading {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      div#loading-text {
+        font-size: 1rem;
+        color: rgb(39, 40, 34);
+      }
+      @media (prefers-color-scheme: dark) {
+        div#loading-text {
+          color: white;
+        }
+      }
     </style>
     <script defer src="./app.js"></script>
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+      <div id="loading">
+        <div id="loading-text">Loading SWRDevTools...</div>
+      </div>
+    </div>
   </body>
 </html>
