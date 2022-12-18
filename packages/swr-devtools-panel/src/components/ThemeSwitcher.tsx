@@ -1,47 +1,17 @@
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { Theme } from "./SWRDevToolPanel";
 import { useThemePreference } from "./ThemeProvider";
 
-const capitalizeFirstCharacter = (s: string) =>
-  s.charAt(0).toUpperCase() + s.slice(1);
-
 export const ThemeSwitcher = () => {
   const [theme, setTheme] = useThemePreference();
-  const [showMenu, setShowMenu] = useState(false);
-  const switcherRef = useRef<HTMLDivElement>(null);
-
-  const toggleMenu = () => {
-    setShowMenu((v) => !v);
-  };
-
-  const closeMenu = () => {
-    setShowMenu(false);
-  };
 
   const changeModeType = (newTheme: Theme) => {
     setTheme(newTheme);
-    closeMenu();
   };
 
-  useEffect(() => {
-    const closeMenuOnWindow = (ev: MouseEvent) => {
-      if (
-        switcherRef.current !== null &&
-        !switcherRef.current.contains(ev.target as HTMLElement)
-      ) {
-        closeMenu();
-      }
-    };
-    window.addEventListener("click", closeMenuOnWindow);
-    return () => window.removeEventListener("click", closeMenuOnWindow);
-  }, []);
-
   return (
-    <ThemeSwitcherWrapper ref={switcherRef}>
-      <ThemeSwitcherMenuButton onClick={toggleMenu}>
-        {capitalizeFirstCharacter(theme)}
-      </ThemeSwitcherMenuButton>
+    <ThemeSwitcherWrapper>
       <ThemeSwitcherIconWrapper>
         {theme === "system" || theme === "light" ? (
           <svg viewBox="0 0 20 20" width="1em" height="1em" fill="currentColor">
@@ -57,50 +27,23 @@ export const ThemeSwitcher = () => {
           </svg>
         )}
       </ThemeSwitcherIconWrapper>
-      {showMenu && (
-        <ThemeSwitcherMenu>
-          <ThemeSwitcherMenuItem
-            selected={theme === "light"}
-            onClick={() => changeModeType("light")}
-          >
-            Light
-          </ThemeSwitcherMenuItem>
-          <ThemeSwitcherMenuItem
-            selected={theme === "dark"}
-            onClick={() => changeModeType("dark")}
-          >
-            Dark
-          </ThemeSwitcherMenuItem>
-          <ThemeSwitcherMenuItem
-            selected={theme === "system"}
-            onClick={() => changeModeType("system")}
-          >
-            System
-          </ThemeSwitcherMenuItem>
-        </ThemeSwitcherMenu>
-      )}
+      <ThemeSelect
+        value={theme}
+        onChange={(e) => changeModeType(e.target.value as Theme)}
+      >
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+        <option value="system">System</option>
+      </ThemeSelect>
     </ThemeSwitcherWrapper>
   );
 };
 
 const ThemeSwitcherWrapper = styled.div`
   display: flex;
+  width: 100%;
+  justify-content: flex-end;
   align-items: center;
-  position: relative;
-  margin: auto 1rem auto auto;
-`;
-
-const ThemeSwitcherMenuButton = styled.button`
-  border: 0;
-  background-color: var(--swr-devtools-bg-color);
-  color: var(--swr-devtools-text-color);
-  padding: 8px;
-  border-radius: 4px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: var(--swr-devtools-hover-bg-color);
-  }
 `;
 
 const ThemeSwitcherIconWrapper = styled.div`
@@ -109,38 +52,11 @@ const ThemeSwitcherIconWrapper = styled.div`
   margin: 0 4px;
 `;
 
-const ThemeSwitcherMenu = styled.div`
-  display: flex;
-  flex-direction: column;
-  background-color: var(--swr-devtools-bg-color);
+const ThemeSelect = styled.select`
   width: 5rem;
-  height: 5rem;
-  position: absolute;
-  right: 0;
-  top: 2rem;
-  border: solid 1px var(--swr-devtools-border-color);
-  border-radius: 4px;
-  z-index: 10;
+  height: 36px;
+  border: none;
   font-size: 0.8rem;
-`;
-
-const ThemeSwitcherMenuItem = styled.button<{ selected: boolean }>`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  flex-grow: 1;
-  border: 0;
   color: var(--swr-devtools-text-color);
-  background-color: ${({ selected }) =>
-    selected
-      ? "var(--swr-devtools-selected-bg-color)"
-      : "var(--swr-devtools-bg-color)"};
-
-  &:hover {
-    background-color: ${({ selected }) =>
-      selected
-        ? "var(--swr-devtools-selected-bg-color)"
-        : "var(--swr-devtools-hover-bg-color)"};
-  }
+  background-color: var(--swr-devtools-bg-color);
 `;
