@@ -1,10 +1,9 @@
 import { devtools, runtime } from "webextension-polyfill";
 
-const port = runtime.connect({
-  name: "panel:" + devtools.inspectedWindow.tabId,
-});
-
 devtools.panels.create("SWR", "", "panel.html").then((panel) => {
+  const port = runtime.connect({
+    name: "panel:" + devtools.inspectedWindow.tabId,
+  });
   panel.onHidden.addListener(() => {
     console.log("hide panel");
     port.postMessage({ type: "hide_panel" });
