@@ -49,7 +49,7 @@ export type ContentMessage =
       tabId: number;
     };
 
-let isPanelShown = false;
+let panelIsOpen = false;
 
 let port_: Runtime.Port | null = null;
 
@@ -59,19 +59,19 @@ const getPort = () => {
   port_ = runtime.connect({ name: "content" });
   const onMessage = (message: any) => {
     console.log("receive event", { message });
-    if (message.type === "show_panel") {
-      isPanelShown = true;
-      window.postMessage({ type: "show_panel" });
-    } else if (message.type === "hide_panel") {
-      isPanelShown = false;
-      window.postMessage({ type: "hide_panel" });
+    if (message.type === "panelshow") {
+      panelIsOpen = true;
+      window.postMessage({ type: "panelshow" });
+    } else if (message.type === "panelhide") {
+      panelIsOpen = false;
+      window.postMessage({ type: "panelhide" });
     }
   };
   // cannot get tabId here
   port_.onMessage.addListener(onMessage);
   port_.onDisconnect.addListener(() => {
     console.log("disconnect content panel port");
-    isPanelShown = false;
+    panelIsOpen = false;
     port_?.onMessage.removeListener(onMessage);
     port_ = null;
   });
@@ -91,7 +91,7 @@ window.addEventListener("message", (e: MessageEvent<DevToolsMessage>) => {
     case "initialized": {
       port.postMessage(e.data);
       // sync the status of displayed panel
-      window.postMessage({ type: "load", payload: isPanelShown });
+      window.postMessage({ type: "load", payload: { panelIsOpen } });
       break;
     }
     case "updated_swr_cache":
@@ -99,7 +99,7 @@ window.addEventListener("message", (e: MessageEvent<DevToolsMessage>) => {
     case "request_success":
     case "request_error":
     case "request_discarded": {
-      if (isPanelShown) {
+      if (panelIsOpen) {
         port.postMessage(e.data);
       }
       break;

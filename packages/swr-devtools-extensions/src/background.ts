@@ -4,7 +4,7 @@ import type { ContentMessage } from "./content";
 const contentPortMap = new Map();
 const panelPortMap = new Map();
 
-let showPanel = false;
+let panelIsOpen = false;
 
 runtime.onConnect.addListener((port: Runtime.Port) => {
   const tabId = port.sender?.tab?.id || +port.name.replace("panel:", "");
@@ -15,7 +15,7 @@ runtime.onConnect.addListener((port: Runtime.Port) => {
     contentPortMap.set(tabId, port);
     if (panelPortMap.has(tabId)) {
       port.postMessage({
-        type: showPanel ? "show_panel" : "hide_panel",
+        type: panelIsOpen ? "panelshow" : "panelhide",
       });
     }
     port.onDisconnect.addListener(() => {
@@ -52,10 +52,10 @@ runtime.onConnect.addListener((port: Runtime.Port) => {
     port.onMessage.addListener((message) => {
       const contentPort = contentPortMap.get(tabId);
       console.log("sent message from panel to content", message, contentPort);
-      if (message.type === "show_panel") {
-        showPanel = true;
-      } else if (message.type === "hide_panel") {
-        showPanel = false;
+      if (message.type === "panelshow") {
+        panelIsOpen = true;
+      } else if (message.type === "panelhide") {
+        panelIsOpen = false;
       }
       contentPort?.postMessage(message);
     });

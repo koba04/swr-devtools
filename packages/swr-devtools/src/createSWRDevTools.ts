@@ -64,11 +64,11 @@ export type DevToolsMessage =
       };
     };
 
-let isOpenedDevToolsPanel = false;
+let devToolsPanelIsOpen = false;
 
 const inject = (cache: Cache) =>
   injectSWRCache(cache, (key: string, value: any) => {
-    if (isOpenedDevToolsPanel) {
+    if (devToolsPanelIsOpen) {
       window.postMessage(
         {
           type: "updated_swr_cache",
@@ -98,12 +98,12 @@ export const createSWRDevtools = () => {
 
   if (typeof window !== "undefined") {
     window.addEventListener("message", (e) => {
-      if (e.data?.type === "show_panel") {
-        isOpenedDevToolsPanel = true;
-      } else if (e.data?.type === "hide_panel") {
-        isOpenedDevToolsPanel = false;
+      if (e.data?.type === "panelshow") {
+        devToolsPanelIsOpen = true;
+      } else if (e.data?.type === "panelhide") {
+        devToolsPanelIsOpen = false;
       } else if (e.data?.type === "load") {
-        isOpenedDevToolsPanel = e.data?.payload;
+        devToolsPanelIsOpen = e.data?.payload?.panelIsOpen;
       }
     });
   }
@@ -136,7 +136,7 @@ export const createSWRDevtools = () => {
 
     useEffect(() => {
       return () => {
-        if (!isOpenedDevToolsPanel) return;
+        if (!devToolsPanelIsOpen) return;
         // When the key changes or unmounts, ongoing requests should be discarded.
         // This only affects React 17.
         // https://github.com/vercel/swr/blob/bcc39321dd12133a0c42207ef4bdef7e214d9b1e/core/use-swr.ts#L245-L254
@@ -153,10 +153,10 @@ export const createSWRDevtools = () => {
       };
     }, [serializedKey]);
 
-    console.log({ isOpenedDevToolsPanel });
+    console.log({ devToolsPanelIsOpen });
 
     // If DevToolsPanel is not opened, we don't do anything.
-    if (!isOpenedDevToolsPanel) {
+    if (!devToolsPanelIsOpen) {
       return useSWRNext(key, fn, config);
     }
 
