@@ -33,13 +33,7 @@ const port = runtime.connect({
 const root = createRoot(rootEl);
 const render = (el: ReactElement) => root.render(el);
 
-/*
-port.onDisconnect.addListener(() => {
-  cache.clear();
-  mounted = false;
-  render(<SWRDevToolPanel cache={null} events={null} />);
-});
-*/
+render(<SWRDevToolPanel cache={null} events={null} key="swr-not-found" />);
 
 let mounted = false;
 port.onMessage.addListener(
