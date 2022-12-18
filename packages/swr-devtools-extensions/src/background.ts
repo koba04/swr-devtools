@@ -6,6 +6,10 @@ const panelPortMap = new Map();
 
 let panelIsOpen = false;
 
+const debug = (...args: any[]) => {
+  // console.log(...args);
+};
+
 runtime.onConnect.addListener((port: Runtime.Port) => {
   const tabId = port.sender?.tab?.id || +port.name.replace("panel:", "");
   console.log("on connect", { name: port.name, tabId });
@@ -13,11 +17,9 @@ runtime.onConnect.addListener((port: Runtime.Port) => {
   // A port between a content page
   if (port.name === "content") {
     contentPortMap.set(tabId, port);
-    if (panelPortMap.has(tabId)) {
-      port.postMessage({
-        type: panelIsOpen ? "panelshow" : "panelhide",
-      });
-    }
+    port.postMessage({
+      type: panelIsOpen ? "panelshow" : "panelhide",
+    });
     port.onDisconnect.addListener(() => {
       console.log("disconnected content port => ", tabId);
       contentPortMap.delete(tabId);
@@ -29,17 +31,16 @@ runtime.onConnect.addListener((port: Runtime.Port) => {
           ...message,
           tabId,
         };
-        /*
-        console.log("sent message from content to panel", data, {
+
+        const panelPort = panelPortMap.get(tabId);
+        panelPort?.postMessage(data);
+
+        debug("sent message from content to panel", data, {
           sender,
           tabId,
           panelPortMap,
           panelPort,
         });
-        */
-
-        const panelPort = panelPortMap.get(tabId);
-        panelPort?.postMessage(data);
       }
     );
     // A port between the SWR panel in devtools
@@ -50,14 +51,16 @@ runtime.onConnect.addListener((port: Runtime.Port) => {
       panelPortMap.delete(tabId);
     });
     port.onMessage.addListener((message) => {
-      const contentPort = contentPortMap.get(tabId);
-      console.log("sent message from panel to content", message, contentPort);
       if (message.type === "panelshow") {
         panelIsOpen = true;
       } else if (message.type === "panelhide") {
         panelIsOpen = false;
       }
+
+      const contentPort = contentPortMap.get(tabId);
       contentPort?.postMessage(message);
+
+      debug("sent message from panel to content", message, contentPort);
     });
   }
 });

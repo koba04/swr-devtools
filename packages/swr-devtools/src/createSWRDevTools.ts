@@ -20,6 +20,10 @@ export class EventEmitter {
   }
 }
 
+const debug = (...args: any[]) => {
+  // console.log(...args);
+};
+
 const injected = new WeakSet();
 
 export type DevToolsMessage =
@@ -153,7 +157,7 @@ export const createSWRDevtools = () => {
       };
     }, [serializedKey]);
 
-    console.log({ devToolsPanelIsOpen });
+    debug({ devToolsPanelIsOpen });
 
     // If DevToolsPanel is not opened, we don't do anything.
     if (!devToolsPanelIsOpen) {

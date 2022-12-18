@@ -53,12 +53,16 @@ let panelIsOpen = false;
 
 let port_: Runtime.Port | null = null;
 
+const debug = (...args: any[]) => {
+  // console.log(...args);
+};
+
 const getPort = () => {
   if (port_ !== null) return port_;
-  console.log("reconnect content port");
+  debug("reconnect content port");
   port_ = runtime.connect({ name: "content" });
   const onMessage = (message: any) => {
-    console.log("receive event", { message });
+    debug("receive event", { message });
     if (message.type === "panelshow") {
       panelIsOpen = true;
       window.postMessage({ type: "panelshow" });
@@ -70,7 +74,7 @@ const getPort = () => {
   // cannot get tabId here
   port_.onMessage.addListener(onMessage);
   port_.onDisconnect.addListener(() => {
-    console.log("disconnect content panel port");
+    debug("disconnect content panel port");
     panelIsOpen = false;
     port_?.onMessage.removeListener(onMessage);
     port_ = null;
