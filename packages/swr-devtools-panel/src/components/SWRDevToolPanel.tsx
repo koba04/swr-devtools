@@ -129,9 +129,11 @@ export const SWRDevToolPanel = ({ cache, events }: Props) => {
               />
             )
           ) : (
-            <NoteText>
-              Haven&apos;t received any cache data from SWRDevTools
-            </NoteText>
+            <NotFound>
+              <NotFoundText>
+                Open SWRDevTools on the page using SWR.
+              </NotFoundText>
+            </NotFound>
           )}
         </PanelWrapper>
       </DevToolWindow>
@@ -187,6 +189,14 @@ const PanelWrapper = styled.div`
   height: calc(100% - 36px);
 `;
 
-const NoteText = styled.p`
+const NotFound = styled.div`
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2rem;
+`;
+
+const NotFoundText = styled.p`
   color: var(--swr-devtools-text-color);
 `;
