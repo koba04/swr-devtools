@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.1](https://github.com/koba04/swr-devtools/compare/v1.2.0...v1.2.1) (2022-12-19)
+
+
+### Bug Fixes
+
+* missing discarded events ([#106](https://github.com/koba04/swr-devtools/issues/106)) ([f95dbdb](https://github.com/koba04/swr-devtools/commit/f95dbdb50aa0c0b642fae536b323a6da7ea4751d))
+* remove duplicate React instance ([#105](https://github.com/koba04/swr-devtools/issues/105)) ([9f9f6e5](https://github.com/koba04/swr-devtools/commit/9f9f6e521ac9f89ee1b0fbba6b2bd809218ab181))
+
+
+
+
+
 # [0.5.0](https://github.com/koba04/swr-devtools/compare/v0.4.0...v0.5.0) (2022-06-01)
 
 

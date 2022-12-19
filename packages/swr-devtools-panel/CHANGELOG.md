@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.1](https://github.com/koba04/swr-devtools/compare/v1.2.0...v1.2.1) (2022-12-19)
+
+
+### Bug Fixes
+
+* header style on mobile ([#96](https://github.com/koba04/swr-devtools/issues/96)) ([293971d](https://github.com/koba04/swr-devtools/commit/293971d91da0370c77c220cf88d8bb389df5efef))
+* the style of theme switcher ([#104](https://github.com/koba04/swr-devtools/issues/104)) ([5cdbdfd](https://github.com/koba04/swr-devtools/commit/5cdbdfd953b8d3b651a8da0710b889542b4ce7be))
+
+
+
+
+
 # [1.1.0](https://github.com/koba04/swr-devtools/compare/v1.0.0...v1.1.0) (2022-07-12)
 
 
