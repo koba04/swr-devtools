@@ -150,10 +150,16 @@ export const createSWRDevtools = () => {
             key: serializedKey,
             id: requestIdRef.current,
           });
-          events.emit("request_discarded", {
-            key: serializedKey,
-            id: requestIdRef.current,
-          });
+          window.postMessage(
+            {
+              type: "request_discarded",
+              payload: serializePayload({
+                key: serializedKey,
+                id: requestIdRef.current,
+              }),
+            },
+            "*"
+          );
         }
       };
     }, [serializedKey]);
