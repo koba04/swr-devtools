@@ -15,6 +15,11 @@
       "import": "./lib/swr-cache.js",
       "require": "./cjs/swr-cache.js",
       "types": "./lib/swr-cache.d.ts"
+    },
+    "./lib/createSWRDevTools": {
+      "import": "./lib/createSWRDevTools.js",
+      "require": "./cjs/createSWRDevTools.js",
+      "types": "./lib/createSWRDevTools.d.ts"
     }
   },
   "types": "lib/index.d.ts",
