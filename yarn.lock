@@ -7976,10 +7976,10 @@ swr@^1.3.0:
   resolved "https://registry.yarnpkg.com/swr/-/swr-1.3.0.tgz#c6531866a35b4db37b38b72c45a63171faf9f4e8"
   integrity sha512-dkghQrOl2ORX9HYrMDtPa7LTVHJjCTeZoB1dqTbnnEDlSvN8JEKpYIYurDfvbQFUUS8Cg8PceFVZNkW0KNNYPw==
 
-swr@^2.0.0-beta.7:
-  version "2.0.0-beta.7"
-  resolved "https://registry.yarnpkg.com/swr/-/swr-2.0.0-beta.7.tgz#e1151958f0b0d55d58bfc42300485fb9e2e38c5c"
-  integrity sha512-DYDwTRqaz22xEHsTAdW+cVcpH99cAeyF0i2CwgT+oaCd7Qpb3f+fntBDSE7nHs8vAgMg3zZ4W9bLCsI7VcEH8g==
+swr@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/swr/-/swr-2.0.0.tgz#91d999359e2be92de1a41f6b6711d72be20ffdbd"
+  integrity sha512-IhUx5yPkX+Fut3h0SqZycnaNLXLXsb2ECFq0Y29cxnK7d8r7auY2JWNbCW3IX+EqXUg3rwNJFlhrw5Ye/b6k7w==
   dependencies:
     use-sync-external-store "^1.2.0"
 
