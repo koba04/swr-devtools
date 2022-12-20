@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { SWRConfig } from "swr";
 import { EventEmitter, createSWRDevtools } from "./createSWRDevTools";
 
@@ -15,6 +15,9 @@ if (typeof window !== "undefined") {
 
 export const SWRDevTools = ({ children }: { children: React.ReactNode }) => {
   const [swrdevtools, events] = useRef(createSWRDevtools()).current;
+  useEffect(() => {
+    window.postMessage({ type: "panelshow" });
+  }, []);
   return (
     <SWRDevToolsContext.Provider value={{ events }}>
       <SWRConfig value={{ use: [swrdevtools] }}>{children}</SWRConfig>
