@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.2](https://github.com/koba04/swr-devtools/compare/v1.2.1...v1.2.2) (2022-12-20)
+
+
+### Bug Fixes
+
+* send the panelshow event with SWRDevTools ([#108](https://github.com/koba04/swr-devtools/issues/108)) ([ed7b643](https://github.com/koba04/swr-devtools/commit/ed7b643fbd6ad644035e2d8a9c46a321b70ed64e))
+
+
+
+
+
 ## [1.2.1](https://github.com/koba04/swr-devtools/compare/v1.2.0...v1.2.1) (2022-12-19)
 
 

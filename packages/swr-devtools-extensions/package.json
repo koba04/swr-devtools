@@ -1,7 +1,7 @@
 {
   "name": "swr-devtools-extensions",
   "private": "true",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "main": "lib/index.js",
   "license": "MIT",
   "scripts": {
@@ -37,8 +37,8 @@
     "react-dom": "^18.2.0",
     "styled-components": "^5.3.5",
     "swr": "^2.0.0-beta.7",
-    "swr-devtools": "^1.2.1",
-    "swr-devtools-panel": "^1.2.1",
+    "swr-devtools": "^1.2.2",
+    "swr-devtools-panel": "^1.2.2",
     "webextension-polyfill": "^0.10.0"
   }
 }
