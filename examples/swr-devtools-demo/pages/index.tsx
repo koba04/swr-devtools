@@ -10,12 +10,30 @@ import cachePanelImage from "../public/img/cache-view.png";
 import historyPanelImage from "../public/img/history-view.png";
 import networkPanelImage from "../public/img/network-view.png";
 
+let counter = 1;
+
+const sleep = (ms: number) =>
+  new Promise((resolve) => setTimeout(resolve, Math.random() * 2000));
+
+const fetcher = async (url) => {
+  await sleep(Math.random() * 2000);
+
+  ++counter;
+  if (/error/.test(url)) {
+    await sleep(1000);
+    throw new Error("this is an error message");
+  } else if (url.startsWith("/api/hello")) {
+    return { name: `Hello World ${counter}` };
+  }
+};
+
 export default function Home() {
-  useSWR("/api/hello?error=true", {
+  useSWR("/api/hello?error=true", fetcher, {
     shouldRetryOnError: false,
   });
   const { data, mutate, error } = useSWR(
-    `/api/hello${typeof window !== "undefined" ? location.search : ""}`
+    `/api/hello${typeof window !== "undefined" ? location.search : ""}`,
+    fetcher
   );
 
   useEffect(() => {
