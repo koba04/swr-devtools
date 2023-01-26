@@ -1,9 +1,11 @@
+"use client";
+
 import Head from "next/head";
 import Link from "next/link";
 import useSWRInfinite from "swr/infinite";
-import { DevToolsView } from "../components/DevToolsView";
+import { DevToolsView } from "../../components/DevToolsView";
 
-import styles from "../styles/infinite.module.css";
+import styles from "../../styles/infinite.module.css";
 
 const dummyData = {
   1: [
