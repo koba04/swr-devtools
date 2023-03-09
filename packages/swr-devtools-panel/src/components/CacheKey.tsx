@@ -6,15 +6,24 @@ import {
   ErrorLabel,
   InfiniteLabel,
   LoadingLabel,
+  SubscriptionLabel,
   ValidationgLabel,
 } from "./StatusLabel";
 
+const getKey = (cacheData: DevToolsCacheData) => {
+  if (cacheData.isInfinite) return cacheData.infiniteKey;
+  if (cacheData.isSubscription) return cacheData.subscriptionKey;
+  return cacheData.key;
+};
+
 export const CacheKey = ({ cacheData }: { cacheData: DevToolsCacheData }) => {
+  console.log([cacheData]);
   return (
     <CacheText>
-      <div>{cacheData.isInfinite ? cacheData.infiniteKey : cacheData.key}</div>
+      <div>{getKey(cacheData)}</div>
       <Labels>
         <>
+          {cacheData.isSubscription && <SubscriptionLabel />}
           {cacheData.isInfinite && <InfiniteLabel />}
           {cacheData.error && <ErrorLabel />}
           {cacheData.isLoading && <LoadingLabel />}
