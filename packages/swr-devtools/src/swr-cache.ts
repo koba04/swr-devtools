@@ -11,6 +11,8 @@ export type DevToolsCacheData = {
   timestampString: string;
   isInfinite?: boolean;
   infiniteKey?: string;
+  isSubscription: boolean;
+  subscriptionKey: string;
 };
 
 export const serializePayload = (payload: any) => superjson.stringify(payload);
@@ -52,19 +54,27 @@ const isInfiniteCache = (key: string) => {
   return /\$inf\$/.test(key);
 };
 
+const isSubscriptionCache = (key: string) => {
+  return /\$sub\$/.test(key);
+};
+
 const isIsValidatingCache = (key: string) => {
   return /^\$req\$/.test(key);
 };
 
 const filterMetaCacheKey = (key: string) => {
   const match = key.match(
-    /^(?:\$(?:req|swr|err)\$)?(?:\$inf\$)(?<cacheKey>.*)?/
+    /^(?:\$(?:req|swr|err)\$)?(?:\$(inf|sub)\$)(?<cacheKey>.*)?/
   );
   return match?.groups?.cacheKey ?? key;
 };
 
 const isV2CacheData = (data: any) => {
-  return "isValidating" in data && "isLoading" in data;
+  return (
+    ("isValidating" in data && "isLoading" in data) ||
+    // useSWRSubscription
+    ("_c" in data && "_k" in data)
+  );
 };
 
 const isV1MetaCache = (key: string) => {
@@ -77,16 +87,26 @@ export const convertToDevToolsCacheData = (
   value: any
 ): { key: string; value: Partial<DevToolsCacheData> } => {
   const isInfinite = isInfiniteCache(key);
+  const isSubscription = isSubscriptionCache(key);
   const infiniteKey = isInfinite ? filterMetaCacheKey(key) : undefined;
+  const subscriptionKey = isSubscription ? filterMetaCacheKey(key) : undefined;
+
   if (
     value !== undefined &&
     typeof value === "object" &&
     isV2CacheData(value)
   ) {
     // SWR v2
+    // useSWRSubscription was added at 2.1.0
     return {
       key,
-      value: { ...value, isInfinite, infiniteKey },
+      value: {
+        ...value,
+        isInfinite,
+        infiniteKey,
+        subscriptionKey,
+        isSubscription,
+      },
     };
   } else if (value !== undefined && isV1MetaCache(key)) {
     // SWR ^1.3.0 ($swr$ cache key)

@@ -39,6 +39,13 @@ export const InfiniteLabel = ({ children }: { children?: string }) => (
   </Label>
 );
 
+export const SubscriptionLabel = ({ children }: { children?: string }) => (
+  <Label>
+    {children && <span aria-label="subscription">{children}</span>}
+    <Icon>🔁</Icon>
+  </Label>
+);
+
 const Label = styled.label`
   display: inline-flex;
   align-items: center;
