@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0](https://github.com/koba04/swr-devtools/compare/v1.2.2...v1.3.0) (2023-03-10)
+
+
+### Features
+
+* support useSWRSubscription ([#119](https://github.com/koba04/swr-devtools/issues/119)) ([5821ecd](https://github.com/koba04/swr-devtools/commit/5821ecdb1dc04ec24b0b5bf917c49648e471b8ea))
+
+
+
+
+
 ## [1.2.2](https://github.com/koba04/swr-devtools/compare/v1.2.1...v1.2.2) (2022-12-20)
 
 
