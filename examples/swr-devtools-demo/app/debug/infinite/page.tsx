@@ -3,7 +3,7 @@ import Head from "next/head";
 import Link from "next/link";
 import useSWRInfinite from "swr/infinite";
 
-import styles from "../../../styles/infinite.module.css";
+import styles from "./infinite.module.css";
 
 const dummyData = {
   1: [
@@ -112,9 +112,11 @@ export default function Home() {
           </ul>
           <div className={styles.buttonArea}>
             <button
-              disabled={isValidating}
               className={styles.button}
-              onClick={() => setSize((size) => size + 1)}
+              onClick={() => {
+                console.log("click");
+                setSize((size) => size + 1);
+              }}
             >
               {isValidating ? "...loading" : "Load more"}
             </button>

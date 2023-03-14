@@ -2,9 +2,9 @@
 import Head from "next/head";
 import Link from "next/link";
 import { useCallback, useState } from "react";
-import { SWRConfiguration } from "swr";
+import { SWRConfiguration, useSWRConfig } from "swr";
 
-import styles from "../../styles/infinite.module.css";
+import styles from "./debug.module.css";
 import { SWREntry } from "./SWREntry";
 
 type Settings = {
@@ -16,12 +16,16 @@ type Options = SWRConfiguration & {
 };
 
 export default function Home() {
+  const config = useSWRConfig();
   const [settings, setSettings] = useState<Settings>({
     gridCount: 10,
   });
+
   const [options, setOptions] = useState<Options>({
+    ...config,
     refreshInterval: 0,
   });
+  console.log(config);
   const onChangeSettings = useCallback((setting: Partial<Settings>) => {
     setSettings((current) => ({ ...current, ...setting }));
   }, []);
@@ -36,12 +40,12 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
+      <main className={styles.main}>
         <h1 className={styles.title}>Debug</h1>
-        <section>
-          <h2>Settings</h2>
-          <label>
-            Grid Count:&nbsp;
+        <fieldset className={styles.section}>
+          <legend className={styles.subtitle}>Settings</legend>
+          <label className={styles.label}>
+            <span>Grid Count</span>
             <input
               type="text"
               value={settings.gridCount}
@@ -50,11 +54,11 @@ export default function Home() {
               }}
             />
           </label>
-        </section>
-        <section>
-          <h2>SWR Options</h2>
-          <label>
-            refreshInterval:&nbsp;
+        </fieldset>
+        <fieldset className={styles.section}>
+          <legend className={styles.subtitle}>SWR Options</legend>
+          <label className={styles.label}>
+            <span>refreshInterval</span>
             <input
               type="text"
               value={options.refreshInterval}
@@ -63,17 +67,40 @@ export default function Home() {
               }}
             />
           </label>
-          <section />
-        </section>
-        <section className={styles.content}>
-          <h2>Data</h2>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(3, 1fr)",
-              gap: 10,
-            }}
-          >
+          <label className={styles.label}>
+            <span>revalidateIfStale</span>
+            <input
+              type="checkbox"
+              checked={options.revalidateIfStale}
+              onChange={(e) => {
+                onChangeOptions({ revalidateIfStale: e.target.checked });
+              }}
+            />
+          </label>
+          <label className={styles.label}>
+            <span>revalidateOnMount</span>
+            <input
+              type="checkbox"
+              checked={options.revalidateOnMount}
+              onChange={(e) => {
+                onChangeOptions({ revalidateOnMount: e.target.checked });
+              }}
+            />
+          </label>
+          <label className={styles.label}>
+            <span>revalidateOnFocus</span>
+            <input
+              type="checkbox"
+              checked={options.revalidateOnFocus}
+              onChange={(e) => {
+                onChangeOptions({ revalidateOnFocus: e.target.checked });
+              }}
+            />
+          </label>
+        </fieldset>
+        <section className={styles.section}>
+          <h2 className={styles.subtitle}>Data</h2>
+          <div className={styles.grid}>
             {Array.from({ length: settings.gridCount }).map((_, i) => {
               const key = "test" + i;
               return <SWREntry key={key} swrKey={key} options={options} />;

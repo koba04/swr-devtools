@@ -1,4 +1,3 @@
-import { isValidElement } from "react";
 import useSWR from "swr";
 
 const sleep = (ms: number) =>
