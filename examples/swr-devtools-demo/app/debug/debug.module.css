@@ -1,0 +1,57 @@
+.container {
+  min-height: 100vh;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.main {
+  width: 90%;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 10;
+}
+
+@media (max-width: 780px){
+  .grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+.nav {
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+.label {
+  display: block;
+}
+
+.label > span {
+  display: inline-block;
+  padding: 0 5px;
+  width: 150px;
+}
+.label > input {
+  max-width: 50px;
+}
+
+.title {
+  line-height: 1.15;
+  font-size: 3rem;
+  text-align: center;
+}
+
+.section {
+  margin-bottom: 20px;
+}
+
+.subtitle {
+  font-size: 2rem;
+  margin: 10px 0;
+}

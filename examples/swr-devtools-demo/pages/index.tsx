@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
-import Image from "next/future/image";
+import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import useSWR from "swr";
 import { useEffect } from "react";
