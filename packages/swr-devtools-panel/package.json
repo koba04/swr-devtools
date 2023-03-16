@@ -29,7 +29,8 @@
     "build:esm": "tsc",
     "build:cjs": "tsc -p tsconfig.cjs.json",
     "lint": "tsc --noEmit",
-    "test": "vitest"
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "peerDependencies": {
     "react": ">=17.0.2",
