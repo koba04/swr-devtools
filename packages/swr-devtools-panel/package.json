@@ -28,7 +28,8 @@
     "build": "run-p build:*",
     "build:esm": "tsc",
     "build:cjs": "tsc -p tsconfig.cjs.json",
-    "lint": "tsc --noEmit"
+    "lint": "tsc --noEmit",
+    "test": "vitest"
   },
   "peerDependencies": {
     "react": ">=17.0.2",
@@ -36,12 +37,17 @@
     "swr": ">=1.0.0"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^14.0.0",
     "@types/react": "^18.0.20",
     "@types/styled-components": "^5.1.26",
+    "jsdom": "^21.1.1",
     "react": "^18.2.0",
     "styled-components": "^5.3.5",
     "swr": "^2.0.0",
-    "typescript": "^4.8.3"
+    "typescript": "^4.8.3",
+    "vite": "^4.2.0",
+    "vitest": "^0.29.3"
   },
   "dependencies": {
     "react-json-tree": "^0.17.0",
