@@ -13,7 +13,6 @@ const fetcher = async (url) => {
 
 function MyApp({ Component, pageProps }) {
   return (
-    // @ts-expect-error
     <SWRConfig value={{ fetcher }}>
       <SWRDevTools>
         <Component {...pageProps} />

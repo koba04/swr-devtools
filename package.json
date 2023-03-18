@@ -23,7 +23,10 @@
     "v1-legacy": "yarn workspace swr-v1-legacy-devtools-demo dev",
     "lint:eslint": "eslint '**/pages/**/*' '**/src/**/*'",
     "lint:tsc": "yarn workspaces run lint",
-    "lint": "run-p -l lint:*"
+    "lint": "run-p -l lint:*",
+    "test": "run-p -l test:*",
+    "test:panel": "yarn workspace swr-devtools-panel test",
+    "test:devtools": "yarn workspace swr-devtools test"
   },
   "repository": "ssh://git@github.com/koba04/swr-devtools.git",
   "author": "Toru Kobayashi <koba0004@gmail.com>",
