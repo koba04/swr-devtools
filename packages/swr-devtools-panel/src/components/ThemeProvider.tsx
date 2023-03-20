@@ -5,8 +5,14 @@ const THEME_KEY = "$swr-devtools:theme";
 
 const initialTheme = (): Theme => {
   if (typeof window === "undefined") return "system";
-  // @ts-expect-error
-  return localStorage.getItem(THEME_KEY) || "system";
+  let theme: Theme = "system";
+  try {
+    // @ts-expect-error
+    theme = localStorage.getItem(THEME_KEY);
+  } catch {
+    // noop
+  }
+  return theme;
 };
 
 const getThemeByPreference = () =>
@@ -42,7 +48,11 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
     setTheme(initialTheme());
   }, []);
   useEffect(() => {
-    localStorage.setItem(THEME_KEY, theme);
+    try {
+      localStorage.setItem(THEME_KEY, theme);
+    } catch {
+      // noop
+    }
   }, [theme]);
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>
