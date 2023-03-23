@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.1](https://github.com/koba04/swr-devtools/compare/v1.3.0...v1.3.1) (2023-03-23)
+
+
+### Bug Fixes
+
+* ignore DOMException by accessing localStorage ([#123](https://github.com/koba04/swr-devtools/issues/123)) ([bf93b8c](https://github.com/koba04/swr-devtools/commit/bf93b8cf1d27cb3dfce5f6c64f224b59ab1af445))
+
+
+
+
+
 # [1.3.0](https://github.com/koba04/swr-devtools/compare/v1.2.2...v1.3.0) (2023-03-10)
 
 
