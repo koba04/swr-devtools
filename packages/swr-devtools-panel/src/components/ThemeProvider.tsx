@@ -7,8 +7,7 @@ const initialTheme = (): Theme => {
   if (typeof window === "undefined") return "system";
   let theme: Theme = "system";
   try {
-    // @ts-expect-error
-    theme = localStorage.getItem(THEME_KEY);
+    theme = localStorage.getItem(THEME_KEY) as Theme;
   } catch {
     // noop
   }
