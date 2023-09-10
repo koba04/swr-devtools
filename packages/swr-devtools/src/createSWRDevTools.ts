@@ -113,16 +113,16 @@ export const createSWRDevtools = () => {
     });
   }
 
-  const swrdevtools: Middleware = (useSWRNext) => (key, fn, config) => {
-    // use the same React instance with the application
-    const { useLayoutEffect, useEffect, useRef } =
-      typeof window !== "undefined" &&
-      // @ts-expect-error
-      typeof window.__SWR_DEVTOOLS_REACT__ !== "undefined"
-        ? // @ts-expect-error
-          window.__SWR_DEVTOOLS_REACT__
-        : dummyHooks;
+  // use the same React instance with the application
+  const { useLayoutEffect, useEffect, useRef } =
+    typeof window !== "undefined" &&
+    // @ts-expect-error
+    typeof window.__SWR_DEVTOOLS_REACT__ !== "undefined"
+      ? // @ts-expect-error
+        window.__SWR_DEVTOOLS_REACT__
+      : dummyHooks;
 
+  const swrdevtools: Middleware = (useSWRNext) => (key, fn, config) => {
     useLayoutEffect(() => {
       window.postMessage({ type: "initialized" }, "*");
     }, []);
