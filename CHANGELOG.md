@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.2](https://github.com/koba04/swr-devtools/compare/v1.3.1...v1.3.2) (2023-09-10)
+
+
+### Bug Fixes
+
+* crash on multiple SWR instances ([#126](https://github.com/koba04/swr-devtools/issues/126)) ([75f2d43](https://github.com/koba04/swr-devtools/commit/75f2d43a3f00db1205078fffcd93a52c08dd3866))
+
+
+
+
+
 ## [1.3.1](https://github.com/koba04/swr-devtools/compare/v1.3.0...v1.3.1) (2023-03-23)
 
 
