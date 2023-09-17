@@ -10,7 +10,7 @@ on:
     branches: [ main ]
 
 jobs:
-  lint:
+  test:
 
     runs-on: ubuntu-latest
 
