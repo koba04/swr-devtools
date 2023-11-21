@@ -24,7 +24,7 @@
     "start": "run-p start:*",
     "start:cjs": "tsc -p tsconfig.cjs.json --watch",
     "start:esm": "tsc --watch",
-    "prebuild": "yarn clean",
+    "prebuild": "pnpm clean",
     "build": "run-p build:*",
     "build:esm": "tsc",
     "build:cjs": "tsc -p tsconfig.cjs.json",

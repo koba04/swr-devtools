@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "license": "MIT",
   "scripts": {
-    "prebuild": "yarn clean",
+    "prebuild": "pnpm clean",
     "build:zip:chrome": "cd dist && zip -r ../extension.zip * && cd ../",
     "build:webpack:chrome": "webpack --mode production",
     "build:chrome": "run-s build:webpack:chrome build:zip:chrome",
