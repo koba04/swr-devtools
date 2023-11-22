@@ -80,7 +80,8 @@ const sleep = (ms: number) =>
 const fetcher = async (url) => {
   await sleep(Math.random() * 2000);
   const searchParams = new URL(location.origin + url).searchParams;
-  return dummyData[searchParams.get("page")] || [];
+  const page = searchParams.get("page");
+  return page !== null && dummyData[page] ? dummyData[page] : [];
 };
 
 export default function Home() {

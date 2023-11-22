@@ -63,6 +63,9 @@ importers:
       babel-plugin-styled-components:
         specifier: ^2.0.7
         version: 2.1.4(@babel/core@7.23.3)(styled-components@5.3.11)
+      typescript:
+        specifier: ^4.8.3
+        version: 4.9.5
 
   examples/swr-v1-devtools-demo:
     dependencies:
@@ -97,6 +100,9 @@ importers:
       babel-plugin-styled-components:
         specifier: ^2.0.7
         version: 2.1.4(@babel/core@7.23.3)(styled-components@5.3.11)
+      typescript:
+        specifier: ^4.8.3
+        version: 4.9.5
 
   examples/swr-v1-legacy-devtools-demo:
     dependencies:
@@ -131,6 +137,9 @@ importers:
       babel-plugin-styled-components:
         specifier: ^2.0.7
         version: 2.1.4(@babel/core@7.23.3)(styled-components@5.3.11)
+      typescript:
+        specifier: ^4.8.3
+        version: 4.9.5
 
   packages/swr-devtools:
     dependencies:

@@ -10,7 +10,6 @@ export default class MyDocument extends Document {
       ctx.renderPage = () =>
         originalRenderPage({
           enhanceApp: (App) => (props) =>
-            // @ts-expect-error
             sheet.collectStyles(<App {...props} />),
         });
 
