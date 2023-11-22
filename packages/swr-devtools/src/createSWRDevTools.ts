@@ -1,6 +1,6 @@
 // We cannot import React nad use hooks that SWR provides because this runs on the application side,
 // we have to use the same React instance with the application
-import type { Middleware, Cache } from "swr";
+import { type Middleware, type Cache, useSWRConfig } from "swr";
 
 import { injectSWRCache, serializePayload } from "./swr-cache";
 import { serialize as unstable_serialize } from "./swr/serialize";
@@ -128,8 +128,7 @@ export const createSWRDevtools = () => {
     }, []);
 
     // FIXME: I'll use mutate to support mutating from a devtool panel.
-    // const { cache /* , mutate */ } = useSWRConfig();
-    const cache = config.cache;
+    const { cache /* , mutate */ } = useSWRConfig();
 
     if (!injected.has(cache)) {
       inject(cache);
@@ -190,7 +189,12 @@ export const createSWRDevtools = () => {
           );
           try {
             const res = fn(...args);
-            if (res && "then" in res && typeof res.then === "function") {
+            if (
+              res &&
+              typeof res === "object" &&
+              "then" in res &&
+              typeof res.then === "function"
+            ) {
               return res
                 .then((r) => {
                   requestIdRef.current = id;

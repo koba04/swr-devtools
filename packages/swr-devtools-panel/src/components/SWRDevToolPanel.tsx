@@ -73,7 +73,6 @@ const GlobalStyleSheet = createGlobalStyle<{ theme: Theme }>`${({ theme }) => `
 
 const GlobalStyle = () => {
   const theme = useTheme();
-  // @ts-expect-error https://github.com/styled-components/styled-components/issues/3738
   return <GlobalStyleSheet theme={theme} />;
 };
 
