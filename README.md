@@ -21,6 +21,9 @@ A DevTools for SWR
 
 ### (SWR v1) Wrap your application in the SWRDevTools component
 
+<details>
+<summary>This instruction is only required with SWR v1</summary>
+
 **⚠️ If you use SWR v2 or later versions, you don't need to install `swr-devtools` and wrap your application. SWR Devtools does it for you.**
 
 ```shell
@@ -40,6 +43,9 @@ createRoot(document.getElementById("app")).render(
   document.getElementById("app")
 );
 ```
+
+</details>
+
 ## Packages
 
 | package                                                       | description                                  |
