@@ -13,6 +13,7 @@ const fetcher = async (url) => {
 
 function MyApp({ Component, pageProps }) {
   return (
+    // @ts-expect-error roperty 'children' does not exist on type 'IntrinsicAttributes & { value?: Partial<PublicConfiguration<any, any, BareFetcher<any>>> & Partial<ProviderConfiguration> & { ...; }; }'.
     <SWRConfig value={{ fetcher }}>
       <SWRDevTools>
         <Component {...pageProps} />

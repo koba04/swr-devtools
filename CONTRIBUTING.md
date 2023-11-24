@@ -7,8 +7,8 @@ Thank you for your contributions!
 ### Develop `swr-devtools-panel`
 
 ```
-$ yarn install
-$ yarn start
+$ pnpm install
+$ pnpm start
 ```
 
 And then, open http://localhost:3000/.
@@ -22,4 +22,4 @@ See more details on https://developer.chrome.com/docs/extensions/mv3/getstarted/
 
 #### Firefox
 
-After the instruction of "Develop `swr-devtools-panel`", run `yarn workspace swr-devtools-extensions start:firefox`.
+After the instruction of "Develop `swr-devtools-panel`", run `pnpm --filter swr-devtools-extensions start:firefox`.

@@ -20,12 +20,15 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
+    # https://github.com/actions/setup-node/issues/531#issuecomment-1241495144
+    - name: Enable Corepack
+      run: corepack enable
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
-        cache: 'yarn'
-    - run: yarn install
-    - run: yarn build
-    - run: yarn test
+        cache: 'pnpm'
+    - run: pnpm install
+    - run: pnpm build
+    - run: pnpm test

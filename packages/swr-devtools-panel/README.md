@@ -9,8 +9,8 @@ This package is a React component of SWR Devtools panel. If you want to use this
 
 ```
 // install peerDependencies
-$ yarn add react swr styled-components
-$ yarn add swr-devtools-panel
+$ pnpm add react swr styled-components
+$ pnpm add swr-devtools-panel
 ```
 
 ## How to use

@@ -129,6 +129,7 @@ export const createSWRDevtools = () => {
 
     // FIXME: I'll use mutate to support mutating from a devtool panel.
     // const { cache /* , mutate */ } = useSWRConfig();
+    // @ts-expect-error
     const cache = config.cache;
 
     if (!injected.has(cache)) {
@@ -190,7 +191,12 @@ export const createSWRDevtools = () => {
           );
           try {
             const res = fn(...args);
-            if (res && "then" in res && typeof res.then === "function") {
+            if (
+              res &&
+              typeof res === "object" &&
+              "then" in res &&
+              typeof res.then === "function"
+            ) {
               return res
                 .then((r) => {
                   requestIdRef.current = id;
