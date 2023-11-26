@@ -22,9 +22,7 @@
     "start": "run-p -l start:*",
     "v1": "pnpm --filter swr-v1-devtools-demo dev",
     "v1-legacy": "pnpm --filter swr-v1-legacy-devtools-demo dev",
-    "lint:eslint": "eslint '**/pages/**/*' '**/src/**/*'",
-    "lint:tsc": "pnpm -r lint",
-    "lint": "run-p -l lint:*",
+    "lint": "pnpm -r lint",
     "test": "run-p -l test:*",
     "test:panel": "pnpm --filter swr-devtools-panel test",
     "test:devtools": "pnpm --filter swr-devtools test"
@@ -35,11 +33,8 @@
   "packageManager": "pnpm@8.10.5",
   "devDependencies": {
     "@biomejs/biome": "1.3.3",
-    "@cybozu/eslint-config": "^17.0.3",
-    "eslint": "^8.23.1",
     "lerna": "^5.5.2",
     "npm-run-all": "^4.1.5",
-    "prettier": "^2.7.1",
     "rimraf": "^3.0.2"
   }
 }
