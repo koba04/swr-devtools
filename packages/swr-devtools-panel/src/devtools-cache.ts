@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Cache } from "swr";
 
 import {
-  injectSWRCache,
   DevToolsCacheData,
   convertToDevToolsCacheData,
+  injectSWRCache,
 } from "swr-devtools/lib/swr-cache";
 import { formatDateTime } from "./format";
 

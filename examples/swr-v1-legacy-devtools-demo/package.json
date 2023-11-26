@@ -7,7 +7,10 @@
     "build": "next build",
     "start": "next start",
     "format": "biome format --write .",
-    "lint": "tsc --noEmit"
+    "fix:biome": "biome check --apply-unsafe .",
+    "lint": "run-p lint:*",
+    "lint:biome": "biome check .",
+    "lint:tsc": "tsc --noEmit"
   },
   "dependencies": {
     "next": "^12.3.1",

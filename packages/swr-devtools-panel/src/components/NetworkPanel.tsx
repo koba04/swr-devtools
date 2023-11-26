@@ -7,9 +7,9 @@ import { CacheData } from "./CacheData";
 import { Timeline } from "./timeline";
 
 function formatTime(time: number, step: number) {
-  if (step >= 500) return time / 1000 + "s";
-  if (time >= 10000) return time / 1000 + "s";
-  return time + "ms";
+  if (step >= 500) return `${time / 1000}s`;
+  if (time >= 10000) return `${time / 1000}s`;
+  return `${time}ms`;
 }
 
 export const NetworkPanel = ({

@@ -1,8 +1,8 @@
 import type { ReactElement } from "react";
 import { createRoot } from "react-dom/client";
-import { SWRDevToolPanel } from "swr-devtools-panel";
 import { deserializePayload } from "swr-devtools";
-import { runtime, devtools, Runtime } from "webextension-polyfill";
+import { SWRDevToolPanel } from "swr-devtools-panel";
+import { Runtime, devtools, runtime } from "webextension-polyfill";
 
 import type { ContentMessage } from "./content";
 
@@ -27,7 +27,7 @@ const cacheMap = new Map();
 const rootEl = document.getElementById("app")!;
 
 const port = runtime.connect({
-  name: "panel:" + devtools.inspectedWindow.tabId,
+  name: `panel:${devtools.inspectedWindow.tabId}`,
 });
 
 const root = createRoot(rootEl);

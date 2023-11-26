@@ -45,10 +45,12 @@ const isItemVisible = (
 
 // Find the starting index where it's tested value >= 0
 const binarySearch = (
-  l: number,
-  r: number,
+  left: number,
+  right: number,
   test: (i: number) => -1 | 0 | 1,
 ) => {
+  let l = left;
+  let r = right;
   while (l + 1 < r) {
     const m = (l + r) >> 1;
     const v = test(m);
@@ -73,8 +75,8 @@ const TimelineItem: React.FC<{
   return (
     <TrackItem
       style={{
-        left: left * 100 + "%",
-        width: width * 100 + "%",
+        left: `${left * 100}%`,
+        width: `${width * 100}%`,
       }}
     >
       {rendererRefs.current.renderItem(item)}

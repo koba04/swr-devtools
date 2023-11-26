@@ -1,6 +1,6 @@
-import "../styles/globals.css";
 import { SWRConfig } from "swr";
 import { SWRDevTools } from "swr-devtools";
+import "../styles/globals.css";
 
 const fetcher = async (url) => {
   const res = await fetch(url);

@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { useSWRConfig } from "swr";
-import { SWRDevToolPanel } from "swr-devtools-panel";
 import { SWRDevToolsContext } from "swr-devtools";
+import { SWRDevToolPanel } from "swr-devtools-panel";
 
 // The way to use SWR DevTools as a React Component
 export const DevToolsView = () => {

@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import { Cache } from "swr";
-import { NetworkPanel } from "./NetworkPanel";
 import { DevToolsCacheData } from "swr-devtools/lib/swr-cache";
+import { NetworkPanel } from "./NetworkPanel";
 
+import { useDevToolsCache } from "../devtools-cache";
+import { EventEmitter, useRequests, useTracks } from "../request";
 import { CachePanel } from "./CachePanel";
 import { HistoryPanel } from "./HistoryPanel";
 import { Tab } from "./Tab";
-import { EventEmitter, useRequests, useTracks } from "../request";
-import { useDevToolsCache } from "../devtools-cache";
-import { ThemeSwitcher } from "./ThemeSwitcher";
 import { ThemeProvider, useTheme, useThemePreference } from "./ThemeProvider";
+import { ThemeSwitcher } from "./ThemeSwitcher";
 
 export type Theme = "dark" | "light" | "system";
 export type PanelType = "current" | "history" | "network";

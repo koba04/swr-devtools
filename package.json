@@ -2,10 +2,7 @@
   "name": "swr-devtools",
   "version": "0.0.1",
   "private": true,
-  "workspaces": [
-    "packages/*",
-    "examples/*"
-  ],
+  "workspaces": ["packages/*", "examples/*"],
   "scripts": {
     "build": "run-s build:devtools build:panel build:extensions",
     "build:devtools": "pnpm --filter \"swr-devtools\" build",
@@ -22,6 +19,7 @@
     "start": "run-p -l start:*",
     "v1": "pnpm --filter swr-v1-devtools-demo dev",
     "v1-legacy": "pnpm --filter swr-v1-legacy-devtools-demo dev",
+    "fix:biome": "pnpm -r fix:biome",
     "lint": "pnpm -r lint",
     "test": "run-p -l test:*",
     "test:panel": "pnpm --filter swr-devtools-panel test",

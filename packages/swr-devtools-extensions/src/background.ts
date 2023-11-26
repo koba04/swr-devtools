@@ -1,4 +1,4 @@
-import { runtime, Runtime } from "webextension-polyfill";
+import { Runtime, runtime } from "webextension-polyfill";
 import type { ContentMessage } from "./content";
 
 const contentPortMap = new Map();

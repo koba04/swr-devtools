@@ -17,9 +17,7 @@ export class EventEmitter {
     };
   }
   emit(...args: any[]) {
-    for (const listener of this.listeners) {
-      listener(...args);
-    }
+    this.listeners.forEach((fn) => fn(...args));
   }
 }
 
