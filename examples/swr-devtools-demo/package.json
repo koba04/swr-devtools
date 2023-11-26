@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "format": "biome format --write .",
     "lint": "tsc --noEmit"
   },
   "dependencies": {

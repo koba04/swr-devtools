@@ -13,6 +13,7 @@
     "build:extensions": "pnpm --filter \"swr-devtools-extensions\" build",
     "build:panel": "pnpm --filter \"swr-devtools-panel\" build",
     "deploy:demo": "run-s build:devtools build:panel build:demo",
+    "format": "pnpm -r format",
     "prerelease": "run-s build lint",
     "release": "lerna publish --conventional-commits",
     "start:demo": "pnpm --filter swr-devtools-demo dev",
@@ -33,6 +34,7 @@
   "license": "MIT",
   "packageManager": "pnpm@8.10.5",
   "devDependencies": {
+    "@biomejs/biome": "1.3.3",
     "@cybozu/eslint-config": "^17.0.3",
     "eslint": "^8.23.1",
     "lerna": "^5.5.2",

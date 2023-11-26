@@ -14,6 +14,7 @@
     "build:firefox": "run-s build:webpack:firefox build:zip:firefox",
     "build": "run-p build:chrome build:firefox",
     "clean": "rimraf dist/ dist-v2/ extension.zip",
+    "format": "biome format --write .",
     "lint": "tsc --noEmit",
     "start:chrome": "webpack --mode development --watch",
     "start:firefox:build": "MANIFEST_VERSION=2 webpack --mode development --watch",

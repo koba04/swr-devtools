@@ -28,6 +28,7 @@
     "build": "run-p build:*",
     "build:esm": "tsc",
     "build:cjs": "tsc -p tsconfig.cjs.json",
+    "format": "biome format --write .",
     "lint": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest"

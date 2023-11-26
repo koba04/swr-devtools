@@ -40,6 +40,7 @@
   "bugs": "https://github.com/koba04/swr-devtools/issues",
   "scripts": {
     "clean": "rimraf lib cjs",
+    "format": "biome format --write .",
     "start": "run-p start:*",
     "start:cjs": "tsc -p tsconfig.cjs.json --watch",
     "start:esm": "tsc --watch",
