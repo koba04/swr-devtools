@@ -66,7 +66,7 @@ port.onMessage.addListener(
         cache.clear();
         mounted = true;
         render(
-          <SWRDevToolPanel cache={cache} events={eventEmitter} key={tabId} />
+          <SWRDevToolPanel cache={cache} events={eventEmitter} key={tabId} />,
         );
         break;
       }
@@ -79,7 +79,7 @@ port.onMessage.addListener(
         // mount a devtool panel if it hasn't been mounted yet.
         if (mounted === false) {
           render(
-            <SWRDevToolPanel cache={cache} events={eventEmitter} key={tabId} />
+            <SWRDevToolPanel cache={cache} events={eventEmitter} key={tabId} />,
           );
           mounted = true;
         }
@@ -95,7 +95,7 @@ port.onMessage.addListener(
         // mount a devtool panel if it hasn't been mounted yet.
         if (mounted === false) {
           render(
-            <SWRDevToolPanel cache={cache} events={eventEmitter} key={tabId} />
+            <SWRDevToolPanel cache={cache} events={eventEmitter} key={tabId} />,
           );
           mounted = true;
         }
@@ -107,5 +107,5 @@ port.onMessage.addListener(
         // noop
       }
     }
-  }
+  },
 );

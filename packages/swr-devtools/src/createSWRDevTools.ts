@@ -82,7 +82,7 @@ const inject = (cache: Cache) =>
             value,
           }),
         },
-        "*"
+        "*",
       );
     }
   });
@@ -159,7 +159,7 @@ export const createSWRDevtools = () => {
                 id: requestIdRef.current,
               }),
             },
-            "*"
+            "*",
           );
         }
       };
@@ -187,7 +187,7 @@ export const createSWRDevtools = () => {
                 id,
               }),
             },
-            "*"
+            "*",
           );
           try {
             const res = fn(...args);
@@ -211,7 +211,7 @@ export const createSWRDevtools = () => {
                       type: "request_success",
                       payload: serializePayload(payload),
                     },
-                    "*"
+                    "*",
                   );
                   return r;
                 })
@@ -228,7 +228,7 @@ export const createSWRDevtools = () => {
                       type: "request_error",
                       payload: serializePayload(payload),
                     },
-                    "*"
+                    "*",
                   );
                   throw e;
                 });
@@ -255,7 +255,7 @@ export const createSWRDevtools = () => {
             id: requestIdRef.current,
           }),
         },
-        "*"
+        "*",
       );
       return config.onDiscarded ? config.onDiscarded.apply(null, args) : null;
     };

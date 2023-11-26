@@ -12,7 +12,7 @@ module.exports = {
   output: {
     path: path.resolve(
       __dirname,
-      process.env.MANIFEST_VERSION === "2" ? "dist-v2" : "dist"
+      process.env.MANIFEST_VERSION === "2" ? "dist-v2" : "dist",
     ),
     filename: "[name].js",
   },

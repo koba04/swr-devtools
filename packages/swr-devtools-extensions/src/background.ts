@@ -41,7 +41,7 @@ runtime.onConnect.addListener((port: Runtime.Port) => {
           panelPortMap,
           panelPort,
         });
-      }
+      },
     );
     // A port between the SWR panel in devtools
   } else if (port.name.startsWith("panel")) {

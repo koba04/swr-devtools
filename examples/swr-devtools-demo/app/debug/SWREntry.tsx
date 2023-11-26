@@ -21,7 +21,7 @@ export const SWREntry = ({
   const { data, isLoading, isValidating } = useSWR(
     "/api/debug?key=" + swrKey,
     fetcher,
-    options
+    options,
   );
   if (isLoading) return <p>Loading...</p>;
   if (isValidating) return <p>Validating...</p>;

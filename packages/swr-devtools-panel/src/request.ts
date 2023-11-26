@@ -37,7 +37,7 @@ export function useRequests(events: EventEmitter | null) {
           key,
           data,
           error,
-        }: { id: number; key: string; data?: any; error?: any }
+        }: { id: number; key: string; data?: any; error?: any },
       ) => {
         setRequestsById((currentRequestsByKey) => {
           let channelKey = key;
@@ -114,7 +114,7 @@ export function useRequests(events: EventEmitter | null) {
           }
           return currentRequestsByKey;
         });
-      }
+      },
     );
   }, [events]);
 

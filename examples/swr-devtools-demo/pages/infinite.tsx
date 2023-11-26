@@ -87,7 +87,7 @@ const fetcher = async (url) => {
 export default function Home() {
   const { data, setSize, isValidating } = useSWRInfinite(
     (index) => `/api/list?page=${index + 1}`,
-    fetcher
+    fetcher,
   );
 
   const pages = data ? data.reduce((acc, page) => acc.concat(page), []) : [];

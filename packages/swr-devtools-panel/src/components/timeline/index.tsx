@@ -19,7 +19,7 @@ const isTrackVisible = (
   viewportHeight: number,
   trackHeight: number,
   trackIndex: number,
-  margin: number
+  margin: number,
 ): -1 | 0 | 1 => {
   // Before viewport
   if (trackHeight * (trackIndex + 1) < viewportTop - margin) return -1;
@@ -34,7 +34,7 @@ const isItemVisible = (
   viewportWidth: number,
   itemLeft: number,
   itemWidth: number,
-  margin: number
+  margin: number,
 ): -1 | 0 | 1 => {
   // Before viewport
   if (itemLeft + itemWidth < viewportLeft - margin) return -1;
@@ -47,7 +47,7 @@ const isItemVisible = (
 const binarySearch = (
   l: number,
   r: number,
-  test: (i: number) => -1 | 0 | 1
+  test: (i: number) => -1 | 0 | 1,
 ) => {
   while (l + 1 < r) {
     const m = (l + r) >> 1;
@@ -121,14 +121,14 @@ const TimelineTrack: React.FC<{
           areaWidth,
           left * trackWidth,
           width * trackWidth,
-          VIRTUAL_SCROLL_MARGIN
+          VIRTUAL_SCROLL_MARGIN,
         ),
       ] as const;
     };
     const startIndex = binarySearch(
       0,
       track.items.length - 1,
-      (i) => test(i)[2]
+      (i) => test(i)[2],
     );
 
     for (let i = startIndex; i < track.items.length; i++) {
@@ -142,7 +142,7 @@ const TimelineTrack: React.FC<{
             left={left}
             width={width}
             rendererRefs={rendererRefs}
-          />
+          />,
         );
       } else if (visible === 1) {
         break;
@@ -158,11 +158,11 @@ const TimelineTrack: React.FC<{
               {rendererRefs.current.renderTrackLabel(track)}
             </TrackTitle>
             <TrackContent style={{ width: trackWidth }}>{ui}</TrackContent>
-          </>
+          </>,
         )}
       </TrackContainer>
     );
-  }
+  },
 );
 TimelineTrack.displayName = "TimelineTrack";
 
@@ -191,7 +191,7 @@ export const Timeline: React.FC<{
     startTime: number,
     endTime: number,
     scrollLeft: number,
-    viewportWidth: number
+    viewportWidth: number,
   ) => React.ReactNode;
 }> = ({
   tracks,
@@ -220,7 +220,7 @@ export const Timeline: React.FC<{
         if (s[0] !== target.scrollLeft) {
           scrollDistanceToRightRef.current = Math.max(
             0,
-            scrollDistanceToRightRef.current - (target.scrollLeft - s[0])
+            scrollDistanceToRightRef.current - (target.scrollLeft - s[0]),
           );
           shouldAutoScrollRef.current = scrollDistanceToRightRef.current < 20;
         }
@@ -257,7 +257,7 @@ export const Timeline: React.FC<{
     };
     scrollDistanceToRightRef.current = Math.max(
       0,
-      trackWidth + labelWidth - viewport[0] - scroll[0]
+      trackWidth + labelWidth - viewport[0] - scroll[0],
     );
   });
 
@@ -275,7 +275,7 @@ export const Timeline: React.FC<{
       viewport[1],
       trackHeight,
       i,
-      VIRTUAL_SCROLL_MARGIN
+      VIRTUAL_SCROLL_MARGIN,
     );
   };
   const startIndex = binarySearch(0, tracks.length - 1, test);
@@ -296,7 +296,7 @@ export const Timeline: React.FC<{
           areaLeft={scroll[0]}
           areaWidth={viewport[0]}
           rendererRefs={rendererRefs}
-        />
+        />,
       );
     } else if (visible === 1) {
       break;

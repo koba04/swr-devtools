@@ -22,7 +22,7 @@ describe("SWRDevToolPanel", () => {
     render(
       <SWRConfig value={{ use: [middleware] }}>
         <App />
-      </SWRConfig>
+      </SWRConfig>,
     );
     expect(await screen.findByText("data:response")).toBeInTheDocument();
   });

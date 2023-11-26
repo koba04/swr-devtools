@@ -15,26 +15,15 @@
   },
   "content_scripts": [
     {
-      "matches": [
-        "https://*/*",
-        "http://*/*"
-      ],
-      "js": [
-        "content.js"
-      ],
+      "matches": ["https://*/*", "http://*/*"],
+      "js": ["content.js"],
       "run_at": "document_start"
     }
   ],
   "web_accessible_resources": [
     {
-      "resources": [
-        "web-accessible.js"
-      ],
-      "matches": [
-        "https://*/*",
-        "http://*/*"
-
-      ]
+      "resources": ["web-accessible.js"],
+      "matches": ["https://*/*", "http://*/*"]
     }
   ]
 }

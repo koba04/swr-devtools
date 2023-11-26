@@ -23,7 +23,7 @@ export const deserializePayload = (payload: any) =>
 
 export const injectSWRCache = (
   cache: Cache,
-  watcher: (key: string, value: any) => void
+  watcher: (key: string, value: any) => void,
 ): void => {
   // intercept operations modifying the cache store
   const originalSet = cache.set;
@@ -64,7 +64,7 @@ const isIsValidatingCache = (key: string) => {
 
 const filterMetaCacheKey = (key: string) => {
   const match = key.match(
-    /^(?:\$(?:req|swr|err)\$)?(?:\$(inf|sub)\$)(?<cacheKey>.*)?/
+    /^(?:\$(?:req|swr|err)\$)?(?:\$(inf|sub)\$)(?<cacheKey>.*)?/,
   );
   return match?.groups?.cacheKey ?? key;
 };
@@ -84,7 +84,7 @@ const isV1MetaCache = (key: string) => {
 // refs. https://github.com/koba04/swr-devtools/issues/48
 export const convertToDevToolsCacheData = (
   key: string,
-  value: any
+  value: any,
 ): { key: string; value: Partial<DevToolsCacheData> } => {
   const isInfinite = isInfiniteCache(key);
   const isSubscription = isSubscriptionCache(key);

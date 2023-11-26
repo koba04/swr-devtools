@@ -103,7 +103,7 @@ export const NetworkPanel = ({
               scales.push(
                 <HeaderScaleTimestamp key={i} style={{ left }}>
                   {formatTime(o, tStep)}
-                </HeaderScaleTimestamp>
+                </HeaderScaleTimestamp>,
               );
               o += tStep;
               left += sStep;

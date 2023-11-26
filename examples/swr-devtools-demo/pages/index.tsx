@@ -33,7 +33,7 @@ export default function Home() {
   });
   const { data, mutate, error } = useSWR(
     `/api/hello${typeof window !== "undefined" ? location.search : ""}`,
-    fetcher
+    fetcher,
   );
 
   useEffect(() => {
@@ -101,9 +101,9 @@ export default function Home() {
             SWRDevTools extension on your application!
           </p>
           <p>
-            ⚠️ If you use SWR v1, Install <code>swr-devtools</code> and wrap
-            your application with the <code>SWRDevTools</code> component. Please
-            see the more details in{" "}
+            ⚠️ If you use SWR v1, Install <code>swr-devtools</code> and wrap your
+            application with the <code>SWRDevTools</code> component. Please see
+            the more details in{" "}
             <a
               href="https://github.com/koba04/swr-devtools/#how-to-use"
               target="_blank"
