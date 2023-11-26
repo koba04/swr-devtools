@@ -48,7 +48,10 @@
     "build": "run-p build:*",
     "build:esm": "tsc",
     "build:cjs": "tsc -p tsconfig.cjs.json",
-    "lint": "tsc --noEmit",
+    "fix:biome": "biome check --apply-unsafe .",
+    "lint": "run-p lint:*",
+    "lint:biome": "biome check .",
+    "lint:tsc": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest"
   },

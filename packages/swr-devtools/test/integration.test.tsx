@@ -1,9 +1,9 @@
-import React from "react";
-import { vi, describe, it, expect } from "vitest";
-import { render, screen } from "@testing-library/react";
 import matchers from "@testing-library/jest-dom/matchers";
-import { createSWRDevtools } from "../src";
+import { render, screen } from "@testing-library/react";
+import React from "react";
 import useSWR, { SWRConfig } from "swr";
+import { describe, expect, it, vi } from "vitest";
+import { createSWRDevtools } from "../src";
 
 expect.extend(matchers);
 vi.stubGlobal("matchMedia", () => ({
