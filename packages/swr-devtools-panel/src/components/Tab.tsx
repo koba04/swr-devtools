@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { PanelType, Panel } from "./SWRDevToolPanel";
+import { Panel, PanelType } from "./SWRDevToolPanel";
 
 type TabProps = {
   onChange: (panel: PanelType) => void;

@@ -7,7 +7,7 @@ import styles from "../styles/infinite.module.css";
 
 export default function Home() {
   const { data, setSize } = useSWRInfinite(
-    (index) => `/api/list?page=${index + 1}`
+    (index) => `/api/list?page=${index + 1}`,
   );
 
   const pages = data ? data.reduce((acc, page) => acc.concat(page), []) : [];

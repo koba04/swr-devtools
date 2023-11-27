@@ -2,7 +2,7 @@ import { devtools, runtime } from "webextension-polyfill";
 
 devtools.panels.create("SWR", "", "panel.html").then((panel) => {
   const port = runtime.connect({
-    name: "panel:" + devtools.inspectedWindow.tabId,
+    name: `panel:${devtools.inspectedWindow.tabId}`,
   });
   panel.onHidden.addListener(() => {
     // console.log("hide panel");

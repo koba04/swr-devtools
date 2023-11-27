@@ -6,7 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "tsc --noEmit"
+    "format": "biome format --write .",
+    "fix:biome": "biome check --apply-unsafe .",
+    "lint": "run-p lint:*",
+    "lint:biome": "biome check .",
+    "lint:tsc": "tsc --noEmit"
   },
   "dependencies": {
     "@vercel/analytics": "^0.1.11",

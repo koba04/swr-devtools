@@ -1,15 +1,15 @@
 import Head from "next/head";
 import Link from "next/link";
-import { highlight } from "sugar-high";
-import styles from "../styles/Home.module.css";
-import useSWR from "swr";
 import { useEffect } from "react";
+import { highlight } from "sugar-high";
+import useSWR from "swr";
 import { DevToolsView } from "../components/DevToolsView";
+import styles from "../styles/Home.module.css";
 
 export default function Home() {
   // const { data, mutate } = useSWR("/api/hello?error=true");
   const { data, mutate, error } = useSWR(
-    `/api/hello${typeof window !== "undefined" ? location.search : ""}`
+    `/api/hello${typeof window !== "undefined" ? location.search : ""}`,
   );
   const { data: data2 } = useSWR("/api/hello?foo");
 

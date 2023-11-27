@@ -40,6 +40,7 @@
   "bugs": "https://github.com/koba04/swr-devtools/issues",
   "scripts": {
     "clean": "rimraf lib cjs",
+    "format": "biome format --write .",
     "start": "run-p start:*",
     "start:cjs": "tsc -p tsconfig.cjs.json --watch",
     "start:esm": "tsc --watch",
@@ -47,7 +48,10 @@
     "build": "run-p build:*",
     "build:esm": "tsc",
     "build:cjs": "tsc -p tsconfig.cjs.json",
-    "lint": "tsc --noEmit",
+    "fix:biome": "biome check --apply-unsafe .",
+    "lint": "run-p lint:*",
+    "lint:biome": "biome check .",
+    "lint:tsc": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest"
   },

@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Cache } from "swr";
 
 import {
-  injectSWRCache,
   DevToolsCacheData,
   convertToDevToolsCacheData,
+  injectSWRCache,
 } from "swr-devtools/lib/swr-cache";
 import { formatDateTime } from "./format";
 
@@ -36,20 +36,20 @@ const sortCacheDataFromLatest = (cacheData: Map<string, DevToolsCacheData>) => {
 
 const retrieveCache = (
   key: string,
-  value: Partial<DevToolsCacheData>
+  value: Partial<DevToolsCacheData>,
 ): DevToolsCacheData[] => {
   const date = new Date();
 
   const cacheData = cacheDataMap.get(key);
 
   const updatedCacheData: DevToolsCacheData = Object.keys(
-    value
+    value,
   ).reduce<DevToolsCacheData>(
     (acc, cacheKey) => ({
       ...acc,
       [cacheKey]: value[cacheKey as keyof DevToolsCacheData],
     }),
-    {} as DevToolsCacheData
+    {} as DevToolsCacheData,
   );
 
   cacheDataMap.set(key, {
@@ -73,7 +73,7 @@ export const useDevToolsCache = (cache: Cache | null): DevToolsCacheData[] => {
       (key_: string, value_: Partial<DevToolsCacheData>) => {
         const { key, value } = convertToDevToolsCacheData(key_, value_);
         setCacheData(retrieveCache(key, value));
-      }
+      },
     );
     return () => {
       unsubscribe();

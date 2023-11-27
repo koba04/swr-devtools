@@ -1,10 +1,10 @@
 import Head from "next/head";
-import Link from "next/link";
 import Image from "next/image";
-import styles from "../styles/Home.module.css";
-import useSWR from "swr";
+import Link from "next/link";
 import { useEffect } from "react";
+import useSWR from "swr";
 import { DevToolsView } from "../components/DevToolsView";
+import styles from "../styles/Home.module.css";
 
 import cachePanelImage from "../public/img/cache-view.png";
 import historyPanelImage from "../public/img/history-view.png";
@@ -33,7 +33,7 @@ export default function Home() {
   });
   const { data, mutate, error } = useSWR(
     `/api/hello${typeof window !== "undefined" ? location.search : ""}`,
-    fetcher
+    fetcher,
   );
 
   useEffect(() => {
@@ -101,9 +101,9 @@ export default function Home() {
             SWRDevTools extension on your application!
           </p>
           <p>
-            ⚠️ If you use SWR v1, Install <code>swr-devtools</code> and wrap
-            your application with the <code>SWRDevTools</code> component. Please
-            see the more details in{" "}
+            ⚠️ If you use SWR v1, Install <code>swr-devtools</code> and wrap your
+            application with the <code>SWRDevTools</code> component. Please see
+            the more details in{" "}
             <a
               href="https://github.com/koba04/swr-devtools/#how-to-use"
               target="_blank"

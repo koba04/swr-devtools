@@ -3,8 +3,7 @@ import useSWR from "swr";
 const sleep = (ms: number) =>
   new Promise((resolve) => setTimeout(resolve, Math.random() * 1000));
 
-const randomNumber = (len: number) =>
-  Math.floor(Math.random() * Math.pow(10, len));
+const randomNumber = (len: number) => Math.floor(Math.random() * 10 ** len);
 
 const fetcher = async () => {
   await sleep(Math.random() * 2000);
@@ -19,9 +18,9 @@ export const SWREntry = ({
   options: any;
 }) => {
   const { data, isLoading, isValidating } = useSWR(
-    "/api/debug?key=" + swrKey,
+    `/api/debug?key=${swrKey}`,
     fetcher,
-    options
+    options,
   );
   if (isLoading) return <p>Loading...</p>;
   if (isValidating) return <p>Validating...</p>;

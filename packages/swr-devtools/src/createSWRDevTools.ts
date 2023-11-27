@@ -1,6 +1,6 @@
 // We cannot import React nad use hooks that SWR provides because this runs on the application side,
 // we have to use the same React instance with the application
-import type { Middleware, Cache } from "swr";
+import type { Cache, Middleware } from "swr";
 
 import { injectSWRCache, serializePayload } from "./swr-cache";
 import { serialize as unstable_serialize } from "./swr/serialize";
@@ -82,7 +82,7 @@ const inject = (cache: Cache) =>
             value,
           }),
         },
-        "*"
+        "*",
       );
     }
   });
@@ -159,7 +159,7 @@ export const createSWRDevtools = () => {
                 id: requestIdRef.current,
               }),
             },
-            "*"
+            "*",
           );
         }
       };
@@ -187,7 +187,7 @@ export const createSWRDevtools = () => {
                 id,
               }),
             },
-            "*"
+            "*",
           );
           try {
             const res = fn(...args);
@@ -211,7 +211,7 @@ export const createSWRDevtools = () => {
                       type: "request_success",
                       payload: serializePayload(payload),
                     },
-                    "*"
+                    "*",
                   );
                   return r;
                 })
@@ -228,7 +228,7 @@ export const createSWRDevtools = () => {
                       type: "request_error",
                       payload: serializePayload(payload),
                     },
-                    "*"
+                    "*",
                   );
                   throw e;
                 });
@@ -255,7 +255,7 @@ export const createSWRDevtools = () => {
             id: requestIdRef.current,
           }),
         },
-        "*"
+        "*",
       );
       return config.onDiscarded ? config.onDiscarded.apply(null, args) : null;
     };

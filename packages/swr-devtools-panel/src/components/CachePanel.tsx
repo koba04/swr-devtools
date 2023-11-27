@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 
+import { DevToolsCacheData } from "swr-devtools/lib/swr-cache";
 import { CacheData } from "./CacheData";
 import { CacheKey } from "./CacheKey";
-import { SearchInput } from "./SearchInput";
-import { DevToolsCacheData } from "swr-devtools/lib/swr-cache";
 import {
   CacheItem,
   CacheItemButton,
@@ -13,6 +12,7 @@ import {
   Timestamp,
   VerticalDivider,
 } from "./Panel";
+import { SearchInput } from "./SearchInput";
 
 export const CachePanel = ({
   cacheData,

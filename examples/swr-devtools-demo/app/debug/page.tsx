@@ -4,8 +4,8 @@ import Link from "next/link";
 import { useCallback, useState } from "react";
 import { SWRConfiguration, useSWRConfig } from "swr";
 
-import styles from "./debug.module.css";
 import { SWREntry } from "./SWREntry";
+import styles from "./debug.module.css";
 
 type Settings = {
   gridCount: number;
@@ -102,7 +102,7 @@ export default function Home() {
           <h2 className={styles.subtitle}>Data</h2>
           <div className={styles.grid}>
             {Array.from({ length: settings.gridCount }).map((_, i) => {
-              const key = "test" + i;
+              const key = `test${i}`;
               return <SWREntry key={key} swrKey={key} options={options} />;
             })}
           </div>
