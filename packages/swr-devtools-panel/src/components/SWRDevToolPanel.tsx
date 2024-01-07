@@ -11,6 +11,7 @@ import { HistoryPanel } from "./HistoryPanel";
 import { Tab } from "./Tab";
 import { ThemeProvider, useTheme, useThemePreference } from "./ThemeProvider";
 import { ThemeSwitcher } from "./ThemeSwitcher";
+import { NotFound } from "./NotFound";
 
 export type Theme = "dark" | "light" | "system";
 export type PanelType = "current" | "history" | "network";
@@ -128,11 +129,7 @@ export const SWRDevToolPanel = ({ cache, events }: Props) => {
               />
             )
           ) : (
-            <NotFound>
-              <NotFoundText>
-                Open SWRDevTools on the page using SWR.
-              </NotFoundText>
-            </NotFound>
+            <NotFound />
           )}
         </PanelWrapper>
       </DevToolWindow>
@@ -186,16 +183,4 @@ const PanelWrapper = styled.div`
   position: relative;
   width: 100%;
   height: calc(100% - 36px);
-`;
-
-const NotFound = styled.div`
-  display: flex;
-  height: 100%;
-  justify-content: center;
-  align-items: center;
-  font-size: 1.2rem;
-`;
-
-const NotFoundText = styled.p`
-  color: var(--swr-devtools-text-color);
 `;
