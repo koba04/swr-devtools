@@ -5,6 +5,8 @@ import type { Cache, Middleware } from "swr";
 import { injectSWRCache, serializePayload } from "./swr-cache";
 import { serialize as unstable_serialize } from "./swr/serialize";
 
+import type React from "react";
+
 type EventListener = (...args: any[]) => void;
 
 export class EventEmitter {
@@ -87,16 +89,42 @@ const inject = (cache: Cache) =>
     }
   });
 
+type ReactInstance = {
+  useLayoutEffect: typeof React.useLayoutEffect;
+  useEffect: typeof React.useEffect;
+  useRef: typeof React.useRef;
+}
+
 const noop = () => {
   /* noop */
 };
-const dummyHooks = {
+const dummyHooks: ReactInstance = {
   useLayoutEffect: noop,
   useEffect: noop,
-  useRef: <T>(a: T) => ({
-    current: a,
-  }),
+  useRef: (<T>(a: T) => ({ current: a })) as typeof React.useRef,
 };
+
+
+function getReactInstance(): ReactInstance {
+  if (typeof window !== "undefined") {
+    if ('__SWR_DEVTOOLS_REACT__' in window && typeof window.__SWR_DEVTOOLS_REACT__ !== "undefined") {
+      return window.__SWR_DEVTOOLS_REACT__ as ReactInstance;
+    }
+    // We are initializing too late, SWR hasn't detected us and didn't inject React instance
+    // That's OK, since https://github.com/vercel/swr/pull/4257 we can ask SWR to inject again
+    if ('__SWR_DEVTOOLS_SETUP__' in window && typeof window.__SWR_DEVTOOLS_SETUP__ === "function") {
+      window.__SWR_DEVTOOLS_SETUP__();
+
+      // Now let's try reading React instance again
+      if ('__SWR_DEVTOOLS_REACT__' in window && typeof window.__SWR_DEVTOOLS_REACT__ !== "undefined") {
+        return window.__SWR_DEVTOOLS_REACT__ as ReactInstance;
+      }
+    }
+  }
+
+  // We either not in a browser environment, or SWR DevTools is not properly set up. In both cases we return dummy hooks as fallback.
+  return dummyHooks;
+}
 
 export const createSWRDevtools = () => {
   const events = new EventEmitter();
@@ -114,13 +142,7 @@ export const createSWRDevtools = () => {
   }
 
   // use the same React instance with the application
-  const { useLayoutEffect, useEffect, useRef } =
-    typeof window !== "undefined" &&
-    // @ts-expect-error
-    typeof window.__SWR_DEVTOOLS_REACT__ !== "undefined"
-      ? // @ts-expect-error
-        window.__SWR_DEVTOOLS_REACT__
-      : dummyHooks;
+  const { useLayoutEffect, useEffect, useRef } = getReactInstance();
 
   const swrdevtools: Middleware = (useSWRNext) => (key, fn, config) => {
     useLayoutEffect(() => {
