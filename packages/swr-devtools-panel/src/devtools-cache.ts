@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { Cache } from "swr";
+import type { Cache } from "swr";
 
 import {
-  DevToolsCacheData,
   convertToDevToolsCacheData,
+  type DevToolsCacheData,
   injectSWRCache,
 } from "swr-devtools/lib/swr-cache";
 import { formatDateTime } from "./format";

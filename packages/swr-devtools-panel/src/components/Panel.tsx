@@ -20,14 +20,14 @@ export const CacheItems = styled.ul`
   padding-inline-start: 0;
 `;
 
-export const CacheItem = styled.li<{ isSelected: boolean }>`
+export const CacheItem = styled.li<{ $isSelected: boolean }>`
   padding: 0;
   border-bottom: solid 1px var(--swr-devtools-border-color);
   background-color: ${(props) =>
-    props.isSelected ? "var(--swr-devtools-selected-bg-color)" : "none"};
+    props.$isSelected ? "var(--swr-devtools-selected-bg-color)" : "none"};
   &:hover {
     background-color: ${(props) =>
-      props.isSelected
+      props.$isSelected
         ? "var(--swr-devtools-selected-bg-color)"
         : "var(--swr-devtools-hover-bg-color)"};
   }

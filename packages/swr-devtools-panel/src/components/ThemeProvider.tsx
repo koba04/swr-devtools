@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { Theme } from "./SWRDevToolPanel";
+import type { Theme } from "./SWRDevToolPanel";
 
 const THEME_KEY = "$swr-devtools:theme";
 
@@ -35,7 +35,7 @@ export const useThemePreference = (): [Theme, typeof setTheme] => {
   return [theme, setTheme];
 };
 
-export const useTheme = (): Omit<Theme, "system"> => {
+export const useTheme = (): Exclude<Theme, "system"> => {
   const [theme] = useThemePreference();
   return theme === "system" ? getThemeByPreference() : theme;
 };

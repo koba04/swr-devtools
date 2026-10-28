@@ -2,7 +2,7 @@ import type { ReactElement } from "react";
 import { createRoot } from "react-dom/client";
 import { deserializePayload } from "swr-devtools";
 import { SWRDevToolPanel } from "swr-devtools-panel";
-import { Runtime, devtools, runtime } from "webextension-polyfill";
+import { devtools, type Runtime, runtime } from "webextension-polyfill";
 
 import type { ContentMessage } from "./content";
 
@@ -18,7 +18,9 @@ class EventEmitter {
     };
   }
   emit(...args: any[]) {
-    this.listeners.forEach((fn) => fn(...args));
+    this.listeners.forEach((fn) => {
+      fn(...args);
+    });
   }
 }
 
@@ -38,7 +40,8 @@ render(<SWRDevToolPanel cache={null} events={null} key="swr-not-found" />);
 let mounted = false;
 port.onMessage.addListener(
   // sender is undefined
-  (message: ContentMessage, { sender }: Runtime.Port) => {
+  (rawMessage: unknown, { sender }: Runtime.Port) => {
+    const message = rawMessage as ContentMessage;
     const tabId = message.tabId; // sender?.tab?.id;
     const cache = cacheMap.get(tabId) || new Map();
     /*

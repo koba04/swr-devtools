@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Panel, PanelType } from "./SWRDevToolPanel";
+import type { Panel, PanelType } from "./SWRDevToolPanel";
 
 type TabProps = {
   onChange: (panel: PanelType) => void;
@@ -14,7 +14,7 @@ export const Tab = ({ onChange, current, panels }: TabProps) => (
       <li key={panel.key}>
         <TabButton
           onClick={() => onChange(panel.key)}
-          isSelected={panel.key === current}
+          $isSelected={panel.key === current}
         >
           {panel.label}
         </TabButton>
@@ -24,7 +24,7 @@ export const Tab = ({ onChange, current, panels }: TabProps) => (
 );
 
 const TabButton = styled.button.attrs({ type: "button" })<{
-  isSelected: boolean;
+  $isSelected: boolean;
   children: React.ReactNode;
 }>`
   display: inline-block;
@@ -33,18 +33,18 @@ const TabButton = styled.button.attrs({ type: "button" })<{
   border: 0;
   padding: 0.2rem 1.5rem;
   border-bottom: ${(props) =>
-    props.isSelected
+    props.$isSelected
       ? "solid 2px var(--swr-devtools-selected-border-color)"
       : "none"};
   background-color: ${(props) =>
-    props.isSelected
+    props.$isSelected
       ? "var(--swr-devtools-selected-bg-color)"
       : "var(--swr-devtools-bg-color)"};
   color: var(--swr-devtools-text-color);
   cursor: pointer;
   &:hover {
     background-color: ${(props) =>
-      props.isSelected
+      props.$isSelected
         ? "var(--swr-devtools-selected-bg-color)"
         : "var(--swr-devtools-hover-bg-color)"};
   }

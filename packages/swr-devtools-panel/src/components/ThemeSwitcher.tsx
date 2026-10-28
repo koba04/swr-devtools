@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Theme } from "./SWRDevToolPanel";
+import type { Theme } from "./SWRDevToolPanel";
 import { useThemePreference } from "./ThemeProvider";
 
 export const ThemeSwitcher = () => {

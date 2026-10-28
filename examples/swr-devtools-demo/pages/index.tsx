@@ -4,11 +4,10 @@ import Link from "next/link";
 import { useEffect } from "react";
 import useSWR from "swr";
 import { DevToolsView } from "../components/DevToolsView";
-import styles from "../styles/Home.module.css";
-
 import cachePanelImage from "../public/img/cache-view.png";
 import historyPanelImage from "../public/img/history-view.png";
 import networkPanelImage from "../public/img/network-view.png";
+import styles from "../styles/Home.module.css";
 
 let counter = 1;
 

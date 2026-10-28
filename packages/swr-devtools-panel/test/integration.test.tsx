@@ -1,4 +1,4 @@
-import matchers from "@testing-library/jest-dom/matchers";
+import * as matchers from "@testing-library/jest-dom/matchers";
 import { render, screen } from "@testing-library/react";
 import React from "react";
 import { EventEmitter } from "swr-devtools/lib/createSWRDevTools";

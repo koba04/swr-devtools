@@ -1,7 +1,7 @@
 import React from "react";
 import { JSONTree } from "react-json-tree";
 import styled from "styled-components";
-import { DevToolsCacheData } from "swr-devtools/lib/swr-cache";
+import type { DevToolsCacheData } from "swr-devtools/lib/swr-cache";
 import { CacheKey } from "./CacheKey";
 import { ErrorLabel } from "./StatusLabel";
 import { useTheme } from "./ThemeProvider";
@@ -19,13 +19,13 @@ export const CacheData = React.memo(({ cacheData }: Props) => (
     </Title>
     <DataWrapper>
       <>
-        {cacheData.data && (
+        {!!cacheData.data && (
           <>
             <DataTitle>Data</DataTitle>
             <CacheDataView data={cacheData.data as any} />
           </>
         )}
-        {cacheData.error && (
+        {!!cacheData.error && (
           <>
             <DataTitle>
               <ErrorLabel>Error</ErrorLabel>
@@ -50,7 +50,7 @@ const CacheDataView = ({ data }: { data: any }) => {
       theme="railscasts"
       invertTheme={theme !== "dark"}
       hideRoot
-      shouldExpandNode={(_keyPath, _data, level) => level < 3}
+      shouldExpandNodeInitially={(_keyPath, _data, level) => level < 3}
     />
   );
 };

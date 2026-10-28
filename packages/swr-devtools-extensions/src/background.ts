@@ -1,4 +1,4 @@
-import { Runtime, runtime } from "webextension-polyfill";
+import { type Runtime, runtime } from "webextension-polyfill";
 import type { ContentMessage } from "./content";
 
 const contentPortMap = new Map();
@@ -25,7 +25,8 @@ runtime.onConnect.addListener((port: Runtime.Port) => {
       contentPortMap.delete(tabId);
     });
     port.onMessage.addListener(
-      (message: ContentMessage, { sender }: Runtime.Port) => {
+      (rawMessage: unknown, { sender }: Runtime.Port) => {
+        const message = rawMessage as ContentMessage;
         // this might not be necessary
         const data = {
           ...message,
@@ -50,7 +51,7 @@ runtime.onConnect.addListener((port: Runtime.Port) => {
       console.log("disconnected panel port => ", tabId);
       panelPortMap.delete(tabId);
     });
-    port.onMessage.addListener((message) => {
+    port.onMessage.addListener((message: any) => {
       if (message.type === "panelshow") {
         panelIsOpen = true;
       } else if (message.type === "panelhide") {

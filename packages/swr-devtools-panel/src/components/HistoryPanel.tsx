@@ -40,7 +40,7 @@ export const HistoryPanel = ({
           {histories.map((track) => (
             <CacheItem
               key={track.key}
-              isSelected={selectedItem && selectedItem.id === track.data.id}
+              $isSelected={selectedItem && selectedItem.id === track.data.id}
             >
               <CacheItemButton
                 onClick={() => {

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { SWRConfig } from "swr";
-import { EventEmitter, createSWRDevtools } from "./createSWRDevTools";
+import { createSWRDevtools, type EventEmitter } from "./createSWRDevTools";
 
 export type SWRDevToolsContextValue = { events: EventEmitter | null };
 

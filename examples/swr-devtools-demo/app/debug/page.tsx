@@ -2,10 +2,9 @@
 import Head from "next/head";
 import Link from "next/link";
 import { useCallback, useState } from "react";
-import { SWRConfiguration, useSWRConfig } from "swr";
-
-import { SWREntry } from "./SWREntry";
+import { type SWRConfiguration, useSWRConfig } from "swr";
 import styles from "./debug.module.css";
+import { SWREntry } from "./SWREntry";
 
 type Settings = {
   gridCount: number;

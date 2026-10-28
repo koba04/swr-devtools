@@ -17,7 +17,7 @@
   gap: 10;
 }
 
-@media (max-width: 780px){
+@media (max-width: 780px) {
   .grid {
     grid-template-columns: repeat(5, 1fr);
   }

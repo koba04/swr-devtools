@@ -1,7 +1,7 @@
-import React, { MouseEvent, useCallback, useRef, useState } from "react";
+import React, { type MouseEvent, useCallback, useRef, useState } from "react";
 import styled from "styled-components";
 import { formatDateTime } from "../format";
-import { RequestsById } from "../request";
+import type { RequestsById } from "../request";
 import { CacheData } from "./CacheData";
 
 import { Timeline } from "./timeline";
@@ -144,13 +144,13 @@ export const NetworkPanel = ({
             );
           }}
           renderTrack={(track, children) => {
-            return <TrackRow i={track.data.index}>{children}</TrackRow>;
+            return <TrackRow $i={track.data.index}>{children}</TrackRow>;
           }}
           renderTrackLabel={(track) => {
             return (
               <TrackLabel
                 className="swr-devtools-track-label"
-                i={track.data.index}
+                $i={track.data.index}
                 title={track.data.title}
               >
                 {track.data.shouldMergeKey ? "└ " : null}
@@ -211,11 +211,11 @@ const Request = styled.div<{
   }
 `;
 
-const TrackRow = styled.div<{ i: number }>`
+const TrackRow = styled.div<{ $i: number }>`
   height: 24px;
   min-width: 100%;
   ${(props) =>
-    props.i % 2
+    props.$i % 2
       ? "background: var(--swr-devtools-network-row-bg-alt-color);"
       : ""}
   &:hover {
@@ -227,7 +227,7 @@ const TrackRow = styled.div<{ i: number }>`
   }
 `;
 
-const TrackLabel = styled.div<{ i: number }>`
+const TrackLabel = styled.div<{ $i: number }>`
   padding: 0 4px;
   height: 24px;
   line-height: 24px;
@@ -235,7 +235,7 @@ const TrackLabel = styled.div<{ i: number }>`
   border-right: 1px solid #8383835e;
   font-size: 11px;
   background: ${(props) =>
-    props.i % 2
+    props.$i % 2
       ? "var(--swr-devtools-network-row-bg-alt-color)"
       : "var(--swr-devtools-network-row-bg-color)"};
   text-overflow: ellipsis;

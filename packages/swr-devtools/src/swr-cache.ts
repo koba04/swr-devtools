@@ -1,5 +1,5 @@
-import type { Cache } from "swr";
 import superjson from "superjson";
+import type { Cache } from "swr";
 
 export type DevToolsCacheData = {
   key: string;

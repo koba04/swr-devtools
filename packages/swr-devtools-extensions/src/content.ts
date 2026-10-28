@@ -1,5 +1,5 @@
-import { DevToolsMessage } from "swr-devtools";
-import { Runtime, runtime } from "webextension-polyfill";
+import type { DevToolsMessage } from "swr-devtools";
+import { type Runtime, runtime } from "webextension-polyfill";
 
 const injectDevToolsHook = () => {
   const script = document.createElement("script");

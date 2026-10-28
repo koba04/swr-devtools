@@ -43,7 +43,7 @@ export function useRequests(events: EventEmitter | null) {
           let channelKey = key;
           let channelNum = 0;
 
-          let currentRequests;
+          let currentRequests: SWRRequest[];
           const activeRequests = activeRequestsRef.current;
 
           switch (type) {

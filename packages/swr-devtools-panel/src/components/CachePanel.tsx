@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { DevToolsCacheData } from "swr-devtools/lib/swr-cache";
+import type { DevToolsCacheData } from "swr-devtools/lib/swr-cache";
 import { CacheData } from "./CacheData";
 import { CacheKey } from "./CacheKey";
 import {
@@ -39,7 +39,7 @@ export const CachePanel = ({
             .map((cacheItem) => (
               <CacheItem
                 key={cacheItem.key}
-                isSelected={selectedItem?.key === cacheItem.key}
+                $isSelected={selectedItem?.key === cacheItem.key}
               >
                 <CacheItemButton onClick={() => onSelectItem(cacheItem)}>
                   <CacheKey cacheData={cacheItem} />
